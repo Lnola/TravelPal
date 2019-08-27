@@ -1,20 +1,22 @@
 import React, { Component } from "react";
 import { withFormik, Form } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Tooltip from "@material-ui/core/Tooltip";
-import { IconButton } from "@material-ui/core";
+// import Tooltip from "@material-ui/core/Tooltip";
+// import { IconButton } from "@material-ui/core";
 import {
-  faSearch,
+  // faSearch,
   faUtensils,
   faLandmark,
   faMonument,
   faHeart,
-  faBasketballBall
+  faBasketballBall,
+  faTimes
 } from "@fortawesome/free-solid-svg-icons";
 import Input from "../Input";
 import "./Locations.css";
 import LocationPreview from "./LocationPreview";
 import LocationModal from "./LocationModal";
+import { authorizedRequest } from "../../utils_api";
 
 class Locations extends Component {
   constructor(props) {
@@ -52,9 +54,20 @@ class Locations extends Component {
           icon: faHeart,
           isClicked: false
         }
-      ]
+      ],
+      cityLocations: []
     };
   }
+
+  handleGetCityLocations = city => {
+    authorizedRequest(
+      `/api/cityLocations?city=${city.toLowerCase()}`,
+      "get"
+    ).then(cityLocations => {
+      this.setState({ cityLocations });
+      // console.log(this.state.cityLocations);
+    });
+  };
 
   handleToggleModal = visibleType => {
     const { isModalVisible } = this.state;
@@ -79,13 +92,29 @@ class Locations extends Component {
     this.setState({ filtersArray });
   };
 
+  handleGoToPreviousPage = () => {
+    this.props.history.goBack();
+  };
+
   render() {
-    const { values, handleSubmit, errors } = this.props;
-    const { isModalVisible, filtersArray, currentScrollPosition } = this.state;
+    const { values } = this.props;
+    const {
+      isModalVisible,
+      // filtersArray,
+      currentScrollPosition,
+      cityLocations
+    } = this.state;
+
+    let locations = [];
+    if (cityLocations.length !== 0)
+      locations = cityLocations[0].result.data.places;
 
     return (
       <React.Fragment>
-        <header>
+        <header className="header__locations--wrapper">
+          <span onClick={this.handleGoToPreviousPage}>
+            <FontAwesomeIcon icon={faTimes} color="grey" />
+          </span>
           <h1 className="header__locations">Locations</h1>
         </header>
         <main>
@@ -94,21 +123,19 @@ class Locations extends Component {
               type="text"
               name="city"
               className="locations__search"
-              error={errors.city}
               value={values.city}
-              areAllFull={false}
             />
             <button
               className="locations__search--button"
               type="submit"
-              onClick={() => handleSubmit()}
-            >
-              <FontAwesomeIcon icon={faSearch} color="grey" />
-            </button>
+              onClick={() => {
+                this.handleGetCityLocations(values.city);
+              }}
+            ></button>
           </Form>
 
           <section className="locations__filters">
-            {filtersArray.map((filter, index) => (
+            {/* {filtersArray.map((filter, index) => (
               <Tooltip key={index} title={filter.filter}>
                 <IconButton onClick={() => this.handleFilterClick(filter)}>
                   {filter.isClicked ? (
@@ -136,13 +163,24 @@ class Locations extends Component {
                   )}
                 </IconButton>
               </Tooltip>
-            ))}
+            ))} */}
           </section>
 
           <section>
-            <LocationPreview onToggleModal={this.handleToggleModal} />
-            <LocationPreview onToggleModal={this.handleToggleModal} />
-            <LocationPreview onToggleModal={this.handleToggleModal} />
+            {cityLocations.length === 0 ? (
+              <p className="locations__message">
+                No locations found. Try searching a city you want to see the
+                locations of...
+              </p>
+            ) : (
+              locations.map((location, index) => (
+                <LocationPreview
+                  key={index}
+                  onToggleModal={this.handleToggleModal}
+                  locationId={location.id}
+                />
+              ))
+            )}
           </section>
         </main>
 
@@ -164,11 +202,5 @@ export default withFormik({
     };
   },
 
-  handleSubmit(values, { resetForm }) {
-    const city = values.city;
-
-    resetForm();
-
-    console.log(city);
-  }
+  handleSubmit() {}
 })(Locations);

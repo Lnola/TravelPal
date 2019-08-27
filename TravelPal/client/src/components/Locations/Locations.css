@@ -1,7 +1,13 @@
+.header__locations--wrapper {
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
 .header__locations {
   color: grey;
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  margin-left: 10px;
 }
 
 .locations__filters {
@@ -41,9 +47,10 @@
 }
 
 .locations__search {
-  width: 85vw;
+  width: 100%;
   padding-top: 7px;
   padding-bottom: 7px;
+  text-align: center;
 }
 
 .locations__search::placeholder {
@@ -87,4 +94,13 @@
 .locations__add {
   bottom: 0;
   right: 10px;
+}
+
+.locations__message {
+  width: 90%;
+  text-align: center;
+  margin: auto;
+  margin-top: 35vh;
+  color: grey;
+  font-size: 15px;
 }

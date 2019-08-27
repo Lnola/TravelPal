@@ -43,7 +43,7 @@ class LocationModal extends Component {
   };
 
   handleAddLocation = () => {
-    console.log(this.state.selectedDate);
+    // console.log(this.state.selectedDate);
     this.setState({ selectedDate: [], isCalendarVisible: false });
   };
 

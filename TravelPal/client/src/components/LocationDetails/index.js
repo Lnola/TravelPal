@@ -60,7 +60,7 @@ class LocationDetails extends Component {
 
     const displayLocation = location.result.data.places[0];
 
-    console.log(location);
+    // console.log(location);
 
     return (
       <React.Fragment>

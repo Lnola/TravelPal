@@ -153,3 +153,7 @@ const getMonthFromDate = month => {
 
   return month;
 };
+
+export const formatLocationId = locationId => {
+  return locationId.split(":")[1];
+};

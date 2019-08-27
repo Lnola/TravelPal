@@ -1,13 +1,35 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { debounce } from "throttle-debounce";
 import FavoritesButton from "../FavoritesButton";
-import RandomImg from "../../assets/RandomImg.jpg";
 import PlusButton from "../PlusButtton";
+import { authorizedRequest } from "../../utils_api";
+import { formatLocationId } from "../../utils";
+import ImageMissing from "../../assets/RandomImg.png";
 
 class LocationPreview extends Component {
   constructor(props) {
     super(props);
-    this.state = { favoritesButtonColor: "" };
+    this.state = { favoritesButtonColor: "", location: null };
+
+    this.fetchLocationDebounced = debounce(500, this.fetchLocation);
+  }
+
+  fetchLocation = locationId => {
+    this.setLocation(locationId);
+  };
+
+  setLocation = locationId => {
+    locationId = formatLocationId(locationId);
+    // console.log(locationId);
+
+    authorizedRequest(`/api/locations/poi/${locationId}`, "get")
+      .then(location => this.setState({ location }))
+      .catch(err => console.log(err));
+  };
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    this.fetchLocationDebounced(nextProps.locationId);
   }
 
   handleHeartClick = () => {
@@ -18,23 +40,37 @@ class LocationPreview extends Component {
   };
 
   render() {
-    const { favoritesButtonColor } = this.state;
+    const { favoritesButtonColor, location } = this.state;
+
+    if (location === null) return null;
+
+    const displayLocation = location.result.data.places[0];
 
     return (
       <figure className="locations__preview">
         <Link
           to={{
             pathname: "/locations/details",
-            state: { isAddDisabled: true }
+            state: { isAddDisabled: true, location }
           }}
         >
           <img
             className="locations__preview--image"
-            src={RandomImg}
+            src={
+              displayLocation.main_media !== null
+                ? displayLocation.main_media.media[0].url
+                : displayLocation.thumbnail_url !== null
+                ? displayLocation.thumbnail_url
+                : ImageMissing
+            }
             alt="Location"
           />
-          <figcaption className="locations__preview--title">Title</figcaption>
-          <p className="locations__preview--description">Short description</p>
+          <figcaption className="locations__preview--title">
+            {displayLocation.name}
+          </figcaption>
+          <p className="locations__preview--description">
+            {displayLocation.address}
+          </p>
         </Link>
         <FavoritesButton
           className="locations__favorites"
