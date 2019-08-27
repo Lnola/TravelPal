@@ -1,0 +1,28 @@
+{
+  "name": "travelpal",
+  "version": "1.0.0",
+  "description": "Simple travel app",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "server": "nodemon app.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Luka Nola",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "concurrently": "^4.1.2",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^7.12.1",
+    "pg-hstore": "^2.3.3",
+    "rand-token": "^0.4.0",
+    "sequelize": "^5.16.0",
+    "sequelize-cli": "^5.5.0"
+  }
+}

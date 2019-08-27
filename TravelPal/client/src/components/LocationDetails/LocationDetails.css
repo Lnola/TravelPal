@@ -1,0 +1,37 @@
+/* .header__locations__details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+} */
+
+.location__details__image {
+  width: 100vw;
+  margin-left: -20px;
+  margin-top: -20px;
+}
+
+.locations__details--x {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.location__details--wrapper {
+  color: grey;
+  margin-top: 20px;
+}
+
+.location__details--title {
+  margin-bottom: 20px;
+}
+
+.location__details--wrapper p {
+  margin-bottom: 10px;
+}
+
+.location__details--more,
+.location__details--link {
+  color: #f76f63;
+  display: inline-block;
+}
