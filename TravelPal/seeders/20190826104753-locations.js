@@ -837,77 +837,149 @@ module.exports = {
             data: {
               places: [
                 {
-                  id: "poi:6031428",
+                  id: "poi:2796",
                   level: "poi",
-                  rating: 0.0062225716020811,
-                  rating_local: 0.0311128580104055,
-                  quadkey: "120232103323201013323",
+                  rating: 0.51372619394843,
+                  rating_local: 2.56863096974215,
+                  quadkey: "120233201330202011221",
                   location: {
-                    lat: 44.1172141,
-                    lng: 15.2210791
+                    lat: 42.6411621,
+                    lng: 18.1098539
                   },
                   bounding_box: {
-                    south: 44.1170617,
-                    west: 15.2208621,
-                    north: 44.1173534,
-                    east: 15.2212873
+                    south: 42.6387763,
+                    west: 18.1041244,
+                    north: 42.6431373,
+                    east: 18.1135044
                   },
-                  name: "Zadar County",
-                  name_suffix: "Zadar, Croatia",
-                  original_name: "Zadarska županija",
-                  url: "https://go.sygic.com/travel/place?id=poi:6031428",
-                  duration: 3600,
-                  marker: "other:office:governmental",
-                  categories: [],
+                  name: "Walls of Dubrovnik",
+                  name_suffix: "Dubrovnik, Croatia",
+                  original_name: "Dubrovačke gradske zidine",
+                  url: "https://go.sygic.com/travel/place?id=poi:2796",
+                  duration: 1800,
+                  marker: "hiking:viewpoint",
+                  categories: [
+                    "hiking",
+                    "sightseeing",
+                    "discovering",
+                    "playing"
+                  ],
                   parent_ids: [
-                    "city:47",
-                    "region:23637",
+                    "city:49",
+                    "region:23503",
                     "country:27",
-                    "poi:36973594",
                     "continent:1"
                   ],
                   perex:
-                    "Zadar County is a county in Croatia, it encompasses northern Dalmatia and southeastern Lika. Its center is the city of Zadar.",
+                    "An absolute must-see if you're around Dubrovnik. These walls are the perfect example of a fortification system, as they protected the city…",
                   customer_rating: null,
                   star_rating: null,
                   star_rating_unofficial: null,
-                  thumbnail_url: null,
+                  thumbnail_url:
+                    "https://media-cdn.sygictraveldata.com/media/poi:2796",
                   tags: [
                     {
-                      key: "Office",
-                      name: "Office"
+                      key: "Heritage",
+                      name: "Heritage"
                     },
                     {
-                      key: "Government Office",
-                      name: "Government Office"
+                      key: "Coastal Views",
+                      name: "Coastal Views"
+                    },
+                    {
+                      key: "Family Friendly",
+                      name: "Family Friendly"
+                    },
+                    {
+                      key: "UNESCO",
+                      name: "UNESCO"
+                    },
+                    {
+                      key: "View Point",
+                      name: "View Point"
+                    },
+                    {
+                      key: "Game of Thrones",
+                      name: "Game of Thrones"
+                    },
+                    {
+                      key: "Editor's Choice",
+                      name: "Editor's Choice"
                     }
                   ],
-                  area: 581,
-                  address: "Ulica Božidara Petranovića 8, 23000 Zadar",
-                  address_is_approximated: false,
-                  admission: null,
-                  email: "zupanija@zadarska-zupanija.hr",
+                  area: 6655,
+                  address: "8 Placa - Stradun, Dubrovnik 20000, Croatia",
+                  address_is_approximated: true,
+                  admission:
+                    "Adults: 150 HRK\nChildren (5 - 18): 50 HRK\nChildren (under 5): free",
+                  email: "info@citywallsdubrovnik.hr",
                   opening_hours: null,
                   is_deleted: false,
-                  phone: "+385 23 350 401",
+                  phone: "+385 20 638 800",
                   description: {
                     text:
-                      "Zadar County is a county in Croatia, it encompasses northern Dalmatia and southeastern Lika. Its center is the city of Zadar.",
-                    provider: "wikipedia",
+                      "An absolute must-see if you're around Dubrovnik. These walls are the perfect example of a fortification system, as they protected the city during the Middle Ages from every single attack that took place here.\n\nThe most productive phase of construction took place between the 12th and the 17th century, but the walls have been existent since the 8th century. They did their job, which was proven after a 15-month long invasion by the Saracens that the city withstood with no problems.\n\nThe walk usually takes about two hours, but if you're a photographer, prepare to spend more time here. The incredible view of both the city and the sea should be enjoyed thoroughly and without rushing. This place is guaranteed to provide you with some of the best vacation photos you can show off to your friends.\n\nThere's quite a few stairs here, so bear that in mind when planning a trip to this location. If you come here during summer, bring a lot of water and a protection from the sunlight, because it gets pretty intense. Do not throw away the receipt confirming that you have paid your ticket, because you will be asked to show it about halfway through the trip.",
+                    provider: null,
                     translation_provider: null,
-                    link: "https://en.wikipedia.org/wiki/Zadar_County",
+                    link: null,
                     is_translated: true
                   },
-                  opening_hours_raw: null,
-                  media_count: 0,
-                  main_media: null,
+                  opening_hours_raw:
+                    "Apr-May: Mo-Su 8:00-18:30; Jun-Jul: Mo-Su 8:00-19:30; Aug-Sep: Mo-Su 8:00-18:30; Oct: Mo-Su 8:00-17:30; Nov-Mar: Mo-Su 10:00-15:00",
+                  media_count: 12,
+                  main_media: {
+                    usage: {
+                      square: "m:35957368",
+                      video_preview: null,
+                      portrait: "m:35957368",
+                      landscape: "m:35957368"
+                    },
+                    media: [
+                      {
+                        original: {
+                          size: null,
+                          width: 3072,
+                          height: 2035
+                        },
+                        suitability: ["landscape", "portrait", "square"],
+                        url_template:
+                          "https://media-cdn.sygictraveldata.com/media/{size}/612664395a40232133447d33247d383335393537333638",
+                        created_at: "2017-03-29T09:19:50+0000",
+                        source: {
+                          provider: "wikipedia",
+                          name: "Wikimedia Commons",
+                          external_id: null
+                        },
+                        type: "photo",
+                        created_by: "56d6fc0c75fd4",
+                        url:
+                          "https://media-cdn.sygictraveldata.com/media/612664395a40232133447d33247d383335393537333638.jpg",
+                        quadkey: null,
+                        attribution: {
+                          title_url:
+                            "https://commons.wikimedia.org/wiki/File:R0000598_Dubrovnik_Stadtmauer.jpg",
+                          license: "CC BY-SA 4.0",
+                          other: null,
+                          author_url:
+                            "http://commons.wikimedia.org/wiki/User:Harlekess",
+                          author: "Harlekess",
+                          title:
+                            "Stadtmauer von Dubrovnik von der Festung Lovrijenac aus gesehen",
+                          license_url:
+                            "http://creativecommons.org/licenses/by-sa/4.0"
+                        },
+                        location: null,
+                        id: "m:35957368"
+                      }
+                    ]
+                  },
                   references: [
                     {
-                      id: 14493223,
+                      id: 1474267,
                       title: "Wikipedia",
                       type: "wiki",
                       language_id: "en",
-                      url: "https://en.wikipedia.org/wiki/Zadar_County",
+                      url: "https://en.wikipedia.org/wiki/Walls_of_Dubrovnik",
                       supplier: "wiki",
                       priority: 0,
                       currency: null,
@@ -915,11 +987,11 @@ module.exports = {
                       flags: []
                     },
                     {
-                      id: 8341696,
-                      title: "Official Website",
+                      id: 5000,
+                      title: "Official website",
                       type: "link:official",
                       language_id: null,
-                      url: "https://www.zadarska-zupanija.hr/",
+                      url: "https://www.wallsofdubrovnik.com/",
                       supplier: null,
                       priority: 0,
                       currency: null,
@@ -929,19 +1001,19 @@ module.exports = {
                   ],
                   external_ids: [
                     {
-                      id: "Q58146",
+                      id: "Q931733",
                       type: "wikidata",
                       language_id: null
                     },
                     {
-                      id: "en:Zadar County",
-                      type: "wikipedia",
-                      language_id: "en"
-                    },
-                    {
-                      id: "way:173172515",
+                      id: "relation:2294262",
                       type: "osm",
                       language_id: null
+                    },
+                    {
+                      id: "en:Walls of Dubrovnik",
+                      type: "wikipedia",
+                      language_id: "en"
                     }
                   ],
                   collection_count: 0,
@@ -949,7 +1021,7 @@ module.exports = {
                 }
               ]
             },
-            server_timestamp: "2019-08-24T19:28:31+00:00"
+            server_timestamp: "2019-08-24T19:30:26+00:00"
           }),
           poi: 2796,
           createdAt: new Date(),

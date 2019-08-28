@@ -15,7 +15,7 @@ class TripCalendar extends Component {
       arrowClassName
     } = this.props;
 
-    let { minDate, maxDate, selectedDate } = this.props;
+    let { minDate, maxDate, selectedDate, isFancyDateVisible } = this.props;
 
     if (minDate === undefined) minDate = new Date();
     else {
@@ -26,7 +26,7 @@ class TripCalendar extends Component {
 
     return (
       <section className="trip__details">
-        {isSelectRange ? null : selectedDate === null ? (
+        {isSelectRange ? null : selectedDate === null || !isFancyDateVisible ? (
           <span>
             <FontAwesomeIcon
               icon={faCalendar}

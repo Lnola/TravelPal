@@ -15,4 +15,21 @@ router.get(`/:id`, verifyToken, (req, res) => {
     });
 });
 
+router.post("/add", verifyToken, (req, res) => {
+  const { tripId, locationId, date } = req.body;
+  console.log(tripId, locationId, date);
+
+  TripLocation.findAll({ where: { tripId, locationId, date } }).then(
+    exactSameTL => {
+      if (exactSameTL.length === 0)
+        TripLocation.create({ tripId, locationId, date })
+          .then(response => res.send(response))
+          .catch(err => {
+            console.log(err);
+            res.sendStatus(422);
+          });
+    }
+  );
+});
+
 module.exports = router;

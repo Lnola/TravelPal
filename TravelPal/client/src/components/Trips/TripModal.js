@@ -3,6 +3,7 @@ import { withFormik, Form } from "formik";
 import * as Yup from "yup";
 import Input from "../Input";
 import TripCalendar from "../TripDetails/TripCalendar";
+import { authorizedRequest } from "../../utils_api";
 
 class TripModal extends Component {
   constructor(props) {
@@ -30,11 +31,20 @@ class TripModal extends Component {
   };
 
   render() {
-    const { values, handleSubmit, errors, isSubmitting } = this.props;
+    const {
+      values,
+      handleSubmit,
+      errors,
+      isSubmitting,
+      onToggleModal,
+      style
+    } = this.props;
     const { areAllFull, isCalendarVisible, selectedDate } = this.state;
 
+    values.selectedDate = selectedDate;
+
     return (
-      <aside>
+      <aside style={style}>
         <section className="modal--wrapper">
           <Form>
             <Input
@@ -48,14 +58,14 @@ class TripModal extends Component {
             <TripCalendar
               isCalendarVisible={isCalendarVisible}
               onToggleCalendarVisibility={this.handleToggleCalendarVisibility}
-              selectedDate={selectedDate}
+              selectedDate={values.selectedDate}
               onCalendarChange={this.handleCalendarChange}
               isSelectRange={true}
             />
             <div className="modal__buttons">
               <button
                 type="button"
-                onClick={() => this.props.onToggleModal(false)}
+                onClick={() => onToggleModal(false)}
                 className="modal__button"
               >
                 Close
@@ -79,21 +89,41 @@ class TripModal extends Component {
 export default withFormik({
   mapPropsToValues() {
     return {
-      name: ""
+      name: "",
+      selectedDate: []
     };
   },
 
   validationSchema: Yup.object().shape({
     name: Yup.string()
       .min(3)
+      .required("Cant be empty"),
+    selectedDate: Yup.array()
+      .min(2)
       .required("Cant be empty")
   }),
 
-  handleSubmit(values, { resetForm }) {
-    const name = values.name;
+  handleSubmit(values, { resetForm, props }) {
+    const tripDetails = {
+      name: values.name,
+      selectedDate: values.selectedDate,
+      userId: window.localStorage.getItem("id"),
+      tripId: props.tripId
+    };
 
     resetForm();
+    props.onToggleModal(false);
 
-    console.log(name);
+    // console.log(tripDetails);
+
+    if (props.tripId === undefined)
+      authorizedRequest("/api/trips/add", "post", tripDetails).then(res =>
+        props.forceUpdateTrips()
+      );
+    else {
+      authorizedRequest("/api/trips/edit", "post", tripDetails).then(res =>
+        props.forceUpdateTrip()
+      );
+    }
   }
 })(TripModal);

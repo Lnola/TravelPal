@@ -34,4 +34,5 @@
 .location__details--link {
   color: #f76f63;
   display: inline-block;
+  margin-right: 7px;
 }

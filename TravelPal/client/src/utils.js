@@ -58,6 +58,9 @@ export const formatMarker = marker => {
   const firstWord =
     parts[0].substring(0, 1).toUpperCase() +
     parts[0].substring(1, parts[0].lenght);
+
+  if (parts.length === 1) return firstWord;
+
   const secondPartAsArray = parts[1].split("_");
 
   let final = firstWord + " -";

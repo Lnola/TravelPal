@@ -15,6 +15,10 @@ class LocationPreview extends Component {
     this.fetchLocationDebounced = debounce(500, this.fetchLocation);
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    this.fetchLocationDebounced(nextProps.locationId);
+  }
+
   fetchLocation = locationId => {
     this.setLocation(locationId);
   };
@@ -24,19 +28,44 @@ class LocationPreview extends Component {
     // console.log(locationId);
 
     authorizedRequest(`/api/locations/poi/${locationId}`, "get")
-      .then(location => this.setState({ location }))
+      .then(location => {
+        this.setState({ location });
+        this.getFavoriteStatus(location.id);
+      })
       .catch(err => console.log(err));
   };
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.fetchLocationDebounced(nextProps.locationId);
-  }
-
   handleHeartClick = () => {
-    let { favoritesButtonColor } = this.state;
-    if (favoritesButtonColor.length === 0)
+    let { favoritesButtonColor, location } = this.state;
+    const userId = window.localStorage.getItem("id");
+    const locationId = location.id;
+
+    if (favoritesButtonColor.length === 0) {
       this.setState({ favoritesButtonColor: "#f76f63" });
-    else this.setState({ favoritesButtonColor: "" });
+
+      authorizedRequest("/api/favorites/add", "post", {
+        userId,
+        locationId
+      }).then(response => console.log(response));
+    } else {
+      this.setState({ favoritesButtonColor: "" });
+
+      authorizedRequest(
+        `/api/favorites/delete/user/${userId}/location/${locationId}`,
+        "delete"
+      ).then(response => console.log(response));
+    }
+  };
+
+  getFavoriteStatus = locationId => {
+    const userId = window.localStorage.getItem("id");
+
+    authorizedRequest(
+      `/api/favorites/user/${userId}/location/${locationId}`,
+      "get"
+    ).then(response => {
+      if (response) this.setState({ favoritesButtonColor: "#f76f63" });
+    });
   };
 
   render() {
@@ -79,6 +108,7 @@ class LocationPreview extends Component {
         />
         <PlusButton
           onToggleModal={this.props.onToggleModal}
+          locationId={location.id}
           className="locations__add"
         />
       </figure>

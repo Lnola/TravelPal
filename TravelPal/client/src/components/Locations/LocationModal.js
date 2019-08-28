@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import TripCalendar from "../TripDetails/TripCalendar";
 import { formatDate } from "../../utils";
+import { authorizedRequest } from "../../utils_api";
 
 class LocationModal extends Component {
   constructor(props) {
@@ -43,8 +44,26 @@ class LocationModal extends Component {
   };
 
   handleAddLocation = () => {
-    // console.log(this.state.selectedDate);
-    this.setState({ selectedDate: [], isCalendarVisible: false });
+    let { selectedDate } = this.state;
+    const { tripId, locationId } = this.props;
+
+    // console.log("tripId", tripId, "locationId", locationId, selectedDate);
+
+    selectedDate.forEach(date => {
+      if (
+        locationId !== null &&
+        tripId !== null &&
+        locationId !== undefined &&
+        tripId !== undefined
+      )
+        authorizedRequest("/api/tripLocations/add", "post", {
+          tripId,
+          locationId,
+          date: formatDate(date)
+        }).then(() => console.log("Success"));
+    });
+
+    this.setState({ selectedDate: [] });
   };
 
   render() {
@@ -54,6 +73,8 @@ class LocationModal extends Component {
       isSubmitDisabled
     } = this.state;
 
+    const { dateFrom, dateTo } = this.props;
+
     return (
       <aside style={this.props.style}>
         <section className="modal--wrapper">
@@ -61,6 +82,9 @@ class LocationModal extends Component {
             isCalendarVisible={true}
             selectedDate={null}
             onCalendarChange={this.handleCalendarChange}
+            minDate={dateFrom}
+            maxDate={dateTo}
+            isFancyDateVisible={false}
           />
 
           <section className="modal__dates--wrapper">

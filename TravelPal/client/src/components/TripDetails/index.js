@@ -10,6 +10,7 @@ import TripCalendar from "./TripCalendar";
 import TripModal from "../Trips/TripModal";
 import { authorizedRequest } from "../../utils_api";
 import { formatDate, formatDateFromTo } from "../../utils";
+import ImageMissing from "../../assets/MissingImage.svg";
 
 class TripDetails extends Component {
   constructor(props) {
@@ -28,10 +29,10 @@ class TripDetails extends Component {
 
   componentDidMount() {
     if (this.props.location.state !== undefined) {
-      const { trip } = this.props.location.state;
-      this.setState({ trip, selectedDate: trip.dateFrom });
+      const { id } = this.props.location.state.trip;
+      this.getTrip();
 
-      authorizedRequest(`/api/tripLocations/${trip.id}`, "get")
+      authorizedRequest(`/api/tripLocations/${id}`, "get")
         .then(tripLocations => {
           this.setState({ tripLocations });
 
@@ -88,6 +89,13 @@ class TripDetails extends Component {
     });
   };
 
+  getTrip = () => {
+    const { id } = this.props.location.state.trip;
+    authorizedRequest(`/api/trips/trip/${id}`, "get")
+      .then(trip => this.setState({ trip, selectedDate: trip.dateFrom }))
+      .catch(err => console.log(err));
+  };
+
   render() {
     const {
       selectedDate,
@@ -127,6 +135,7 @@ class TripDetails extends Component {
             selectedDate={selectedDate}
             onCalendarChange={this.handleCalendarChange}
             arrowClassName={arrowClassName}
+            isFancyDateVisible={true}
             minDate={trip.dateFrom}
             maxDate={trip.dateTo}
           />
@@ -137,14 +146,21 @@ class TripDetails extends Component {
                 key={index}
                 to={{
                   pathname: "/locations/details",
-                  state: { isAddDisabled: false, location }
+                  state: {
+                    isAddDisabled: false,
+                    location
+                  }
                 }}
               >
                 <figure className="trip__details__location">
                   <span className="trip__details__location--border b-4px-salmon">
                     <img
                       className="trip__details__location--img"
-                      src={location.result.data.places[0].thumbnail_url}
+                      src={
+                        location.result.data.places[0].thumbnail_url !== null
+                          ? location.result.data.places[0].thumbnail_url
+                          : ImageMissing
+                      }
                       alt="Location"
                     />
                   </span>
@@ -152,7 +168,16 @@ class TripDetails extends Component {
                 </figure>
               </Link>
             ))}
-            <Link to="/locations">
+            <Link
+              to={{
+                pathname: "/locations",
+                state: {
+                  dateFrom: trip.dateFrom,
+                  dateTo: trip.dateTo,
+                  tripId: trip.id
+                }
+              }}
+            >
               <div className="trips__details--add--wrapper">
                 <PlusButton
                   className="plus__button--details"
@@ -168,6 +193,9 @@ class TripDetails extends Component {
           <TripModal
             style={{ top: currentScrollPosition }}
             onToggleModal={this.handleToggleModal}
+            tripId={trip.id}
+            onCalendarChange={this.handleCalendarChange}
+            forceUpdateTrip={this.getTrip}
           />
         ) : null}
       </React.Fragment>

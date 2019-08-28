@@ -4,11 +4,14 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 class PlusButton extends Component {
   render() {
-    let { className, onToggleModal } = this.props;
+    let { className, onToggleModal, locationId } = this.props;
     className += " plus__button";
 
     return (
-      <span onClick={() => onToggleModal(true)} className={className}>
+      <span
+        onClick={() => onToggleModal(true, locationId)}
+        className={className}
+      >
         <FontAwesomeIcon
           className="plus__button--icon"
           icon={faPlus}

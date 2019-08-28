@@ -6,6 +6,8 @@ import FavoritesButton from "../FavoritesButton";
 import PlusButton from "../PlusButtton";
 import LocationModal from "../Locations/LocationModal";
 import { formatMarker } from "../../utils";
+import ImageMissing from "../../assets/RandomImg.png";
+import { authorizedRequest } from "../../utils_api";
 
 class LocationDetails extends Component {
   constructor(props) {
@@ -15,6 +17,10 @@ class LocationDetails extends Component {
       favoritesButtonColor: "",
       isShorterDescriptionVisible: true
     };
+  }
+
+  componentDidMount() {
+    this.getFavoriteStatus();
   }
 
   handleGoToPreviousPage = () => {
@@ -36,9 +42,36 @@ class LocationDetails extends Component {
 
   handleHeartClick = () => {
     let { favoritesButtonColor } = this.state;
-    if (favoritesButtonColor.length === 0)
+    const userId = window.localStorage.getItem("id");
+    const locationId = this.props.location.state.location.id;
+
+    if (favoritesButtonColor.length === 0) {
       this.setState({ favoritesButtonColor: "#f76f63" });
-    else this.setState({ favoritesButtonColor: "" });
+
+      authorizedRequest("/api/favorites/add", "post", {
+        userId,
+        locationId
+      }).then(response => console.log(response));
+    } else {
+      this.setState({ favoritesButtonColor: "" });
+
+      authorizedRequest(
+        `/api/favorites/delete/user/${userId}/location/${locationId}`,
+        "delete"
+      ).then(response => console.log(response));
+    }
+  };
+
+  getFavoriteStatus = () => {
+    const userId = window.localStorage.getItem("id");
+    const locationId = this.props.location.state.location.id;
+
+    authorizedRequest(
+      `/api/favorites/user/${userId}/location/${locationId}`,
+      "get"
+    ).then(response => {
+      if (response) this.setState({ favoritesButtonColor: "#f76f63" });
+    });
   };
 
   handleToggleDescription = () => {
@@ -68,7 +101,11 @@ class LocationDetails extends Component {
           <div className="location__details__image--container">
             <img
               className="location__details__image"
-              src={location.result.data.places[0].main_media.media[0].url}
+              src={
+                location.result.data.places[0].main_media !== null
+                  ? location.result.data.places[0].main_media.media[0].url
+                  : ImageMissing
+              }
               alt="Preview"
             />
           </div>
@@ -77,7 +114,11 @@ class LocationDetails extends Component {
             className="locations__details--x"
             onClick={this.handleGoToPreviousPage}
           >
-            <FontAwesomeIcon icon={faTimes} color="white" />
+            {location.result.data.places[0].main_media !== null ? (
+              <FontAwesomeIcon icon={faTimes} color="white" />
+            ) : (
+              <FontAwesomeIcon icon={faTimes} color="black" />
+            )}
           </span>
           <FavoritesButton
             className="location__details--favorites"
@@ -116,7 +157,7 @@ class LocationDetails extends Component {
             <p>Address: {displayLocation.address}</p>
           ) : null}
 
-          {displayLocation.opening_hours &&
+          {displayLocation.opening_hours !== null &&
           displayLocation.opening_hours.length !== 0 ? (
             <p>Opening Hours: {displayLocation.opening_hours}</p>
           ) : null}
@@ -131,31 +172,39 @@ class LocationDetails extends Component {
             <p>Phone: {displayLocation.phone}</p>
           ) : null}
 
-          <p>Marker: {formatMarker(displayLocation.marker)}</p>
+          {displayLocation.marker !== null ? (
+            <p>Marker: {formatMarker(displayLocation.marker)}</p>
+          ) : null}
 
-          <div>
-            Categories:{" "}
-            {displayLocation.categories.map((category, index) => (
-              <p key={index} className="location__details--more">
-                {category}
-              </p>
-            ))}
-          </div>
+          {displayLocation.categories !== null &&
+          displayLocation.categories.length !== 0 ? (
+            <div>
+              Categories:{" "}
+              {displayLocation.categories.map((category, index) => (
+                <p key={index} className="location__details--more">
+                  {category}
+                </p>
+              ))}
+            </div>
+          ) : null}
 
-          <div>
-            References:{" "}
-            {displayLocation.references.map((reference, index) => (
-              <a
-                key={index}
-                href={reference.url}
-                rel="noopener noreferrer"
-                target="_blank"
-                className="location__details--link"
-              >
-                {reference.title}
-              </a>
-            ))}
-          </div>
+          {displayLocation.references !== null &&
+          displayLocation.references.length !== 0 ? (
+            <div>
+              References:{" "}
+              {displayLocation.references.map((reference, index) => (
+                <a
+                  key={index}
+                  href={reference.url}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className="location__details--link"
+                >
+                  {reference.title}
+                </a>
+              ))}
+            </div>
+          ) : null}
 
           {/* <p>References: {displayLocation.references[0]}</p> */}
         </main>

@@ -15,12 +15,16 @@ class Trips extends Component {
   }
 
   componentDidMount() {
+    this.getTrips();
+  }
+
+  getTrips = () => {
     const userId = window.localStorage.getItem("id");
 
     authorizedRequest(`/api/trips/${userId}`, "get").then(trips =>
       this.setState({ trips, filteredTrips: trips })
     );
-  }
+  };
 
   handleFilterByDate = type => {
     const { trips } = this.state;
@@ -89,6 +93,7 @@ class Trips extends Component {
           <TripModal
             style={{ top: currentScrollPosition }}
             onToggleModal={this.handleToggleModal}
+            forceUpdateTrips={this.getTrips}
           />
         ) : null}
       </React.Fragment>

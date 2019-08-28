@@ -55,7 +55,8 @@ class Locations extends Component {
           isClicked: false
         }
       ],
-      cityLocations: []
+      cityLocations: [],
+      locationId: null
     };
   }
 
@@ -69,7 +70,9 @@ class Locations extends Component {
     });
   };
 
-  handleToggleModal = visibleType => {
+  handleToggleModal = (visibleType, locationId) => {
+    if (locationId !== undefined) this.setState({ locationId });
+
     const { isModalVisible } = this.state;
     if (isModalVisible === !visibleType) {
       if (visibleType) {
@@ -102,12 +105,20 @@ class Locations extends Component {
       isModalVisible,
       // filtersArray,
       currentScrollPosition,
-      cityLocations
+      cityLocations,
+      locationId
     } = this.state;
 
     let locations = [];
     if (cityLocations.length !== 0)
       locations = cityLocations[0].result.data.places;
+
+    let dateFrom, dateTo, tripId;
+    if (this.props.location !== undefined) {
+      dateFrom = this.props.location.state.dateFrom;
+      dateTo = this.props.location.state.dateTo;
+      tripId = this.props.location.state.tripId;
+    }
 
     return (
       <React.Fragment>
@@ -188,6 +199,10 @@ class Locations extends Component {
           <LocationModal
             style={{ top: currentScrollPosition }}
             onToggleModal={this.handleToggleModal}
+            dateFrom={dateFrom}
+            dateTo={dateTo}
+            tripId={tripId}
+            locationId={locationId}
           />
         ) : null}
       </React.Fragment>
