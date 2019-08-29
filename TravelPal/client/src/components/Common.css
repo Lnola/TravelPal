@@ -255,7 +255,7 @@ abbr {
     bottom: 25px;
     display: flex;
     justify-content: center;
-    width: 100vw;
+    width: 95%;
   }
 
   .nav__trips--wrapper {
@@ -273,5 +273,11 @@ abbr {
 
   .logout__button {
     position: static;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .nav__trips {
+    width: 97%;
   }
 }
