@@ -70,3 +70,10 @@ export const setTokens = async (accessToken, refreshToken) => {
   window.localStorage.setItem("accessToken", accessToken);
   window.localStorage.setItem("refreshToken", refreshToken);
 };
+
+export const clearLocalStorage = () => {
+  window.localStorage.removeItem("accessToken");
+  window.localStorage.removeItem("refreshToken");
+  window.localStorage.removeItem("username");
+  window.localStorage.removeItem("id");
+};

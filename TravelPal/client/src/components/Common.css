@@ -7,12 +7,11 @@
 }
 
 body {
-  width: 100vw;
+  /* width: 100vw; */
   height: 100vh;
   padding: 20px;
   box-sizing: border-box;
   position: relative;
-  margin-bottom: 100px;
 }
 
 header {
@@ -24,6 +23,10 @@ header {
 
 a {
   color: black;
+}
+
+.link {
+  width: 100%;
 }
 
 .input__wrapper {
@@ -234,4 +237,41 @@ abbr {
 
 .o-hidden {
   overflow: hidden;
+}
+
+@media screen and (min-width: 600px) {
+  main,
+  header {
+    max-width: 1024px;
+    margin: auto;
+  }
+
+  .react-calendar__tile {
+    border-radius: 15px;
+  }
+
+  .nav__trips {
+    position: fixed;
+    bottom: 25px;
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+  }
+
+  .nav__trips--wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1024px;
+  }
+
+  .plus__button--trips {
+    position: static;
+    left: 0;
+    right: 0;
+  }
+
+  .logout__button {
+    position: static;
+  }
 }

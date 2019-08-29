@@ -46,14 +46,20 @@ class LocationPreview extends Component {
       authorizedRequest("/api/favorites/add", "post", {
         userId,
         locationId
-      }).then(response => console.log(response));
+      }).then(response => {
+        // console.log(response);
+        console.log("Added");
+      });
     } else {
       this.setState({ favoritesButtonColor: "" });
 
       authorizedRequest(
         `/api/favorites/delete/user/${userId}/location/${locationId}`,
         "delete"
-      ).then(response => console.log(response));
+      ).then(response => {
+        // console.log(response);
+        console.log("Deleted");
+      });
     }
   };
 

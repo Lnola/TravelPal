@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import Input from "../Input";
 import "./Login.css";
 import { authorizedRequest, setTokens } from "../../utils_api";
+import Logo from "../../assets/Logo.png";
 
 class Login extends Component {
   constructor(props) {
@@ -26,7 +27,8 @@ class Login extends Component {
 
     return (
       <main className="main__login">
-        <Form>
+        <Form className="main__login--form">
+          <img className="main__login--logo" src={Logo} alt="logo" />
           <Input
             type="text"
             name="username"
@@ -74,7 +76,7 @@ export default withFormik({
       .min(4)
       .required("Cant be empty"),
     password: Yup.string()
-      .min(6)
+      .min(4)
       .required("Cant be empty")
   }),
 

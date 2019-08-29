@@ -3,12 +3,6 @@
   align-items: center;
 }
 
-.header__trips__details span {
-}
-
-.header__trips__details h1 {
-}
-
 .header__trips--edit {
   height: 18px;
   width: 100%;
@@ -100,4 +94,18 @@
   transition: 0.3s transform;
   transform: rotate(0);
   margin-bottom: 1px;
+}
+
+@media screen and (min-width: 600px) {
+  .header__trips__details h1 {
+    max-width: none;
+  }
+
+  .header__trips__details p {
+    font-size: 15px;
+  }
+
+  .trip__details__location--border {
+    width: 10%;
+  }
 }

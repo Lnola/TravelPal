@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { withFormik, Form } from "formik";
 import * as Yup from "yup";
 import Input from "../Input";
+import Logo from "../../assets/Logo.png";
+import { authorizedRequest, setTokens } from "../../utils_api";
 
 class Register extends Component {
   constructor(props) {
@@ -30,7 +33,8 @@ class Register extends Component {
 
     return (
       <main className="main__login">
-        <Form>
+        <Form className="main__login--form">
+          <img className="main__login--logo" src={Logo} alt="logo" />
           <Input
             type="text"
             name="name"
@@ -74,6 +78,13 @@ class Register extends Component {
           >
             Register
           </button>
+
+          <div className="input__wrapper">
+            <p className="main__login--text">Go back to login?</p>
+            <Link to="/">
+              <p className="main__login--link">Click here</p>
+            </Link>
+          </div>
         </Form>
       </main>
     );
@@ -103,18 +114,33 @@ export default withFormik({
       .required("Cant be empty"),
     mail: Yup.string().email(),
     password: Yup.string()
-      .min(6)
+      .min(4)
       .required("Cant be empty")
   }),
 
-  handleSubmit(values, { resetForm }) {
+  handleSubmit(values, { resetForm, props }) {
     const userCredentials = {
+      name: values.name,
+      surname: values.surname,
       username: values.username,
+      mail: values.mail,
       password: values.password
     };
 
     resetForm();
 
-    console.log(userCredentials);
+    // console.log(userCredentials);
+
+    authorizedRequest("/api/auth/register", "post", { userCredentials })
+      .then(tokens => {
+        if (tokens !== undefined) {
+          setTokens(tokens.accessToken, tokens.refreshToken);
+          window.localStorage.setItem("id", tokens.userId);
+          window.localStorage.setItem("username", userCredentials.username);
+
+          props.history.push("/trips");
+        } else alert("Username and password don't match");
+      })
+      .catch(() => alert("Something went wrong. Try again!"));
   }
 })(Register);

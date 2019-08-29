@@ -78,14 +78,47 @@ router.post("/refresh", (req, res) => {
     });
 });
 
-router.delete("/delete", (req, res) => {
-  const { refresh } = req.body;
+router.delete("/delete/:userId", (req, res) => {
+  const { userId } = req.params;
 
   RefreshToken.destroy({
-    where: { token: refresh }
+    where: { userId }
   })
-    .then(() => res.sendStatus(204))
+    .then(() => res.sendStatus(200))
     .catch(() => res.sendStatus(404));
+});
+
+router.post("/register", (req, res) => {
+  const { name, surname, username, mail } = req.body.userCredentials;
+  let { password } = req.body.userCredentials;
+
+  bcrypt.hash(password, 10, (err, hash) => {
+    User.create({ name, surname, username, email: mail, password: hash })
+      .then(user => {
+        jwt.sign(
+          { user },
+          JWT_SECRET_KEY,
+          { expiresIn: "5m" },
+          (error, jwtToken) => {
+            // Create refresh token
+            const refreshToken = randtoken.uid(50);
+            // Save refresh token to DB
+            RefreshToken.create({
+              userId: user.id,
+              token: refreshToken
+            }).then(() => console.log("Refresh token created..."));
+            res.send({
+              accessToken: jwtToken,
+              refreshToken,
+              userId: user.id
+            });
+          }
+        );
+      })
+      .catch(() => {
+        res.sendStatus(404);
+      });
+  });
 });
 
 module.exports = router;

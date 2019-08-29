@@ -1,18 +1,48 @@
 import React, { Component } from "react";
-import RandomImg from "../../assets/RandomImg.jpg";
+import MissingImage from "../../assets/RandomImg.png";
 import { formatDateFromTo } from "../../utils";
+import { authorizedRequest } from "../../utils_api";
 
 class TripPreview extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      thumbnails: []
+    };
+  }
+
+  componentDidMount() {
+    authorizedRequest(
+      `/api/tripLocations/images/${this.props.trip.id}`,
+      "get"
+    ).then(thumbnails => {
+      this.setState({ thumbnails });
+    });
+  }
+
   render() {
     const { trip } = this.props;
+    const { thumbnails } = this.state;
+
+    if (thumbnails.length === 0) return null;
+
+    // console.log(thumbnails);
 
     return (
       <section className="trips__preview">
         <div className="trips__preview--images">
-          <img src={RandomImg} alt="Preview" />
-          <img src={RandomImg} alt="Preview" />
-          <img src={RandomImg} alt="Preview" />
-          <img src={RandomImg} alt="Preview" />
+          {thumbnails
+            .reverse()
+            .map((thumbnail, index) =>
+              index < 4 ? (
+                <img
+                  key={index}
+                  src={thumbnail ? thumbnail : MissingImage}
+                  alt="Preview"
+                />
+              ) : null
+            )}
         </div>
         <div className="trips__preview--description">
           <h3>{trip.name}</h3>

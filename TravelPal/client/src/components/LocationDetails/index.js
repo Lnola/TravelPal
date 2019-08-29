@@ -51,14 +51,20 @@ class LocationDetails extends Component {
       authorizedRequest("/api/favorites/add", "post", {
         userId,
         locationId
-      }).then(response => console.log(response));
+      }).then(response => {
+        // console.log(response);
+        console.log("Added");
+      });
     } else {
       this.setState({ favoritesButtonColor: "" });
 
       authorizedRequest(
         `/api/favorites/delete/user/${userId}/location/${locationId}`,
         "delete"
-      ).then(response => console.log(response));
+      ).then(response => {
+        // console.log(response);
+        console.log("Deleted");
+      });
     }
   };
 
@@ -208,14 +214,15 @@ class LocationDetails extends Component {
 
           {/* <p>References: {displayLocation.references[0]}</p> */}
         </main>
-        <nav>
-          {isAddDisabled ? (
+
+        {isAddDisabled ? (
+          <nav>
             <PlusButton
               className="plus__button--trips"
               onToggleModal={this.handleToggleModal}
             />
-          ) : null}
-        </nav>
+          </nav>
+        ) : null}
 
         {isModalVisible ? (
           <LocationModal

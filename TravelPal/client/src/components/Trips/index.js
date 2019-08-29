@@ -7,6 +7,7 @@ import TripModal from "./TripModal";
 import "./Trips.css";
 import { authorizedRequest } from "../../utils_api";
 import { formatDate } from "../../utils";
+import Logout from "./Logout";
 
 class Trips extends Component {
   constructor(props) {
@@ -84,11 +85,18 @@ class Trips extends Component {
               </Link>
             ))
           )}
-          <PlusButton
-            className="plus__button--trips"
-            onToggleModal={this.handleToggleModal}
-          />
         </main>
+
+        <nav className="nav__trips">
+          <section className="nav__trips--wrapper">
+            <Logout />
+            <PlusButton
+              className="plus__button--trips"
+              onToggleModal={this.handleToggleModal}
+            />
+          </section>
+        </nav>
+
         {isModalVisible ? (
           <TripModal
             style={{ top: currentScrollPosition }}

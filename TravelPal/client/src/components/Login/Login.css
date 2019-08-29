@@ -1,12 +1,21 @@
 .main__login {
-  height: 94.5vh;
+  height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.main__login--logo {
+  margin-bottom: -60px;
+  margin-left: -20px;
+}
+
 .main__login form {
   width: 82%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .main__login--button {
@@ -51,4 +60,10 @@
 .login__input::placeholder {
   /* text-align: center; */
   font-size: 14px;
+}
+
+@media screen and (min-width: 600px) {
+  .main__login--form {
+    max-width: 400px;
+  }
 }
