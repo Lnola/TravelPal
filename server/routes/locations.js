@@ -1,9 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const verifyToken = require('../helpers/verifyToken');
+const router = require('express').Router();
 const Location = require('../models/Location');
 
-router.get(`/:id`, verifyToken, (req, res) =>
+const path = '/locations';
+
+router.get(`/:id`, (req, res) =>
   Location.findByPk(req.params.id)
     .then((locations) => {
       res.send(locations);
@@ -14,7 +14,7 @@ router.get(`/:id`, verifyToken, (req, res) =>
     })
 );
 
-router.get(`/poi/:id`, verifyToken, (req, res) => {
+router.get(`/poi/:id`, (req, res) => {
   Location.findOne({ where: { poi: req.params.id } })
     .then((locations) => {
       res.send(locations);
@@ -25,4 +25,4 @@ router.get(`/poi/:id`, verifyToken, (req, res) => {
     });
 });
 
-module.exports = router;
+module.exports = { path, router };

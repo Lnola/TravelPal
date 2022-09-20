@@ -1,11 +1,19 @@
 const router = require('express').Router();
 
-router.use('/auth', require('./routes/refresh_tokens'));
-router.use('/users', require('./routes/users'));
-router.use('/cityLocations', require('./routes/city_locations'));
-router.use('/trips', require('./routes/trips'));
-router.use('/tripLocations', require('./routes/trip_locations'));
-router.use('/locations', require('./routes/locations'));
-router.use('/favorites', require('./routes/favorites'));
+const auth = require('./routes/auth');
+const cityLocations = require('./routes/city_locations');
+const favorites = require('./routes/favorites');
+const locations = require('./routes/locations');
+const tripLocations = require('./routes/trip_locations');
+const trips = require('./routes/trips');
+const users = require('./routes/users');
+
+router.use(auth.path, auth.router);
+router.use(cityLocations.path, cityLocations.router);
+router.use(favorites.path, favorites.router);
+router.use(locations.path, locations.router);
+router.use(tripLocations.path, tripLocations.router);
+router.use(trips.path, trips.router);
+router.use(users.path, users.router);
 
 module.exports = router;

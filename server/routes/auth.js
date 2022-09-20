@@ -1,12 +1,13 @@
-const express = require('express');
+const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const randtoken = require('rand-token');
 const jwt = require('jsonwebtoken');
-const router = express.Router();
 const RefreshToken = require('../models/RefreshToken');
 const User = require('../models/User');
 
 const JWT_SECRET_KEY = 'LZUtOhToSMxihZBDgllg';
+
+const path = '/auth';
 
 router.post('/login', (req, res) => {
   const { userCredentials } = req.body;
@@ -123,4 +124,4 @@ router.post('/register', (req, res) => {
   });
 });
 
-module.exports = router;
+module.exports = { path, router };

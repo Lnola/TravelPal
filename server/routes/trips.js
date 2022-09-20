@@ -1,9 +1,9 @@
-const express = require('express');
-const verifyToken = require('../helpers/verifyToken');
-const router = express.Router();
+const router = require('express').Router();
 const Trip = require('../models/Trip');
 
-router.get('/:userId', verifyToken, (req, res) =>
+const path = '/trips';
+
+router.get('/:userId', (req, res) =>
   Trip.findAll({ where: { userId: req.params.userId } })
     .then((trips) => {
       res.send(trips);
@@ -14,7 +14,7 @@ router.get('/:userId', verifyToken, (req, res) =>
     })
 );
 
-router.get('/trip/:id', verifyToken, (req, res) => {
+router.get('/trip/:id', (req, res) => {
   Trip.findByPk(req.params.id)
     .then((trip) => {
       res.send(trip);
@@ -25,7 +25,7 @@ router.get('/trip/:id', verifyToken, (req, res) => {
     });
 });
 
-router.post('/add', verifyToken, (req, res) => {
+router.post('/add', (req, res) => {
   const { name, selectedDate, userId } = req.body;
 
   Trip.create({
@@ -43,7 +43,7 @@ router.post('/add', verifyToken, (req, res) => {
     });
 });
 
-router.post('/edit', verifyToken, (req, res) => {
+router.post('/edit', (req, res) => {
   const { name, selectedDate, userId, tripId } = req.body;
   console.log(tripId, name, selectedDate, userId);
 
@@ -64,4 +64,4 @@ router.post('/edit', verifyToken, (req, res) => {
     });
 });
 
-module.exports = router;
+module.exports = { path, router };

@@ -1,9 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const verifyToken = require('../helpers/verifyToken');
+const router = require('express').Router();
 const CityLocation = require('../models/CityLocation');
 
-router.get('/', verifyToken, (req, res) => {
+const path = '/city-locations';
+
+router.get('/', (req, res) => {
   const { city } = req.query;
 
   if (city.length !== 0)
@@ -17,4 +17,4 @@ router.get('/', verifyToken, (req, res) => {
       });
 });
 
-module.exports = router;
+module.exports = { path, router };

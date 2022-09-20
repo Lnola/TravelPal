@@ -1,9 +1,9 @@
-const express = require('express');
-const verifyToken = require('../helpers/verifyToken');
-const router = express.Router();
+const router = require('express').Router();
 const Favorite = require('../models/Favorite');
 
-router.get(`/user/:userId/location/:locationId`, verifyToken, (req, res) => {
+const path = '/favorites';
+
+router.get(`/user/:userId/location/:locationId`, (req, res) => {
   const { userId, locationId } = req.params;
 
   Favorite.findAll({ where: { userId, locationId } })
@@ -17,7 +17,7 @@ router.get(`/user/:userId/location/:locationId`, verifyToken, (req, res) => {
     });
 });
 
-router.post('/add', verifyToken, (req, res) => {
+router.post('/add', (req, res) => {
   const { userId, locationId } = req.body;
 
   Favorite.findAll({ where: { userId, locationId } }).then((sameFavorites) => {
@@ -32,19 +32,15 @@ router.post('/add', verifyToken, (req, res) => {
   });
 });
 
-router.delete(
-  '/delete/user/:userId/location/:locationId',
-  verifyToken,
-  (req, res) => {
-    const { userId, locationId } = req.params;
+router.delete('/delete/user/:userId/location/:locationId', (req, res) => {
+  const { userId, locationId } = req.params;
 
-    Favorite.destroy({ where: { userId, locationId } })
-      .then((response) => {
-        console.log(response);
-        res.sendStatus(204);
-      })
-      .catch(() => sendStatus(422));
-  }
-);
+  Favorite.destroy({ where: { userId, locationId } })
+    .then((response) => {
+      console.log(response);
+      res.sendStatus(204);
+    })
+    .catch(() => sendStatus(422));
+});
 
-module.exports = router;
+module.exports = { path, router };

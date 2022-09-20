@@ -1,10 +1,10 @@
-const express = require('express');
-const verifyToken = require('../helpers/verifyToken');
-const router = express.Router();
+const router = require('express').Router();
 const TripLocation = require('../models/TripLocation');
 const Location = require('../models/Location');
 
-router.get(`/:id`, verifyToken, (req, res) => {
+const path = 'trip_locations';
+
+router.get(`/:id`, (req, res) => {
   console.log(req.params.id);
   TripLocation.findAll({ where: { tripId: req.params.id } })
     .then((tripLocations) => {
@@ -16,7 +16,7 @@ router.get(`/:id`, verifyToken, (req, res) => {
     });
 });
 
-router.post('/add', verifyToken, (req, res) => {
+router.post('/add', (req, res) => {
   const { tripId, locationId, date } = req.body;
   console.log(tripId, locationId, date);
 
@@ -33,7 +33,7 @@ router.post('/add', verifyToken, (req, res) => {
   );
 });
 
-router.get(`/images/:id`, verifyToken, (req, res) => {
+router.get(`/images/:id`, (req, res) => {
   console.log(req.params.id);
 
   TripLocation.findAll({ where: { tripId: req.params.id } })
@@ -70,4 +70,4 @@ router.get(`/images/:id`, verifyToken, (req, res) => {
     });
 });
 
-module.exports = router;
+module.exports = { path, router };

@@ -1,9 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const verifyToken = require('../helpers/verifyToken');
+const router = require('express').Router();
 const User = require('../models/User');
 
-router.get('/', verifyToken, (req, res) =>
+const path = '/users';
+
+router.get('/', (req, res) =>
   User.findAll()
     .then((users) => {
       console.log(users);
@@ -15,4 +15,4 @@ router.get('/', verifyToken, (req, res) =>
     })
 );
 
-module.exports = router;
+module.exports = { path, router };
