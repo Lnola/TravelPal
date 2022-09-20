@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../config/database');
+const sequelize = require('../database');
 
 const Trip = sequelize.define('trip', {
   name: {

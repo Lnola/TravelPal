@@ -4,7 +4,7 @@
   "description": "Simple travel app",
   "main": "app.js",
   "scripts": {
-    "dev:server": "nodemon -r dotenv/config app.js",
+    "dev:server": "nodemon -r dotenv/config server/app.js",
     "dev:client": "npm start --prefix client",
     "dev:start": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "db:create": "docker compose up -d",

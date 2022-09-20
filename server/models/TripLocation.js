@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../config/database');
+const sequelize = require('../database');
 
 const TripLocation = sequelize.define('trip_location', {
   tripId: {
