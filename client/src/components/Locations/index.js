@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { withFormik, Form } from "formik";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { Component } from 'react';
+import { withFormik, Form } from 'formik';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import Tooltip from "@material-ui/core/Tooltip";
 // import { IconButton } from "@material-ui/core";
 import {
@@ -10,13 +10,13 @@ import {
   faMonument,
   faHeart,
   faBasketballBall,
-  faTimes
-} from "@fortawesome/free-solid-svg-icons";
-import Input from "../Input";
-import "./Locations.css";
-import LocationPreview from "./LocationPreview";
-import LocationModal from "./LocationModal";
-import { authorizedRequest } from "../../utils_api";
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons';
+import Input from '../Input';
+import './Locations.css';
+import LocationPreview from './LocationPreview';
+import LocationModal from './LocationModal';
+import { authorizedRequest } from '../../utils_api';
 
 class Locations extends Component {
   constructor(props) {
@@ -25,46 +25,46 @@ class Locations extends Component {
       isModalVisible: false,
       filtersArray: [
         {
-          filter: "Restaurant",
-          color: "#cf4917",
+          filter: 'Restaurant',
+          color: '#cf4917',
           icon: faUtensils,
-          isClicked: false
+          isClicked: false,
         },
         {
-          filter: "Museum",
-          color: "#f9ac3d",
+          filter: 'Museum',
+          color: '#f9ac3d',
           icon: faLandmark,
-          isClicked: false
+          isClicked: false,
         },
         {
-          filter: "Landmarks",
-          color: "#758c33",
+          filter: 'Landmarks',
+          color: '#758c33',
           icon: faMonument,
-          isClicked: false
+          isClicked: false,
         },
         {
-          filter: "Sport",
-          color: "#985914",
+          filter: 'Sport',
+          color: '#985914',
           icon: faBasketballBall,
-          isClicked: false
+          isClicked: false,
         },
         {
-          filter: "Favorites",
-          color: "#2d758c",
+          filter: 'Favorites',
+          color: '#2d758c',
           icon: faHeart,
-          isClicked: false
-        }
+          isClicked: false,
+        },
       ],
       cityLocations: [],
-      locationId: null
+      locationId: null,
     };
   }
 
-  handleGetCityLocations = city => {
+  handleGetCityLocations = (city) => {
     authorizedRequest(
       `/api/cityLocations?city=${city.toLowerCase()}`,
-      "get"
-    ).then(cityLocations => {
+      'get'
+    ).then((cityLocations) => {
       this.setState({ cityLocations });
       // console.log(this.state.cityLocations);
     });
@@ -76,19 +76,19 @@ class Locations extends Component {
     const { isModalVisible } = this.state;
     if (isModalVisible === !visibleType) {
       if (visibleType) {
-        document.getElementsByTagName("body")[0].classList.add("o-hidden");
+        document.getElementsByTagName('body')[0].classList.add('o-hidden');
         this.setState({ currentScrollPosition: window.scrollY });
       } else
-        document.getElementsByTagName("body")[0].classList.remove("o-hidden");
+        document.getElementsByTagName('body')[0].classList.remove('o-hidden');
 
       this.setState({ isModalVisible: !isModalVisible });
     }
   };
 
-  handleFilterClick = filterToEdit => {
+  handleFilterClick = (filterToEdit) => {
     const { filtersArray } = this.state;
 
-    filtersArray.forEach(filter => {
+    filtersArray.forEach((filter) => {
       if (filter === filterToEdit) filter.isClicked = !filter.isClicked;
     });
 
@@ -106,7 +106,7 @@ class Locations extends Component {
       // filtersArray,
       currentScrollPosition,
       cityLocations,
-      locationId
+      locationId,
     } = this.state;
 
     let locations = [];
@@ -122,30 +122,30 @@ class Locations extends Component {
 
     return (
       <React.Fragment>
-        <header className="header__locations--wrapper">
+        <header className='header__locations--wrapper'>
           <span onClick={this.handleGoToPreviousPage}>
-            <FontAwesomeIcon icon={faTimes} color="grey" />
+            <FontAwesomeIcon icon={faTimes} color='grey' />
           </span>
-          <h1 className="header__locations">Locations</h1>
+          <h1 className='header__locations'>Locations</h1>
         </header>
         <main>
-          <Form className="locations__search--form">
+          <Form className='locations__search--form'>
             <Input
-              type="text"
-              name="city"
-              className="locations__search"
+              type='text'
+              name='city'
+              className='locations__search'
               value={values.city}
             />
             <button
-              className="locations__search--button"
-              type="submit"
+              className='locations__search--button'
+              type='submit'
               onClick={() => {
                 this.handleGetCityLocations(values.city);
               }}
             ></button>
           </Form>
 
-          <section className="locations__filters">
+          <section className='locations__filters'>
             {/* {filtersArray.map((filter, index) => (
               <Tooltip key={index} title={filter.filter}>
                 <IconButton onClick={() => this.handleFilterClick(filter)}>
@@ -179,7 +179,7 @@ class Locations extends Component {
 
           <section>
             {cityLocations.length === 0 ? (
-              <p className="locations__message">
+              <p className='locations__message'>
                 No locations found. Try searching a city you want to see the
                 locations of...
               </p>
@@ -213,9 +213,9 @@ class Locations extends Component {
 export default withFormik({
   mapPropsToValues() {
     return {
-      city: ""
+      city: '',
     };
   },
 
-  handleSubmit() {}
+  handleSubmit() {},
 })(Locations);

@@ -1,31 +1,31 @@
-const express = require("express");
-const verifyToken = require("../helpers/verifyToken");
+const express = require('express');
+const verifyToken = require('../helpers/verifyToken');
 const router = express.Router();
-const TripLocation = require("../models/TripLocation");
-const Location = require("../models/Location");
+const TripLocation = require('../models/TripLocation');
+const Location = require('../models/Location');
 
 router.get(`/:id`, verifyToken, (req, res) => {
   console.log(req.params.id);
   TripLocation.findAll({ where: { tripId: req.params.id } })
-    .then(tripLocations => {
+    .then((tripLocations) => {
       res.send(tripLocations);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.sendStatus(404);
     });
 });
 
-router.post("/add", verifyToken, (req, res) => {
+router.post('/add', verifyToken, (req, res) => {
   const { tripId, locationId, date } = req.body;
   console.log(tripId, locationId, date);
 
   TripLocation.findAll({ where: { tripId, locationId, date } }).then(
-    exactSameTL => {
+    (exactSameTL) => {
       if (exactSameTL.length === 0)
         TripLocation.create({ tripId, locationId, date })
-          .then(response => res.send(response))
-          .catch(err => {
+          .then((response) => res.send(response))
+          .catch((err) => {
             console.log(err);
             res.sendStatus(422);
           });
@@ -37,7 +37,7 @@ router.get(`/images/:id`, verifyToken, (req, res) => {
   console.log(req.params.id);
 
   TripLocation.findAll({ where: { tripId: req.params.id } })
-    .then(tripLocations => {
+    .then((tripLocations) => {
       let thumbnails = [];
 
       if (tripLocations.length < 4) {
@@ -49,7 +49,7 @@ router.get(`/images/:id`, verifyToken, (req, res) => {
 
       tripLocations.forEach((tripLocation, index) => {
         Location.findByPk(tripLocation.dataValues.locationId)
-          .then(locations => {
+          .then((locations) => {
             locations.dataValues.result.data.places[0].main_media !== null
               ? thumbnails.push(
                   locations.dataValues.result.data.places[0].main_media.media[0]
@@ -64,7 +64,7 @@ router.get(`/images/:id`, verifyToken, (req, res) => {
 
       // res.send(tripLocations);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.sendStatus(404);
     });

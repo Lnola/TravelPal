@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import Calendar from "react-calendar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faCalendar } from "@fortawesome/free-solid-svg-icons";
-import { formatFancyDate } from "../../utils";
-import "./TripDetails.css";
+import React, { Component } from 'react';
+import Calendar from 'react-calendar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { formatFancyDate } from '../../utils';
+import './TripDetails.css';
 
 class TripCalendar extends Component {
   render() {
@@ -12,7 +12,7 @@ class TripCalendar extends Component {
       onToggleCalendarVisibility,
       onCalendarChange,
       isSelectRange,
-      arrowClassName
+      arrowClassName,
     } = this.props;
 
     let { minDate, maxDate, selectedDate, isFancyDateVisible } = this.props;
@@ -25,28 +25,28 @@ class TripCalendar extends Component {
     }
 
     return (
-      <section className="trip__details">
+      <section className='trip__details'>
         {isSelectRange ? null : selectedDate === null || !isFancyDateVisible ? (
           <span>
             <FontAwesomeIcon
               icon={faCalendar}
-              className="trip__details--icon"
-              color="grey"
+              className='trip__details--icon'
+              color='grey'
             />
           </span>
         ) : (
           <div
             onClick={onToggleCalendarVisibility}
-            className="trip__details__date"
+            className='trip__details__date'
           >
             <span className={arrowClassName}>
-              <FontAwesomeIcon icon={faChevronRight} color="#f76f63" />
+              <FontAwesomeIcon icon={faChevronRight} color='#f76f63' />
             </span>
-            <h3 className="trip__details__date--month">
+            <h3 className='trip__details__date--month'>
               {formatFancyDate(selectedDate.toString())[0]},
             </h3>
-            <p className="trip__details__date--day">
-              {formatFancyDate(selectedDate.toString())[1]}.{" "}
+            <p className='trip__details__date--day'>
+              {formatFancyDate(selectedDate.toString())[1]}.{' '}
               {formatFancyDate(selectedDate.toString())[2]}
             </p>
           </div>
@@ -54,11 +54,11 @@ class TripCalendar extends Component {
 
         {isCalendarVisible ? (
           <Calendar
-            onChange={e => onCalendarChange(e)}
+            onChange={(e) => onCalendarChange(e)}
             value={selectedDate}
             minDate={minDate}
             maxDate={maxDate}
-            minDetail={"month"}
+            minDetail={'month'}
             showNavigation={isSelectRange}
             selectRange={isSelectRange}
           />

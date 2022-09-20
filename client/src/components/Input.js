@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { Field } from "formik";
-import { capitalizeText } from "../utils";
+import React, { Component } from 'react';
+import { Field } from 'formik';
+import { capitalizeText } from '../utils';
 
 class Input extends Component {
   constructor(props) {
@@ -11,10 +11,10 @@ class Input extends Component {
   render() {
     const { props } = this;
     let { className } = props;
-    className += " login__input";
+    className += ' login__input';
 
     return (
-      <div className="input__wrapper">
+      <div className='input__wrapper'>
         <Field
           name={props.name}
           render={({ field }) => (
@@ -27,7 +27,7 @@ class Input extends Component {
           )}
         />
         {props.areAllFull ? (
-          <span className="input__error">{capitalizeText(props.error)}</span>
+          <span className='input__error'>{capitalizeText(props.error)}</span>
         ) : null}
       </div>
     );

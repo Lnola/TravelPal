@@ -1,49 +1,49 @@
-const express = require("express");
-const verifyToken = require("../helpers/verifyToken");
+const express = require('express');
+const verifyToken = require('../helpers/verifyToken');
 const router = express.Router();
-const Trip = require("../models/Trip");
+const Trip = require('../models/Trip');
 
-router.get("/:userId", verifyToken, (req, res) =>
+router.get('/:userId', verifyToken, (req, res) =>
   Trip.findAll({ where: { userId: req.params.userId } })
-    .then(trips => {
+    .then((trips) => {
       res.send(trips);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.sendStatus(500);
     })
 );
 
-router.get("/trip/:id", verifyToken, (req, res) => {
+router.get('/trip/:id', verifyToken, (req, res) => {
   Trip.findByPk(req.params.id)
-    .then(trip => {
+    .then((trip) => {
       res.send(trip);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.sendStatus(500);
     });
 });
 
-router.post("/add", verifyToken, (req, res) => {
+router.post('/add', verifyToken, (req, res) => {
   const { name, selectedDate, userId } = req.body;
 
   Trip.create({
     name,
     dateFrom: selectedDate[0],
     dateTo: selectedDate[1],
-    userId
+    userId,
   })
-    .then(response => {
+    .then((response) => {
       res.send(response);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.sendStatus(422);
     });
 });
 
-router.post("/edit", verifyToken, (req, res) => {
+router.post('/edit', verifyToken, (req, res) => {
   const { name, selectedDate, userId, tripId } = req.body;
   console.log(tripId, name, selectedDate, userId);
 
@@ -51,14 +51,14 @@ router.post("/edit", verifyToken, (req, res) => {
     {
       name,
       dateFrom: selectedDate[0],
-      dateTo: selectedDate[1]
+      dateTo: selectedDate[1],
     },
     { where: { id: tripId } }
   )
-    .then(response => {
+    .then((response) => {
       res.send(response);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.sendStatus(422);
     });

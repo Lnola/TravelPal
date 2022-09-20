@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes, faPen } from "@fortawesome/free-solid-svg-icons";
-import Tooltip from "@material-ui/core/Tooltip";
-import { IconButton } from "@material-ui/core";
-import PlusButton from "../PlusButtton";
-import "./TripDetails.css";
-import TripCalendar from "./TripCalendar";
-import TripModal from "../Trips/TripModal";
-import { authorizedRequest } from "../../utils_api";
-import { formatDate, formatDateFromTo } from "../../utils";
-import ImageMissing from "../../assets/MissingImage.svg";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
+import Tooltip from '@material-ui/core/Tooltip';
+import { IconButton } from '@material-ui/core';
+import PlusButton from '../PlusButtton';
+import './TripDetails.css';
+import TripCalendar from './TripCalendar';
+import TripModal from '../Trips/TripModal';
+import { authorizedRequest } from '../../utils_api';
+import { formatDate, formatDateFromTo } from '../../utils';
+import ImageMissing from '../../assets/MissingImage.svg';
 
 class TripDetails extends Component {
   constructor(props) {
@@ -19,11 +19,11 @@ class TripDetails extends Component {
       isCalendarVisible: true,
       selectedDate: new Date(),
       isModalVisible: false,
-      arrowClassName: "",
+      arrowClassName: '',
       locationsArray: [],
       filteredLocationsArray: [],
       trip: {},
-      tripLocations: []
+      tripLocations: [],
     };
   }
 
@@ -32,27 +32,27 @@ class TripDetails extends Component {
       const { id } = this.props.location.state.trip;
       this.getTrip();
 
-      authorizedRequest(`/api/tripLocations/${id}`, "get")
-        .then(tripLocations => {
+      authorizedRequest(`/api/tripLocations/${id}`, 'get')
+        .then((tripLocations) => {
           this.setState({ tripLocations });
 
           this.handleCalendarChange(this.state.selectedDate);
         })
         .catch(() => this.handleToggleCalendarVisibility());
     } else {
-      this.props.history.push("/trips");
-      alert("You must choose a trip first");
+      this.props.history.push('/trips');
+      alert('You must choose a trip first');
     }
   }
 
-  handleToggleModal = visibleType => {
+  handleToggleModal = (visibleType) => {
     const { isModalVisible } = this.state;
     if (isModalVisible === !visibleType) {
       if (visibleType) {
-        document.getElementsByTagName("body")[0].classList.add("o-hidden");
+        document.getElementsByTagName('body')[0].classList.add('o-hidden');
         this.setState({ currentScrollPosition: window.scrollY });
       } else
-        document.getElementsByTagName("body")[0].classList.remove("o-hidden");
+        document.getElementsByTagName('body')[0].classList.remove('o-hidden');
 
       this.setState({ isModalVisible: !isModalVisible });
     }
@@ -63,26 +63,26 @@ class TripDetails extends Component {
     this.setState({ isCalendarVisible: !isCalendarVisible });
 
     if (!isCalendarVisible)
-      this.setState({ arrowClassName: "trip__details--arrow--down" });
-    else this.setState({ arrowClassName: "trip__details--arrow--right" });
+      this.setState({ arrowClassName: 'trip__details--arrow--down' });
+    else this.setState({ arrowClassName: 'trip__details--arrow--right' });
   };
 
-  handleCalendarChange = e => {
+  handleCalendarChange = (e) => {
     let { selectedDate } = this.state;
     selectedDate = formatDate(e);
     this.setState({ selectedDate });
     this.handleToggleCalendarVisibility();
 
     const { tripLocations } = this.state;
-    tripLocations.forEach(tripLocation => {
+    tripLocations.forEach((tripLocation) => {
       let { locationsArray } = this.state;
       locationsArray.length = 0;
 
       if (selectedDate === tripLocation.date)
         authorizedRequest(
           `/api/locations/${tripLocation.locationId}`,
-          "get"
-        ).then(location => {
+          'get'
+        ).then((location) => {
           locationsArray.push(location);
           this.setState({ locationsArray });
         });
@@ -91,9 +91,9 @@ class TripDetails extends Component {
 
   getTrip = () => {
     const { id } = this.props.location.state.trip;
-    authorizedRequest(`/api/trips/trip/${id}`, "get")
-      .then(trip => this.setState({ trip, selectedDate: trip.dateFrom }))
-      .catch(err => console.log(err));
+    authorizedRequest(`/api/trips/trip/${id}`, 'get')
+      .then((trip) => this.setState({ trip, selectedDate: trip.dateFrom }))
+      .catch((err) => console.log(err));
   };
 
   render() {
@@ -104,25 +104,25 @@ class TripDetails extends Component {
       isModalVisible,
       arrowClassName,
       currentScrollPosition,
-      trip
+      trip,
     } = this.state;
 
     return (
       <React.Fragment>
-        <header className="header__trips">
-          <section className="header__trips__details">
-            <Link to="/trips">
+        <header className='header__trips'>
+          <section className='header__trips__details'>
+            <Link to='/trips'>
               <span>
-                <FontAwesomeIcon icon={faTimes} color="grey" />
+                <FontAwesomeIcon icon={faTimes} color='grey' />
               </span>
             </Link>
             <h1>{trip.name}</h1>
             <p>{formatDateFromTo(trip.dateFrom, trip.dateTo)}</p>
           </section>
           <p onClick={() => this.handleToggleModal(true)}>
-            <Tooltip title="Edit">
+            <Tooltip title='Edit'>
               <IconButton>
-                <FontAwesomeIcon className="header__trips--edit" icon={faPen} />
+                <FontAwesomeIcon className='header__trips--edit' icon={faPen} />
               </IconButton>
             </Tooltip>
           </p>
@@ -145,23 +145,23 @@ class TripDetails extends Component {
               <Link
                 key={index}
                 to={{
-                  pathname: "/locations/details",
+                  pathname: '/locations/details',
                   state: {
                     isAddDisabled: false,
-                    location
-                  }
+                    location,
+                  },
                 }}
               >
-                <figure className="trip__details__location">
-                  <span className="trip__details__location--border b-4px-salmon">
+                <figure className='trip__details__location'>
+                  <span className='trip__details__location--border b-4px-salmon'>
                     <img
-                      className="trip__details__location--img"
+                      className='trip__details__location--img'
                       src={
                         location.result.data.places[0].thumbnail_url !== null
                           ? location.result.data.places[0].thumbnail_url
                           : ImageMissing
                       }
-                      alt="Location"
+                      alt='Location'
                     />
                   </span>
                   <figcaption>{location.result.data.places[0].name}</figcaption>
@@ -170,20 +170,20 @@ class TripDetails extends Component {
             ))}
             <Link
               to={{
-                pathname: "/locations",
+                pathname: '/locations',
                 state: {
                   dateFrom: trip.dateFrom,
                   dateTo: trip.dateTo,
-                  tripId: trip.id
-                }
+                  tripId: trip.id,
+                },
               }}
             >
-              <div className="trips__details--add--wrapper">
+              <div className='trips__details--add--wrapper'>
                 <PlusButton
-                  className="plus__button--details"
+                  className='plus__button--details'
                   onToggleModal={() => {}}
                 />
-                <p className="trip__details--add">Add points of interest...</p>
+                <p className='trip__details--add'>Add points of interest...</p>
               </div>
             </Link>
           </section>

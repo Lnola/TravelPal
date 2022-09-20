@@ -1,21 +1,21 @@
-import React, { Component } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import "./LocationDetails.css";
-import FavoritesButton from "../FavoritesButton";
-import PlusButton from "../PlusButtton";
-import LocationModal from "../Locations/LocationModal";
-import { formatMarker } from "../../utils";
-import ImageMissing from "../../assets/RandomImg.png";
-import { authorizedRequest } from "../../utils_api";
+import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import './LocationDetails.css';
+import FavoritesButton from '../FavoritesButton';
+import PlusButton from '../PlusButtton';
+import LocationModal from '../Locations/LocationModal';
+import { formatMarker } from '../../utils';
+import ImageMissing from '../../assets/RandomImg.png';
+import { authorizedRequest } from '../../utils_api';
 
 class LocationDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isModalVisible: false,
-      favoritesButtonColor: "",
-      isShorterDescriptionVisible: true
+      favoritesButtonColor: '',
+      isShorterDescriptionVisible: true,
     };
   }
 
@@ -27,14 +27,14 @@ class LocationDetails extends Component {
     this.props.history.goBack();
   };
 
-  handleToggleModal = visibleType => {
+  handleToggleModal = (visibleType) => {
     const { isModalVisible } = this.state;
     if (isModalVisible === !visibleType) {
       if (visibleType) {
-        document.getElementsByTagName("body")[0].classList.add("o-hidden");
+        document.getElementsByTagName('body')[0].classList.add('o-hidden');
         this.setState({ currentScrollPosition: window.scrollY });
       } else
-        document.getElementsByTagName("body")[0].classList.remove("o-hidden");
+        document.getElementsByTagName('body')[0].classList.remove('o-hidden');
 
       this.setState({ isModalVisible: !isModalVisible });
     }
@@ -42,48 +42,48 @@ class LocationDetails extends Component {
 
   handleHeartClick = () => {
     let { favoritesButtonColor } = this.state;
-    const userId = window.localStorage.getItem("id");
+    const userId = window.localStorage.getItem('id');
     const locationId = this.props.location.state.location.id;
 
     if (favoritesButtonColor.length === 0) {
-      this.setState({ favoritesButtonColor: "#f76f63" });
+      this.setState({ favoritesButtonColor: '#f76f63' });
 
-      authorizedRequest("/api/favorites/add", "post", {
+      authorizedRequest('/api/favorites/add', 'post', {
         userId,
-        locationId
-      }).then(response => {
+        locationId,
+      }).then((response) => {
         // console.log(response);
-        console.log("Added");
+        console.log('Added');
       });
     } else {
-      this.setState({ favoritesButtonColor: "" });
+      this.setState({ favoritesButtonColor: '' });
 
       authorizedRequest(
         `/api/favorites/delete/user/${userId}/location/${locationId}`,
-        "delete"
-      ).then(response => {
+        'delete'
+      ).then((response) => {
         // console.log(response);
-        console.log("Deleted");
+        console.log('Deleted');
       });
     }
   };
 
   getFavoriteStatus = () => {
-    const userId = window.localStorage.getItem("id");
+    const userId = window.localStorage.getItem('id');
     const locationId = this.props.location.state.location.id;
 
     authorizedRequest(
       `/api/favorites/user/${userId}/location/${locationId}`,
-      "get"
-    ).then(response => {
-      if (response) this.setState({ favoritesButtonColor: "#f76f63" });
+      'get'
+    ).then((response) => {
+      if (response) this.setState({ favoritesButtonColor: '#f76f63' });
     });
   };
 
   handleToggleDescription = () => {
     const { isShorterDescriptionVisible } = this.state;
     this.setState({
-      isShorterDescriptionVisible: !isShorterDescriptionVisible
+      isShorterDescriptionVisible: !isShorterDescriptionVisible,
     });
   };
 
@@ -94,7 +94,7 @@ class LocationDetails extends Component {
       favoritesButtonColor,
       isModalVisible,
       currentScrollPosition,
-      isShorterDescriptionVisible
+      isShorterDescriptionVisible,
     } = this.state;
 
     const displayLocation = location.result.data.places[0];
@@ -103,56 +103,56 @@ class LocationDetails extends Component {
 
     return (
       <React.Fragment>
-        <header className="header__locations__details">
-          <div className="location__details__image--container">
+        <header className='header__locations__details'>
+          <div className='location__details__image--container'>
             <img
-              className="location__details__image"
+              className='location__details__image'
               src={
                 location.result.data.places[0].main_media !== null
                   ? location.result.data.places[0].main_media.media[0].url
                   : ImageMissing
               }
-              alt="Preview"
+              alt='Preview'
             />
           </div>
 
           <span
-            className="locations__details--x"
+            className='locations__details--x'
             onClick={this.handleGoToPreviousPage}
           >
             {location.result.data.places[0].main_media !== null ? (
-              <FontAwesomeIcon icon={faTimes} color="white" />
+              <FontAwesomeIcon icon={faTimes} color='white' />
             ) : (
-              <FontAwesomeIcon icon={faTimes} color="black" />
+              <FontAwesomeIcon icon={faTimes} color='black' />
             )}
           </span>
           <FavoritesButton
-            className="location__details--favorites"
+            className='location__details--favorites'
             favoritesButtonColor={favoritesButtonColor}
             onHeartClick={this.handleHeartClick}
           />
         </header>
-        <main className="location__details--wrapper">
-          <h2 className="location__details--title">{displayLocation.name}</h2>
+        <main className='location__details--wrapper'>
+          <h2 className='location__details--title'>{displayLocation.name}</h2>
           {isShorterDescriptionVisible ? (
             <div>
-              Description: {displayLocation.perex}{" "}
+              Description: {displayLocation.perex}{' '}
               <p
                 onClick={this.handleToggleDescription}
-                className="location__details--more"
+                className='location__details--more'
               >
-                {" "}
+                {' '}
                 See more
               </p>
             </div>
           ) : (
             <div>
-              Description: {displayLocation.description.text}{" "}
+              Description: {displayLocation.description.text}{' '}
               <p
                 onClick={this.handleToggleDescription}
-                className="location__details--more"
+                className='location__details--more'
               >
-                {" "}
+                {' '}
                 See less
               </p>
             </div>
@@ -185,9 +185,9 @@ class LocationDetails extends Component {
           {displayLocation.categories !== null &&
           displayLocation.categories.length !== 0 ? (
             <div>
-              Categories:{" "}
+              Categories:{' '}
               {displayLocation.categories.map((category, index) => (
-                <p key={index} className="location__details--more">
+                <p key={index} className='location__details--more'>
                   {category}
                 </p>
               ))}
@@ -197,14 +197,14 @@ class LocationDetails extends Component {
           {displayLocation.references !== null &&
           displayLocation.references.length !== 0 ? (
             <div>
-              References:{" "}
+              References:{' '}
               {displayLocation.references.map((reference, index) => (
                 <a
                   key={index}
                   href={reference.url}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  className="location__details--link"
+                  rel='noopener noreferrer'
+                  target='_blank'
+                  className='location__details--link'
                 >
                   {reference.title}
                 </a>
@@ -218,7 +218,7 @@ class LocationDetails extends Component {
         {isAddDisabled ? (
           <nav>
             <PlusButton
-              className="plus__button--trips"
+              className='plus__button--trips'
               onToggleModal={this.handleToggleModal}
             />
           </nav>

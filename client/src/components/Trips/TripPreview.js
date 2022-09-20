@@ -1,22 +1,22 @@
-import React, { Component } from "react";
-import MissingImage from "../../assets/RandomImg.png";
-import { formatDateFromTo } from "../../utils";
-import { authorizedRequest } from "../../utils_api";
+import React, { Component } from 'react';
+import MissingImage from '../../assets/RandomImg.png';
+import { formatDateFromTo } from '../../utils';
+import { authorizedRequest } from '../../utils_api';
 
 class TripPreview extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      thumbnails: []
+      thumbnails: [],
     };
   }
 
   componentDidMount() {
     authorizedRequest(
       `/api/tripLocations/images/${this.props.trip.id}`,
-      "get"
-    ).then(thumbnails => {
+      'get'
+    ).then((thumbnails) => {
       this.setState({ thumbnails });
     });
   }
@@ -30,8 +30,8 @@ class TripPreview extends Component {
     // console.log(thumbnails);
 
     return (
-      <section className="trips__preview">
-        <div className="trips__preview--images">
+      <section className='trips__preview'>
+        <div className='trips__preview--images'>
           {thumbnails
             .reverse()
             .map((thumbnail, index) =>
@@ -39,12 +39,12 @@ class TripPreview extends Component {
                 <img
                   key={index}
                   src={thumbnail ? thumbnail : MissingImage}
-                  alt="Preview"
+                  alt='Preview'
                 />
               ) : null
             )}
         </div>
-        <div className="trips__preview--description">
+        <div className='trips__preview--description'>
           <h3>{trip.name}</h3>
           <p>{formatDateFromTo(trip.dateFrom, trip.dateTo)}</p>
         </div>

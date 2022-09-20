@@ -1,25 +1,25 @@
-const Sequelize = require("sequelize");
-const sequelize = require("../config/database");
+const Sequelize = require('sequelize');
+const sequelize = require('../config/database');
 
-const Trip = sequelize.define("trip", {
+const Trip = sequelize.define('trip', {
   name: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   dateFrom: {
     type: Sequelize.DATEONLY,
-    allowNull: false
+    allowNull: false,
   },
   dateTo: {
     type: Sequelize.DATEONLY,
-    allowNull: false
+    allowNull: false,
   },
   userId: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    references: "users",
-    referencesKey: "id"
-  }
+    references: 'users',
+    referencesKey: 'id',
+  },
 });
 
 module.exports = Trip;

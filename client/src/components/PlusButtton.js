@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 class PlusButton extends Component {
   render() {
     let { className, onToggleModal, locationId } = this.props;
-    className += " plus__button";
+    className += ' plus__button';
 
     return (
       <span
@@ -13,9 +13,9 @@ class PlusButton extends Component {
         className={className}
       >
         <FontAwesomeIcon
-          className="plus__button--icon"
+          className='plus__button--icon'
           icon={faPlus}
-          color="white"
+          color='white'
         />
       </span>
     );

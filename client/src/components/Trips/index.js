@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import TripPreview from "./TripPreview";
-import TripsFilter from "./TripsFilter";
-import PlusButton from "../PlusButtton";
-import TripModal from "./TripModal";
-import "./Trips.css";
-import { authorizedRequest } from "../../utils_api";
-import { formatDate } from "../../utils";
-import Logout from "./Logout";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import TripPreview from './TripPreview';
+import TripsFilter from './TripsFilter';
+import PlusButton from '../PlusButtton';
+import TripModal from './TripModal';
+import './Trips.css';
+import { authorizedRequest } from '../../utils_api';
+import { formatDate } from '../../utils';
+import Logout from './Logout';
 
 class Trips extends Component {
   constructor(props) {
@@ -20,23 +20,23 @@ class Trips extends Component {
   }
 
   getTrips = () => {
-    const userId = window.localStorage.getItem("id");
+    const userId = window.localStorage.getItem('id');
 
-    authorizedRequest(`/api/trips/${userId}`, "get").then(trips =>
+    authorizedRequest(`/api/trips/${userId}`, 'get').then((trips) =>
       this.setState({ trips, filteredTrips: trips })
     );
   };
 
-  handleFilterByDate = type => {
+  handleFilterByDate = (type) => {
     const { trips } = this.state;
     let filteredTrips = [];
 
-    if (type === "previous") {
-      trips.forEach(trip => {
+    if (type === 'previous') {
+      trips.forEach((trip) => {
         if (trip.dateTo < formatDate(new Date())) filteredTrips.push(trip);
       });
-    } else if (type === "upcoming") {
-      trips.forEach(trip => {
+    } else if (type === 'upcoming') {
+      trips.forEach((trip) => {
         if (trip.dateTo > formatDate(new Date())) filteredTrips.push(trip);
       });
     }
@@ -44,14 +44,14 @@ class Trips extends Component {
     this.setState({ filteredTrips });
   };
 
-  handleToggleModal = visibleType => {
+  handleToggleModal = (visibleType) => {
     const { isModalVisible } = this.state;
     if (isModalVisible === !visibleType) {
       if (visibleType) {
-        document.getElementsByTagName("body")[0].classList.add("o-hidden");
+        document.getElementsByTagName('body')[0].classList.add('o-hidden');
         this.setState({ currentScrollPosition: window.scrollY });
       } else
-        document.getElementsByTagName("body")[0].classList.remove("o-hidden");
+        document.getElementsByTagName('body')[0].classList.remove('o-hidden');
 
       this.setState({ isModalVisible: !isModalVisible });
     }
@@ -62,13 +62,13 @@ class Trips extends Component {
 
     return (
       <React.Fragment>
-        <header className="header__trips">
+        <header className='header__trips'>
           <h1>My Trips</h1>
           <TripsFilter onFilterByDate={this.handleFilterByDate} />
         </header>
         <main>
           {filteredTrips.length === 0 ? (
-            <p className="trips__message">
+            <p className='trips__message'>
               You have no trips planned. Press + button at the bottom of the
               page to add one...
             </p>
@@ -77,8 +77,8 @@ class Trips extends Component {
               <Link
                 key={index}
                 to={{
-                  pathname: "/trips/details",
-                  state: { trip }
+                  pathname: '/trips/details',
+                  state: { trip },
                 }}
               >
                 <TripPreview trip={trip} />
@@ -87,11 +87,11 @@ class Trips extends Component {
           )}
         </main>
 
-        <nav className="nav__trips">
-          <section className="nav__trips--wrapper">
+        <nav className='nav__trips'>
+          <section className='nav__trips--wrapper'>
             <Logout />
             <PlusButton
-              className="plus__button--trips"
+              className='plus__button--trips'
               onToggleModal={this.handleToggleModal}
             />
           </section>

@@ -1,50 +1,50 @@
-"use strict";
+'use strict';
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("trip_locations", {
+    return queryInterface.createTable('trip_locations', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       tripId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "trips",
-          key: "id"
+          model: 'trips',
+          key: 'id',
         },
-        onUpdate: "CASCADE",
-        onDelete: "SET NULL"
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
       },
       locationId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "locations",
-          key: "id"
+          model: 'locations',
+          key: 'id',
         },
-        onUpdate: "CASCADE",
-        onDelete: "SET NULL"
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
       },
       date: {
         type: Sequelize.DATEONLY,
-        allowNull: false
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("trip_locations");
-  }
+    return queryInterface.dropTable('trip_locations');
+  },
 };

@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import TripCalendar from "../TripDetails/TripCalendar";
-import { formatDate } from "../../utils";
-import { authorizedRequest } from "../../utils_api";
+import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import TripCalendar from '../TripDetails/TripCalendar';
+import { formatDate } from '../../utils';
+import { authorizedRequest } from '../../utils_api';
 
 class LocationModal extends Component {
   constructor(props) {
@@ -11,11 +11,11 @@ class LocationModal extends Component {
     this.state = {
       selectedDate: [],
       hasCalendarBeenClicked: false,
-      isSubmitDisabled: true
+      isSubmitDisabled: true,
     };
   }
 
-  handleCalendarChange = e => {
+  handleCalendarChange = (e) => {
     let { selectedDate } = this.state;
 
     selectedDate.forEach((date, index) => {
@@ -27,11 +27,11 @@ class LocationModal extends Component {
     this.setState({
       selectedDate,
       hasCalendarBeenClicked: true,
-      isSubmitDisabled: false
+      isSubmitDisabled: false,
     });
   };
 
-  handleRemoveSelectedDate = date => {
+  handleRemoveSelectedDate = (date) => {
     let { selectedDate, isSubmitDisabled } = this.state;
 
     selectedDate.forEach((someDate, index) => {
@@ -49,35 +49,32 @@ class LocationModal extends Component {
 
     // console.log("tripId", tripId, "locationId", locationId, selectedDate);
 
-    selectedDate.forEach(date => {
+    selectedDate.forEach((date) => {
       if (
         locationId !== null &&
         tripId !== null &&
         locationId !== undefined &&
         tripId !== undefined
       )
-        authorizedRequest("/api/tripLocations/add", "post", {
+        authorizedRequest('/api/tripLocations/add', 'post', {
           tripId,
           locationId,
-          date: formatDate(date)
-        }).then(() => console.log("Success"));
+          date: formatDate(date),
+        }).then(() => console.log('Success'));
     });
 
     this.setState({ selectedDate: [] });
   };
 
   render() {
-    const {
-      selectedDate,
-      hasCalendarBeenClicked,
-      isSubmitDisabled
-    } = this.state;
+    const { selectedDate, hasCalendarBeenClicked, isSubmitDisabled } =
+      this.state;
 
     const { dateFrom, dateTo } = this.props;
 
     return (
       <aside style={this.props.style}>
-        <section className="modal--wrapper">
+        <section className='modal--wrapper'>
           <TripCalendar
             isCalendarVisible={true}
             selectedDate={null}
@@ -87,28 +84,28 @@ class LocationModal extends Component {
             isFancyDateVisible={false}
           />
 
-          <section className="modal__dates--wrapper">
+          <section className='modal__dates--wrapper'>
             {formatDate(new Date()) === formatDate(selectedDate[0]) &&
             !hasCalendarBeenClicked
               ? null
               : selectedDate.map((date, index) => (
-                  <div key={index} className="modal__dates">
+                  <div key={index} className='modal__dates'>
                     <p>{formatDate(date)}</p>
                     <p onClick={() => this.handleRemoveSelectedDate(date)}>
-                      <FontAwesomeIcon icon={faTrashAlt} color="#f76f63" />
+                      <FontAwesomeIcon icon={faTrashAlt} color='#f76f63' />
                     </p>
                   </div>
                 ))}
           </section>
 
-          <div className="modal__buttons modal__buttons--locations">
+          <div className='modal__buttons modal__buttons--locations'>
             <button onClick={() => this.props.onToggleModal(false)}>
               Close
             </button>
 
             <button
               onClick={this.handleAddLocation}
-              type="submit"
+              type='submit'
               disabled={isSubmitDisabled}
             >
               Submit

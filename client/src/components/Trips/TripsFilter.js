@@ -1,21 +1,21 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class TripsFilter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      buttonColorCss: { firstButton: "", secondButton: "" }
+      buttonColorCss: { firstButton: '', secondButton: '' },
     };
   }
 
-  handleButtonColorCss = isFirstButton => {
+  handleButtonColorCss = (isFirstButton) => {
     const { buttonColorCss } = this.state;
     if (isFirstButton) {
-      buttonColorCss.firstButton = "bc-salmon";
-      buttonColorCss.secondButton = "";
+      buttonColorCss.firstButton = 'bc-salmon';
+      buttonColorCss.secondButton = '';
     } else {
-      buttonColorCss.firstButton = "";
-      buttonColorCss.secondButton = "bc-salmon";
+      buttonColorCss.firstButton = '';
+      buttonColorCss.secondButton = 'bc-salmon';
     }
 
     this.setState({ buttonColorCss });
@@ -26,12 +26,12 @@ class TripsFilter extends Component {
     const { onFilterByDate } = this.props;
 
     return (
-      <div className="trips__filter">
+      <div className='trips__filter'>
         <button
           className={buttonColorCss.firstButton}
           onClick={() => {
             this.handleButtonColorCss(true);
-            onFilterByDate("previous");
+            onFilterByDate('previous');
           }}
         >
           Previous
@@ -41,7 +41,7 @@ class TripsFilter extends Component {
           className={buttonColorCss.secondButton}
           onClick={() => {
             this.handleButtonColorCss(false);
-            onFilterByDate("upcoming");
+            onFilterByDate('upcoming');
           }}
         >
           Upcoming
