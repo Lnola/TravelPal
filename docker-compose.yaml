@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:11
+    restart: on-failure
+    environment:
+      POSTGRES_DB: travelpal
+      POSTGRES_USER: travelpal
+      POSTGRES_PASSWORD: travelpal
+    ports:
+      - 5432:5432

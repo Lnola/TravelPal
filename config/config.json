@@ -1,25 +1,9 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "1a2b3c",
-    "database": "TravelPal",
-    "host": "localhost",
-    "dialect": "postgres",
-    "operatorsAliases": false
-  },
-  "test": {
-    "username": "postgres",
-    "password": "1a2b3c",
-    "database": "TravelPal",
-    "host": "localhost",
-    "dialect": "postgres",
-    "operatorsAliases": false
-  },
-  "production": {
-    "username": "postgres",
-    "password": "1a2b3c",
-    "database": "TravelPal",
-    "host": "localhost",
+    "username": "travel-pal",
+    "password": "travel-pal",
+    "database": "travel-pal",
+    "host": "postgres",
     "dialect": "postgres",
     "operatorsAliases": false
   }
