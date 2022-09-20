@@ -9,14 +9,11 @@
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "db:create": "docker compose up -d",
-    "db:model:create": "sequelize model:generate",
     "db:migration:up": "npx sequelize db:migrate",
     "db:migration:undo": "npx sequelize db:migrate:undo",
     "db:migration:undo:all": "npx sequelize db:migrate:undo:all",
-    "db:migration:create": "sequelize migration:generate",
-    "db:seed": "npx sequelize db:seed",
-    "db:seed:undo": "npx sequelize db:seed:undo:all",
-    "db:seed:create": "sequelize seed:generate"
+    "db:seed": "npx sequelize db:seed:all",
+    "db:seed:undo": "npx sequelize db:seed:undo:all"
   },
   "author": "Luka Nola",
   "license": "MIT",
