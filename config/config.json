@@ -1,10 +1,11 @@
 {
   "development": {
-    "username": "travel-pal",
-    "password": "travel-pal",
-    "database": "travel-pal",
-    "host": "postgres",
+    "username": "travelpal",
+    "password": "travelpal",
+    "database": "travelpal",
+    "host": "localhost",
+    "port": 5432,
     "dialect": "postgres",
-    "operatorsAliases": false
+    "operatorsAliases": "0"
   }
 }
