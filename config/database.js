@@ -1,14 +1,11 @@
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize("TravelPal", "postgres", "1a2b3c", {
-  host: "localhost",
-  dialect: "postgres",
+const Sequelize = require('sequelize');
 
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  }
+const { DB_DATABASE, DB_USERNAME, DB_PASSWORD, DB_HOST, DB_DIALECT } =
+  process.env;
+
+const sequelize = new Sequelize(DB_DATABASE, DB_USERNAME, DB_PASSWORD, {
+  host: DB_HOST,
+  dialect: DB_DIALECT,
 });
 
 module.exports = sequelize;
