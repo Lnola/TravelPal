@@ -1,10 +1,10 @@
 const router = require('express').Router();
 
 const auth = require('./routes/auth');
-const cityLocations = require('./routes/city_locations');
+const cityLocations = require('./routes/cityLocations');
 const favorites = require('./routes/favorites');
 const locations = require('./routes/locations');
-const tripLocations = require('./routes/trip_locations');
+const tripLocations = require('./routes/tripLocations');
 const trips = require('./routes/trips');
 const users = require('./routes/users');
 
