@@ -17,11 +17,15 @@ This is a repository for the ExtensionEngine Summercamp 2019 task. Sticking with
 - node ~ v12
 - docker (to create the database)
 
+### Dependencies
+
 First you need to install all the dependencies with:
 
 ```
 $ npm i
 ```
+
+### Database
 
 To create the database run:
 
@@ -41,6 +45,24 @@ Seed the project with:
 $ npm run db:seed
 ```
 
-The TravelPal/config/config.json file contains info about my device which you should configure to correspond to your device. Than run: `npx sequelize-cli db:create` which will create the database. Once the database is created you can run the migrations with: `npx sequelize-cli db:migrate` and after that you can run the seed with: `npx sequelize-cli db:seed:all`
+### Start
 
-After that the database is set up and you can do: `npm run dev` to run the project
+You will need two terminal windows for the client and server:
+
+terminal window #1
+
+```
+$ npm run dev:server
+```
+
+terminal window #2
+
+```
+$ npm run dev:client
+```
+
+Alternatively, you can run the project in only one terminal window with:
+
+```
+$ npm run dev:start
+```
