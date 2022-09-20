@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const RefreshToken = require('../models/RefreshToken');
 const User = require('../models/User');
 
-const JWT_SECRET_KEY = 'LZUtOhToSMxihZBDgllg';
+const { JWT_SECRET_KEY } = process.env;
 
 const path = '/auth';
 
