@@ -3,18 +3,17 @@ const CityLocation = require('../models/CityLocation');
 
 const path = '/city-locations';
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   const { city } = req.query;
+  if (!city) return res.sendStatus(400);
 
-  if (city.length !== 0)
-    CityLocation.findAll({ where: { query: city } })
-      .then((cityLocation) => {
-        res.send(cityLocation);
-      })
-      .catch((err) => {
-        console.log(err);
-        res.sendStatus(500);
-      });
+  try {
+    const cityLocation = await CityLocation.findAll({ where: { query: city } });
+    res.send(cityLocation);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
+  }
 });
 
 module.exports = { path, router };
