@@ -3,65 +3,58 @@ const Trip = require('../models/Trip');
 
 const path = '/trips';
 
-router.get('/:userId', (req, res) =>
-  Trip.findAll({ where: { userId: req.params.userId } })
-    .then((trips) => {
-      res.send(trips);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.sendStatus(500);
-    })
-);
+router.get('/:userId', async (req, res) => {
+  const { userId } = req.params;
 
-router.get('/trip/:id', (req, res) => {
-  Trip.findByPk(req.params.id)
-    .then((trip) => {
-      res.send(trip);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.sendStatus(500);
-    });
+  try {
+    const trips = await Trip.findAll({ where: { userId } });
+    res.send(trips);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
 });
 
-router.post('/add', (req, res) => {
+router.get('/trip/:id', async (req, res) => {
+  const { id } = req.params;
+  const trip = await Trip.findByPk(id);
+
+  try {
+    res.send(trip);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+});
+
+router.post('/add', async (req, res) => {
   const { name, selectedDate, userId } = req.body;
+  const dateFrom = selectedDate[0];
+  const dateTo = selectedDate[0];
+  const newData = { name, dateFrom, dateTo, userId };
 
-  Trip.create({
-    name,
-    dateFrom: selectedDate[0],
-    dateTo: selectedDate[1],
-    userId,
-  })
-    .then((response) => {
-      res.send(response);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.sendStatus(422);
-    });
+  try {
+    const newTrip = await Trip.create(newData);
+    res.send(newTrip);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(422);
+  }
 });
 
-router.post('/edit', (req, res) => {
-  const { name, selectedDate, userId, tripId } = req.body;
-  console.log(tripId, name, selectedDate, userId);
+router.post('/edit', async (req, res) => {
+  const { name, selectedDate, tripId } = req.body;
+  const dateFrom = selectedDate[0];
+  const dateTo = selectedDate[0];
+  const newData = { name, dateFrom, dateTo };
 
-  Trip.update(
-    {
-      name,
-      dateFrom: selectedDate[0],
-      dateTo: selectedDate[1],
-    },
-    { where: { id: tripId } }
-  )
-    .then((response) => {
-      res.send(response);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.sendStatus(422);
-    });
+  try {
+    const newTrip = await Trip.update(newData, { where: { id: tripId } });
+    res.send(newTrip);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(422);
+  }
 });
 
 module.exports = { path, router };
