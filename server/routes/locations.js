@@ -3,26 +3,28 @@ const Location = require('../models/Location');
 
 const path = '/locations';
 
-router.get(`/:id`, (req, res) =>
-  Location.findByPk(req.params.id)
-    .then((locations) => {
-      res.send(locations);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.sendStatus(500);
-    })
-);
+router.get(`/:id`, async (req, res) => {
+  const { id } = req.params;
 
-router.get(`/poi/:id`, (req, res) => {
-  Location.findOne({ where: { poi: req.params.id } })
-    .then((locations) => {
-      res.send(locations);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.sendStatus(500);
-    });
+  try {
+    const location = await Location.findByPk(id);
+    res.send(location);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+});
+
+router.get(`/poi/:id`, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const location = await Location.findOne({ where: { poi: id } });
+    res.send(location);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
 });
 
 module.exports = { path, router };
