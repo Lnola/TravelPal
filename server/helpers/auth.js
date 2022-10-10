@@ -40,7 +40,7 @@ const generateRefreshToken = (res, user, doesMatch) => {
   const secretKey = JWT_SECRET_KEY;
   const options = { expiresIn: '5m' };
   jwt.sign(payload, secretKey, options, (_, accessToken) =>
-    sign(user, accessToken)
+    sign(res, user, accessToken)
   );
 };
 
