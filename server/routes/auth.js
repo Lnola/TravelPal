@@ -1,126 +1,57 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
-const randtoken = require('rand-token');
-const jwt = require('jsonwebtoken');
 const RefreshToken = require('../models/RefreshToken');
 const User = require('../models/User');
+const { generateRefreshToken } = require('../helpers/auth');
 
-const { JWT_SECRET_KEY } = process.env;
+const { SALT_ROUNDS } = process.env;
 
 const path = '/auth';
 
-router.post('/login', (req, res) => {
-  const { userCredentials } = req.body;
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body.userCredentials;
 
-  User.findOne({ where: { username: userCredentials.username } }).then(
-    (user) => {
-      if (user !== null) {
-        bcrypt.compare(
-          userCredentials.password,
-          user.password,
-          (err, doesMatch) => {
-            if (doesMatch) {
-              // Create jwt token
-              jwt.sign(
-                { user },
-                JWT_SECRET_KEY,
-                { expiresIn: '5m' },
-                (error, jwtToken) => {
-                  // Create refresh token
-                  const refreshToken = randtoken.uid(50);
+  const user = await User.findOne({ where: { username } });
+  if (!user) return res.sendStatus(404);
 
-                  // Save refresh token to DB
-                  RefreshToken.create({
-                    userId: user.id,
-                    token: refreshToken,
-                  }).then(() => console.log('Refresh token created...'));
-
-                  res.send({
-                    accessToken: jwtToken,
-                    refreshToken,
-                    userId: user.id,
-                  });
-                }
-              );
-            } else res.sendStatus(401);
-          }
-        );
-      } else res.sendStatus(404);
-    }
+  bcrypt.compare(password, user.password, (_, doesMatch) =>
+    generateRefreshToken(res, user, doesMatch)
   );
 });
 
-router.post('/refresh', (req, res) => {
+router.post('/refresh', async (req, res) => {
   const { access, refresh, userCredentials } = req.body;
+  const { username } = userCredentials;
 
-  if (access.length === 0)
-    RefreshToken.destroy({
-      where: { token: refresh },
-    }).then(() => {
-      User.findOne({ where: { username: userCredentials.username } }).then(
-        (user) => {
-          jwt.sign(
-            { user },
-            JWT_SECRET_KEY,
-            { expiresIn: '5m' },
-            (error, jwtToken) => {
-              // Create refresh token
-              const refreshToken = randtoken.uid(50);
+  if (access.length) return res.sendStatus(200);
 
-              // Save refresh token to DB
-              RefreshToken.create({
-                userId: user.id,
-                token: refreshToken,
-              }).then(() => console.log('Refresh token created...'));
+  await RefreshToken.destroy({ where: { token: refresh } });
 
-              res.send({ accessToken: jwtToken, refreshToken });
-            }
-          );
-        }
-      );
-    });
+  const user = await User.findOne({ where: { username } });
+  generateRefreshToken(res, user, true);
 });
 
-router.delete('/delete/:userId', (req, res) => {
+router.delete('/delete/:userId', async (req, res) => {
   const { userId } = req.params;
 
-  RefreshToken.destroy({
-    where: { userId },
-  })
-    .then(() => res.sendStatus(200))
-    .catch(() => res.sendStatus(404));
+  try {
+    await RefreshToken.destroy({ where: { userId } });
+    res.sendStatus(200);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(404);
+  }
 });
 
 router.post('/register', (req, res) => {
-  const { name, surname, username, mail } = req.body.userCredentials;
-  let { password } = req.body.userCredentials;
+  const { userCredentials } = req.body;
+  const { password } = req.body.userCredentials;
 
-  bcrypt.hash(password, 10, (err, hash) => {
-    User.create({ name, surname, username, email: mail, password: hash })
-      .then((user) => {
-        jwt.sign(
-          { user },
-          JWT_SECRET_KEY,
-          { expiresIn: '5m' },
-          (error, jwtToken) => {
-            // Create refresh token
-            const refreshToken = randtoken.uid(50);
-            // Save refresh token to DB
-            RefreshToken.create({
-              userId: user.id,
-              token: refreshToken,
-            }).then(() => console.log('Refresh token created...'));
-            res.send({
-              accessToken: jwtToken,
-              refreshToken,
-              userId: user.id,
-            });
-          }
-        );
-      })
-      .catch(() => {
-        res.sendStatus(404);
-      });
+  const saltRounds = SALT_ROUNDS;
+  bcrypt.hash(password, saltRounds, async (_, hashPassword) => {
+    const newUser = { ...userCredentials, password: hashPassword };
+    const user = await User.create(newUser);
+    generateRefreshToken(res, user, true);
   });
 });
 
