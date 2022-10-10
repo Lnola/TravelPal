@@ -56,7 +56,7 @@ class LocationModal extends Component {
         locationId !== undefined &&
         tripId !== undefined
       )
-        authorizedRequest('/api/tripLocations/add', 'post', {
+        authorizedRequest('/api/trip_locations/add', 'post', {
           tripId,
           locationId,
           date: formatDate(date),

@@ -32,7 +32,7 @@ class TripDetails extends Component {
       const { id } = this.props.location.state.trip;
       this.getTrip();
 
-      authorizedRequest(`/api/tripLocations/${id}`, 'get')
+      authorizedRequest(`/api/trip_locations/${id}`, 'get')
         .then((tripLocations) => {
           this.setState({ tripLocations });
 

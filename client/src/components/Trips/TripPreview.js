@@ -14,7 +14,7 @@ class TripPreview extends Component {
 
   componentDidMount() {
     authorizedRequest(
-      `/api/tripLocations/images/${this.props.trip.id}`,
+      `/api/trip_locations/images/${this.props.trip.id}`,
       'get'
     ).then((thumbnails) => {
       this.setState({ thumbnails });
