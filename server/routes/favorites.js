@@ -3,44 +3,45 @@ const Favorite = require('../models/Favorite');
 
 const path = '/favorites';
 
-router.get(`/user/:userId/location/:locationId`, (req, res) => {
+router.get(`/user/:userId/location/:locationId`, async (req, res) => {
   const { userId, locationId } = req.params;
 
-  Favorite.findAll({ where: { userId, locationId } })
-    .then((favorites) => {
-      if (favorites.length === 0) res.send(false);
-      else res.send(true);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.sendStatus(404);
-    });
+  try {
+    const favorites = await Favorite.findAll({ where: { userId, locationId } });
+    res.send(!!favorites.length);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(404);
+  }
 });
 
-router.post('/add', (req, res) => {
+router.post('/add', async (req, res) => {
   const { userId, locationId } = req.body;
 
-  Favorite.findAll({ where: { userId, locationId } }).then((sameFavorites) => {
-    if (sameFavorites.length === 0)
-      Favorite.create({ userId, locationId })
-        .then((response) => res.send(response))
-        .catch((err) => {
-          console.log(err);
-          res.sendStatus(422);
-        });
-    else res.sendStatus(200);
+  const matchingFavorites = await Favorite.findAll({
+    where: { userId, locationId },
   });
+  if (matchingFavorites.length) return res.sendStatus(200);
+
+  try {
+    const favorites = await Favorite.create({ userId, locationId });
+    res.send(favorites);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(422);
+  }
 });
 
-router.delete('/delete/user/:userId/location/:locationId', (req, res) => {
+router.delete('/delete/user/:userId/location/:locationId', async (req, res) => {
   const { userId, locationId } = req.params;
 
-  Favorite.destroy({ where: { userId, locationId } })
-    .then((response) => {
-      console.log(response);
-      res.sendStatus(204);
-    })
-    .catch(() => sendStatus(422));
+  try {
+    await Favorite.destroy({ where: { userId, locationId } });
+    res.sendStatus(204);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(422);
+  }
 });
 
 module.exports = { path, router };
