@@ -1,3 +1,5 @@
+const RefreshToken = require('../models/RefreshToken');
+
 const { JWT_SECRET_KEY } = process.env;
 
 const verifyToken = (req, res, next) => {
