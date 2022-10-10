@@ -15,9 +15,8 @@ class Input extends Component {
 
     return (
       <div className='input__wrapper'>
-        <Field
-          name={props.name}
-          render={({ field }) => (
+        <Field name={props.name}>
+          {({ field }) => (
             <input
               className={className}
               {...field}
@@ -25,7 +24,7 @@ class Input extends Component {
               placeholder={capitalizeText(props.name)}
             />
           )}
-        />
+        </Field>
         {props.areAllFull ? (
           <span className='input__error'>{capitalizeText(props.error)}</span>
         ) : null}
