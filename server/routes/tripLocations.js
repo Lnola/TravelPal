@@ -2,7 +2,7 @@ const router = require('express').Router();
 const TripLocation = require('../models/TripLocation');
 const Location = require('../models/Location');
 
-const path = 'trip_locations';
+const path = '/trip_locations';
 
 router.get(`/:id`, async (req, res) => {
   const tripId = req.params.id;
@@ -48,13 +48,15 @@ router.get(`/images/:id`, async (req, res) => {
 
     tripLocations.forEach(async (tripLocation, index) => {
       const { locationId } = tripLocation.dataValues;
+
       const location = await Location.findByPk(locationId);
 
       const mainMedia = location.dataValues.result.data.places[0].main_media;
       if (mainMedia) thumbnails.push(mainMedia.media[0].url);
 
-      if (tripLocations.length === index + 1) return res.send(thumbnails);
-      else return res.sendStatus(404);
+      // if (tripLocations.length === index + 1)
+      return res.send(thumbnails);
+      // else return res.sendStatus(404);
     });
   } catch (err) {
     console.log(err);
