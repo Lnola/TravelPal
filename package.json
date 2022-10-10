@@ -7,6 +7,7 @@
     "dev:server": "nodemon -r dotenv/config server/app.js",
     "dev:client": "npm start --prefix client",
     "dev:start": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "debug:server": "nodemon --inspect -r dotenv/config server/app.js",
     "db:create": "docker compose up -d",
     "db:migration:up": "npx sequelize db:migrate",
     "db:migration:undo": "npx sequelize db:migrate:undo",
