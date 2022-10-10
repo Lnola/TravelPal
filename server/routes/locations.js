@@ -8,10 +8,10 @@ router.get(`/:id`, async (req, res) => {
 
   try {
     const location = await Location.findByPk(id);
-    res.send(location);
+    return res.send(location);
   } catch (err) {
     console.log(err);
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 });
 
@@ -20,10 +20,10 @@ router.get(`/poi/:id`, async (req, res) => {
 
   try {
     const location = await Location.findOne({ where: { poi: id } });
-    res.send(location);
+    return res.send(location);
   } catch (err) {
     console.log(err);
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 });
 

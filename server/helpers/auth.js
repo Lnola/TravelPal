@@ -2,16 +2,13 @@ const { JWT_SECRET_KEY } = process.env;
 
 const verifyToken = (req, res, next) => {
   const bearerHeader = req.headers['authorization'];
+  if (!bearerHeader) return res.sendStatus(403);
 
-  if (bearerHeader !== undefined) {
-    const bearer = bearerHeader.split(' ');
-    const bearerToken = bearer[1];
+  const bearer = bearerHeader.split(' ');
+  const bearerToken = bearer[1];
 
-    req.token = bearerToken;
-    next();
-  } else {
-    res.sendStatus(403);
-  }
+  req.token = bearerToken;
+  next();
 };
 
 const sign = async (res, user, accessToken) => {
@@ -24,15 +21,15 @@ const sign = async (res, user, accessToken) => {
     const newRefreshToken = { userId, token: refreshToken };
     await RefreshToken.create(newRefreshToken);
     const response = { accessToken, refreshToken, userId };
-    res.send(response);
+    return res.send(response);
   } catch (err) {
     console.log(err);
-    res.sendStatus(403);
+    return res.sendStatus(403);
   }
 };
 
 const generateRefreshToken = (res, user, doesMatch) => {
-  if (!doesMatch) res.sendStatus(401);
+  if (!doesMatch) return res.sendStatus(401);
 
   // Create jwt token
   const payload = { user };

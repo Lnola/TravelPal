@@ -8,10 +8,10 @@ router.get('/:userId', async (req, res) => {
 
   try {
     const trips = await Trip.findAll({ where: { userId } });
-    res.send(trips);
+    return res.send(trips);
   } catch (err) {
     console.log(err);
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 });
 
@@ -20,10 +20,10 @@ router.get('/trip/:id', async (req, res) => {
   const trip = await Trip.findByPk(id);
 
   try {
-    res.send(trip);
+    return res.send(trip);
   } catch (err) {
     console.log(err);
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 });
 
@@ -35,10 +35,10 @@ router.post('/add', async (req, res) => {
 
   try {
     const newTrip = await Trip.create(newData);
-    res.send(newTrip);
+    return res.send(newTrip);
   } catch (err) {
     console.log(err);
-    res.sendStatus(422);
+    return res.sendStatus(422);
   }
 });
 
@@ -50,10 +50,10 @@ router.post('/edit', async (req, res) => {
 
   try {
     const newTrip = await Trip.update(newData, { where: { id: tripId } });
-    res.send(newTrip);
+    return res.send(newTrip);
   } catch (err) {
     console.log(err);
-    res.sendStatus(422);
+    return res.sendStatus(422);
   }
 });
 

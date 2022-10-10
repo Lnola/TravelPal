@@ -9,10 +9,10 @@ router.get('/', async (req, res) => {
 
   try {
     const cityLocation = await CityLocation.findAll({ where: { query: city } });
-    res.send(cityLocation);
+    return res.send(cityLocation);
   } catch (err) {
     console.log(err);
-    res.sendStatus(400);
+    return res.sendStatus(400);
   }
 });
 

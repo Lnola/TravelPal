@@ -6,10 +6,10 @@ const path = '/users';
 router.get('/', async (req, res) => {
   try {
     const users = await User.findAll();
-    res.send(users);
+    return res.send(users);
   } catch (err) {
     console.log(err);
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 });
 

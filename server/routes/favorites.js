@@ -8,10 +8,10 @@ router.get(`/user/:userId/location/:locationId`, async (req, res) => {
 
   try {
     const favorites = await Favorite.findAll({ where: { userId, locationId } });
-    res.send(!!favorites.length);
+    return res.send(!!favorites.length);
   } catch (err) {
     console.log(err);
-    res.sendStatus(404);
+    return res.sendStatus(404);
   }
 });
 
@@ -26,10 +26,10 @@ router.post('/add', async (req, res) => {
 
   try {
     const favorites = await Favorite.create(newFavorite);
-    res.send(favorites);
+    return res.send(favorites);
   } catch (err) {
     console.log(err);
-    res.sendStatus(422);
+    return res.sendStatus(422);
   }
 });
 
@@ -38,10 +38,10 @@ router.delete('/delete/user/:userId/location/:locationId', async (req, res) => {
 
   try {
     await Favorite.destroy({ where: { userId, locationId } });
-    res.sendStatus(204);
+    return res.sendStatus(204);
   } catch (err) {
     console.log(err);
-    res.sendStatus(422);
+    return res.sendStatus(422);
   }
 });
 

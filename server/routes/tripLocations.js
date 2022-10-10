@@ -8,10 +8,10 @@ router.get(`/:id`, async (req, res) => {
   const tripId = req.params.id;
   try {
     const tripLocations = await TripLocation.findAll({ where: { tripId } });
-    res.send(tripLocations);
+    return res.send(tripLocations);
   } catch (err) {
     console.log(err);
-    res.sendStatus(404);
+    return res.sendStatus(404);
   }
 });
 
@@ -27,10 +27,10 @@ router.post('/add', async (req, res) => {
 
   try {
     const tripLocation = await TripLocation.create(newTrip);
-    res.send(tripLocation);
+    return res.send(tripLocation);
   } catch (err) {
     console.log(err);
-    res.sendStatus(422);
+    return res.sendStatus(422);
   }
 });
 
@@ -53,12 +53,12 @@ router.get(`/images/:id`, async (req, res) => {
       const mainMedia = location.dataValues.result.data.places[0].main_media;
       if (mainMedia) thumbnails.push(mainMedia.media[0].url);
 
-      if (tripLocations.length === index + 1) res.send(thumbnails);
-      else res.sendStatus(404);
+      if (tripLocations.length === index + 1) return res.send(thumbnails);
+      else return res.sendStatus(404);
     });
   } catch (err) {
     console.log(err);
-    res.sendStatus(404);
+    return res.sendStatus(404);
   }
 });
 

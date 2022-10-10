@@ -36,10 +36,10 @@ router.delete('/delete/:userId', async (req, res) => {
 
   try {
     await RefreshToken.destroy({ where: { userId } });
-    res.sendStatus(200);
+    return res.sendStatus(200);
   } catch (err) {
     console.log(err);
-    res.sendStatus(404);
+    return res.sendStatus(404);
   }
 });
 
