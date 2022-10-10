@@ -17,6 +17,7 @@ router.get(`/user/:userId/location/:locationId`, async (req, res) => {
 
 router.post('/add', async (req, res) => {
   const { userId, locationId } = req.body;
+  const newFavorite = { userId, locationId };
 
   const matchingFavorites = await Favorite.findAll({
     where: { userId, locationId },
@@ -24,7 +25,7 @@ router.post('/add', async (req, res) => {
   if (matchingFavorites.length) return res.sendStatus(200);
 
   try {
-    const favorites = await Favorite.create({ userId, locationId });
+    const favorites = await Favorite.create(newFavorite);
     res.send(favorites);
   } catch (err) {
     console.log(err);
