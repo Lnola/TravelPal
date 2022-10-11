@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '@material-ui/core/Tooltip';
 import { IconButton } from '@material-ui/core';
-import PlusButton from '../../components/PlusButton/PlusButtton';
+import PlusButton from '../../components/PlusButton';
 import './TripDetails.css';
 import TripCalendar from './TripCalendar';
 import TripModal from '../Trips/TripModal';
