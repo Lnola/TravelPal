@@ -18,17 +18,6 @@
   margin-left: -20px;
 }
 
-.auth__form--button {
-  width: 100%;
-  margin-bottom: 16px;
-  padding: 10px;
-  border: none;
-  border-radius: 20px;
-  background-color: #f76f63;
-  color: #fff;
-  font-weight: 600;
-}
-
 .auth__form--text,
 .auth__form--link {
   display: inline-block;
