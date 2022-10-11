@@ -12,7 +12,7 @@ import {
   faBasketballBall,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
-import Input from '../Input';
+import Input from '../../components/Input';
 import './Locations.css';
 import LocationPreview from './LocationPreview';
 import LocationModal from './LocationModal';

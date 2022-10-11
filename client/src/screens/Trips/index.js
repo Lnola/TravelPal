@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import TripPreview from './TripPreview';
 import TripsFilter from './TripsFilter';
-import PlusButton from '../PlusButtton';
+import PlusButton from '../PlusButton/PlusButtton';
 import TripModal from './TripModal';
 import './Trips.css';
 import { authorizedRequest } from '../../utils/utils_api';

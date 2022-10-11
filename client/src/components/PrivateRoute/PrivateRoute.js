@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { getTokens } from '../utils/utils_api';
+import { getTokens } from '../../utils/utils_api';
 
 const tokens = getTokens();
 

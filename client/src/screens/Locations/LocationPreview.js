@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { debounce } from 'throttle-debounce';
-import FavoritesButton from '../FavoritesButton';
-import PlusButton from '../PlusButtton';
+import FavoritesButton from '../../components/FavoritesButton/FavoritesButton';
+import PlusButton from '../../components/PlusButton/PlusButtton';
 import { authorizedRequest } from '../../utils/utils_api';
 import { formatLocationId } from '../../utils/utils';
 import ImageMissing from '../../assets/RandomImg.png';

@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withFormik, Form } from 'formik';
 import * as Yup from 'yup';
-import Input from '../Input';
-import Logo from '../../assets/Logo.png';
-import { authorizedRequest, setTokens } from '../../utils/utils_api';
 
-class Register extends Component {
+import Input from '../../../components/Input';
+
+import { authorizedRequest, setTokens } from '../../../utils/utils_api';
+
+import Logo from '../../../assets/Logo.png';
+import './Login.css';
+
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,15 +19,8 @@ class Register extends Component {
   }
 
   componentDidUpdate(nextProps) {
-    const { name, surname, username, mail, password } = nextProps.values;
-    if (
-      name !== '' &&
-      surname !== '' &&
-      username !== '' &&
-      mail !== '' &&
-      password !== '' &&
-      !this.state.areAllFull
-    )
+    const { username, password } = nextProps.values;
+    if (username !== '' && password !== '' && !this.state.areAllFull)
       this.setState({ areAllFull: true });
   }
 
@@ -37,30 +34,9 @@ class Register extends Component {
           <img className='main__login--logo' src={Logo} alt='logo' />
           <Input
             type='text'
-            name='name'
-            error={errors.name}
-            value={values.name}
-            areAllFull={areAllFull}
-          />
-          <Input
-            type='text'
-            name='surname'
-            error={errors.surname}
-            value={values.surname}
-            areAllFull={areAllFull}
-          />
-          <Input
-            type='text'
             name='username'
             error={errors.username}
             value={values.username}
-            areAllFull={areAllFull}
-          />
-          <Input
-            type='mail'
-            name='mail'
-            error={errors.mail}
-            value={values.mail}
             areAllFull={areAllFull}
           />
           <Input
@@ -76,13 +52,12 @@ class Register extends Component {
             disabled={isSubmitting}
             onClick={() => handleSubmit()}
           >
-            Register
+            Login
           </button>
-
           <div className='input__wrapper'>
-            <p className='main__login--text'>Go back to login?</p>
-            <Link to='/'>
-              <p className='main__login--link'>Click here</p>
+            <p className='main__login--text'>Don't have an account?</p>
+            <Link to='/register'>
+              <p className='main__login--link'>Register here</p>
             </Link>
           </div>
         </Form>
@@ -94,37 +69,26 @@ class Register extends Component {
 export default withFormik({
   mapPropsToValues() {
     return {
-      name: '',
-      surname: '',
       username: '',
-      mail: '',
       password: '',
     };
   },
 
   validationSchema: Yup.object().shape({
-    name: Yup.string().min(2).required(),
-    surname: Yup.string().min(2).required(),
     username: Yup.string().min(4).required('Cant be empty'),
-    mail: Yup.string().email(),
     password: Yup.string().min(4).required('Cant be empty'),
   }),
 
   handleSubmit(values, { resetForm, props }) {
     const userCredentials = {
-      name: values.name,
-      surname: values.surname,
       username: values.username,
-      mail: values.mail,
       password: values.password,
     };
 
     resetForm();
 
-    // console.log(userCredentials);
-
-    authorizedRequest('/api/auth/register', 'post', { userCredentials })
-      .then((tokens) => {
+    authorizedRequest('/api/auth/login', 'post', { userCredentials }).then(
+      (tokens) => {
         if (tokens !== undefined) {
           setTokens(tokens.accessToken, tokens.refreshToken);
           window.localStorage.setItem('id', tokens.userId);
@@ -132,7 +96,7 @@ export default withFormik({
 
           props.history.push('/trips');
         } else alert("Username and password don't match");
-      })
-      .catch(() => alert('Something went wrong. Try again!'));
+      }
+    );
   },
-})(Register);
+})(Login);

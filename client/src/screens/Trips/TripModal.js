@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withFormik, Form } from 'formik';
 import * as Yup from 'yup';
-import Input from '../Input';
+import Input from '../../components/Input';
 import TripCalendar from '../TripDetails/TripCalendar';
 import { authorizedRequest } from '../../utils/utils_api';
 
