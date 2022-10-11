@@ -6,7 +6,7 @@ const tokens = getTokens();
 
 const isLoggedIn = tokens.access !== null && tokens.refresh !== null;
 
-export const PrivateRoute = ({ component: Component, ...rest }) => (
+export default PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
