@@ -22,6 +22,10 @@ a {
   color: black;
 }
 
+#root {
+  height: 100%;
+}
+
 .link {
   width: 100%;
 }
