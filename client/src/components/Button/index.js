@@ -4,7 +4,7 @@ import './index.css';
 
 class AuthForm extends Component {
   render() {
-    const { type, disabled, onClick, label } = this.props;
+    const { type = 'button', disabled, onClick, label } = this.props;
 
     return (
       <button
