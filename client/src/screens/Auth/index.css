@@ -1,56 +1,55 @@
-.main__login {
-  height: 80vh;
+.auth__form {
+  height: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.main__login--logo {
-  margin-bottom: -60px;
-  margin-left: -20px;
-}
-
-.main__login form {
-  width: 82%;
+.auth__form--form {
+  width: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
 }
 
-.main__login--button {
-  border-radius: 20px;
-  padding: 10px;
-  width: 100%;
-  background-color: white;
-  color: #fff;
-  font-weight: 600;
-  margin-bottom: 15px;
-  background-color: #f76f63;
-  border: none;
+.auth__form--logo {
+  margin-bottom: -60px;
+  margin-left: -20px;
 }
 
-.main__login--text,
-.main__login--link {
+.auth__form--button {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: #f76f63;
+  color: #fff;
+  font-weight: 600;
+}
+
+.auth__form--text,
+.auth__form--link {
   display: inline-block;
   font-size: 14px;
 }
 
-.main__login--text {
+.auth__form--text {
   color: grey;
 }
 
-.main__login--link {
-  color: #f76f63;
+.auth__form--link {
   margin-left: 4px;
+  color: #f76f63;
   font-weight: 600;
 }
 
 .login__input {
-  border-radius: 20px;
+  margin-bottom: 16px;
   padding: 10px;
   border: 1px solid grey;
-  margin-bottom: 15px;
+  border-radius: 20px;
   width: 100%;
   box-sizing: border-box;
   color: grey;
@@ -58,12 +57,12 @@
 }
 
 .login__input::placeholder {
-  /* text-align: center; */
   font-size: 14px;
+  opacity: 0.6;
 }
 
 @media screen and (min-width: 600px) {
-  .main__login--form {
+  .auth__form--form {
     max-width: 400px;
   }
 }
