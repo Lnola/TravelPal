@@ -7,6 +7,7 @@ import Trips from './screens/Trips';
 import PrivateRoute from './components/PrivateRoute';
 
 import './components/Common.css';
+import './index.css';
 
 function App() {
   return (
