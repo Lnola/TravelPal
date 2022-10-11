@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Calendar from 'react-calendar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faCalendar } from '@fortawesome/free-solid-svg-icons';
-import { formatFancyDate } from '../../utils';
+import { formatFancyDate } from '../../utils/utils';
 import './TripDetails.css';
 
 class TripCalendar extends Component {

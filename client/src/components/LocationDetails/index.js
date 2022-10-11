@@ -5,9 +5,9 @@ import './LocationDetails.css';
 import FavoritesButton from '../FavoritesButton';
 import PlusButton from '../PlusButtton';
 import LocationModal from '../Locations/LocationModal';
-import { formatMarker } from '../../utils';
+import { formatMarker } from '../../utils/utils';
 import ImageMissing from '../../assets/RandomImg.png';
-import { authorizedRequest } from '../../utils_api';
+import { authorizedRequest } from '../../utils/utils_api';
 
 class LocationDetails extends Component {
   constructor(props) {

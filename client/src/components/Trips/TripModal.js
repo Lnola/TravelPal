@@ -3,7 +3,7 @@ import { withFormik, Form } from 'formik';
 import * as Yup from 'yup';
 import Input from '../Input';
 import TripCalendar from '../TripDetails/TripCalendar';
-import { authorizedRequest } from '../../utils_api';
+import { authorizedRequest } from '../../utils/utils_api';
 
 class TripModal extends Component {
   constructor(props) {

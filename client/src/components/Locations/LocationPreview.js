@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { debounce } from 'throttle-debounce';
 import FavoritesButton from '../FavoritesButton';
 import PlusButton from '../PlusButtton';
-import { authorizedRequest } from '../../utils_api';
-import { formatLocationId } from '../../utils';
+import { authorizedRequest } from '../../utils/utils_api';
+import { formatLocationId } from '../../utils/utils';
 import ImageMissing from '../../assets/RandomImg.png';
 
 class LocationPreview extends Component {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MissingImage from '../../assets/RandomImg.png';
-import { formatDateFromTo } from '../../utils';
-import { authorizedRequest } from '../../utils_api';
+import { formatDateFromTo } from '../../utils/utils';
+import { authorizedRequest } from '../../utils/utils_api';
 
 class TripPreview extends Component {
   constructor(props) {

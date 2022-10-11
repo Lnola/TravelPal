@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Field } from 'formik';
-import { capitalizeText } from '../utils';
+import { capitalizeText } from '../utils/utils';
 
 class Input extends Component {
   constructor(props) {

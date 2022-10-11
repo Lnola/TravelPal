@@ -5,8 +5,8 @@ import TripsFilter from './TripsFilter';
 import PlusButton from '../PlusButtton';
 import TripModal from './TripModal';
 import './Trips.css';
-import { authorizedRequest } from '../../utils_api';
-import { formatDate } from '../../utils';
+import { authorizedRequest } from '../../utils/utils_api';
+import { formatDate } from '../../utils/utils';
 import Logout from './Logout';
 
 class Trips extends Component {

@@ -8,8 +8,8 @@ import PlusButton from '../PlusButtton';
 import './TripDetails.css';
 import TripCalendar from './TripCalendar';
 import TripModal from '../Trips/TripModal';
-import { authorizedRequest } from '../../utils_api';
-import { formatDate, formatDateFromTo } from '../../utils';
+import { authorizedRequest } from '../../utils/utils_api';
+import { formatDate, formatDateFromTo } from '../../utils/utils';
 import ImageMissing from '../../assets/MissingImage.svg';
 
 class TripDetails extends Component {

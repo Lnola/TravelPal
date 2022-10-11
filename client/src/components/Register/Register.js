@@ -4,7 +4,7 @@ import { withFormik, Form } from 'formik';
 import * as Yup from 'yup';
 import Input from '../Input';
 import Logo from '../../assets/Logo.png';
-import { authorizedRequest, setTokens } from '../../utils_api';
+import { authorizedRequest, setTokens } from '../../utils/utils_api';
 
 class Register extends Component {
   constructor(props) {

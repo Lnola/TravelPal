@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import { clearLocalStorage, authorizedRequest } from '../../utils_api';
+import { clearLocalStorage, authorizedRequest } from '../../utils/utils_api';
 
 class Logout extends Component {
   handleLogout = () => {

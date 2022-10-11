@@ -4,7 +4,7 @@ import { withFormik, Form } from 'formik';
 import * as Yup from 'yup';
 import Input from '../Input';
 import './Login.css';
-import { authorizedRequest, setTokens } from '../../utils_api';
+import { authorizedRequest, setTokens } from '../../utils/utils_api';
 import Logo from '../../assets/Logo.png';
 
 class Login extends Component {
