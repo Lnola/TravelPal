@@ -1,0 +1,10 @@
+.pal__button {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: #f76f63;
+  color: #fff;
+  font-weight: 600;
+}
