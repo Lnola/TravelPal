@@ -4,11 +4,14 @@ import './index.css';
 
 class AuthForm extends Component {
   render() {
-    const { type = 'button', disabled, onClick, label } = this.props;
+    const { variant, type = 'button', disabled, onClick, label } = this.props;
+
+    let className = 'pal__button';
+    if (variant) className += ' pal__button--' + variant;
 
     return (
       <button
-        className='pal__button'
+        className={className}
         type={type}
         disabled={disabled}
         onClick={onClick}

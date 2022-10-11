@@ -18,20 +18,11 @@
   margin-left: -20px;
 }
 
-.auth__form--text,
-.auth__form--link {
+.auth__form--text {
   display: inline-block;
   font-size: 14px;
-}
-
-.auth__form--text {
   color: grey;
-}
-
-.auth__form--link {
-  margin-left: 4px;
-  color: #f76f63;
-  font-weight: 600;
+  margin-right: 4px;
 }
 
 .login__input {
