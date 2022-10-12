@@ -6,31 +6,12 @@ import AuthForm from './AuthForm';
 
 import api from '../../api/auth';
 import { setCredentials } from '../../utils/storage';
+import { loginForm } from './constants';
 
 class Login extends Component {
   render() {
-    const { values, handleSubmit, errors, isSubmitting, swapForm } = this.props;
-
-    const inputs = [
-      {
-        name: 'username',
-        type: 'text',
-        value: values.username,
-        error: errors.username,
-      },
-      {
-        name: 'password',
-        type: 'password',
-        value: values.password,
-        error: errors.password,
-      },
-    ];
-    const submitLabel = 'Login';
-    const cta = {
-      text: "Don't have an account?",
-      label: 'Register here',
-      onClick: swapForm,
-    };
+    const { values, errors, swapForm, handleSubmit, isSubmitting } = this.props;
+    const { inputs, submitLabel, cta } = loginForm(values, errors, swapForm);
 
     return (
       <AuthForm
