@@ -9,10 +9,16 @@ import { authorizedRequest } from '../../utils/authorizedRequest';
 import { formatDate } from '../../utils/utils';
 import Logout from './Logout';
 
+const defaultFilterId = 1;
+
 class Trips extends Component {
   constructor(props) {
     super(props);
-    this.state = { isModalVisible: false, trips: [], filteredTrips: [] };
+    this.state = {
+      isModalVisible: false,
+      trips: [],
+      filteredTrips: [],
+    };
   }
 
   componentDidMount() {
@@ -64,7 +70,10 @@ class Trips extends Component {
       <React.Fragment>
         <header className='header__trips'>
           <h1>My Trips</h1>
-          <TripsFilter onFilterByDate={this.handleFilterByDate} />
+          <TripsFilter
+            default={defaultFilterId}
+            filterByDate={this.filterByDate}
+          />
         </header>
         <main>
           {filteredTrips.length === 0 ? (

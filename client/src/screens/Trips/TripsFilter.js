@@ -4,7 +4,7 @@ class TripsFilter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedIndex: 1,
+      selectedIndex: props.default,
     };
   }
 
