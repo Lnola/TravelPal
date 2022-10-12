@@ -3,12 +3,11 @@ import { extractData } from './helpers/helpers';
 
 const urls = {
   root: '/trips',
-  fetchByUserId: (userId) => `${urls.root}/${userId}`,
 };
 
-const fetchByUserId = (userId) => {
-  return request.post(urls.fetchByUserId(userId)).then(extractData);
+const fetch = () => {
+  return request.get(urls.root).then(extractData);
 };
 
-const api = { fetchByUserId };
+const api = { fetch };
 export default api;

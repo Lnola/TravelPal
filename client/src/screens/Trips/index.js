@@ -9,7 +9,6 @@ import PlusButton from '../../components/PlusButton';
 
 import { tripsApi } from '../../api';
 import { formatDate } from '../../utils/utils';
-import { getUserId } from '../../utils/storage';
 import './index.css';
 
 const defaultFilterId = 1;
@@ -29,9 +28,7 @@ class Trips extends Component {
   }
 
   getTrips = async () => {
-    const userId = getUserId();
-
-    const trips = await tripsApi.fetchByUserId(userId);
+    const trips = await tripsApi.fetch();
     this.setState({ trips });
     this.filterByDate(defaultFilterId);
   };
