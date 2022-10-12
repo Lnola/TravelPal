@@ -31,6 +31,24 @@ router.post('/login', async (req, res, next) => {
   }
 });
 
+router.post('/register', async (req, res, next) => {
+  const { userCredentials } = req.body;
+  const { password } = userCredentials;
+
+  const saltRounds = Number(SALT_ROUNDS) || 10;
+  const hashPassword = bcrypt.hashSync(password, saltRounds);
+
+  try {
+    const newUser = { ...userCredentials, password: hashPassword };
+    const user = await User.create(newUser);
+
+    const tokens = await generateTokens(user, next);
+    return res.json(tokens);
+  } catch {
+    return next(new HttpError());
+  }
+});
+
 router.post('/refresh', async (req, res, next) => {
   const { access, refresh, userCredentials } = req.body;
   const { username } = userCredentials;
@@ -53,18 +71,6 @@ router.delete('/delete/:userId', async (req, res) => {
     console.log(err);
     return next(new HttpError(NOT_FOUND, errorMessages.NOT_FOUND));
   }
-});
-
-router.post('/register', (req, res, next) => {
-  const { userCredentials } = req.body;
-  const { password } = req.body.userCredentials;
-
-  const saltRounds = SALT_ROUNDS;
-  bcrypt.hash(password, saltRounds, async (_, hashPassword) => {
-    const newUser = { ...userCredentials, password: hashPassword };
-    const user = await User.create(newUser);
-    generateRefreshToken(res, user, true, next);
-  });
 });
 
 module.exports = { path, router };
