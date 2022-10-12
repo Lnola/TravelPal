@@ -37,8 +37,8 @@ export default withFormik({
   },
 
   validationSchema: Yup.object().shape({
-    name: Yup.string().min(2).required(),
-    surname: Yup.string().min(2).required(),
+    name: Yup.string().min(4).required('Cannot be empty'),
+    surname: Yup.string().min(4).required('Cannot be empty'),
     username: Yup.string().min(4).required('Cannot be empty'),
     email: Yup.string().email(),
     password: Yup.string().min(4).required('Cannot be empty'),
