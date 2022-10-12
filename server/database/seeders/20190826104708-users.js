@@ -2,7 +2,7 @@
 const bcrypt = require('bcrypt');
 
 const createUser = async (index) => {
-  const password = bcrypt.hashSync('1234', process.env.SALT_ROUNDS || 12);
+  const password = bcrypt.hashSync('1234', process.env.SALT_ROUNDS || 10);
 
   return {
     name: `User${index}`,
