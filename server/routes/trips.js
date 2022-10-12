@@ -5,17 +5,17 @@ const Trip = require('../models/Trip');
 
 const HttpError = require('../helpers/httpError');
 const errorMessages = require('../helpers/errorMessages');
+const { authenticate } = require('../helpers/auth');
 
 const path = '/trips';
 
-router.get('/:userId', async (req, res) => {
-  const { userId } = req.params;
+router.get('/', authenticate, async (req, res) => {
+  const userId = req.user.id;
 
   try {
     const trips = await Trip.findAll({ where: { userId } });
     return res.send(trips);
   } catch (err) {
-    console.log(err);
     return res.sendStatus(500);
   }
 });
