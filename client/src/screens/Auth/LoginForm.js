@@ -8,7 +8,7 @@ import api from '../../api/auth';
 import { setCredentials } from '../../utils/storage';
 import { loginForm } from './constants';
 
-class Login extends Component {
+class LoginForm extends Component {
   render() {
     const { values, errors, swapForm, handleSubmit, isSubmitting } = this.props;
     const { inputs, submitLabel, cta } = loginForm(values, errors, swapForm);
@@ -52,4 +52,4 @@ export default withFormik({
       alert(response.data.message);
     }
   },
-})(Login);
+})(LoginForm);
