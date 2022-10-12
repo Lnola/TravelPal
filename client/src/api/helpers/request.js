@@ -11,14 +11,14 @@ const config = {
 
 const client = axios.create(config);
 
-const isAuthError = (err) => [FORBIDDEN].includes(err.response.status);
-
 client.interceptors.request.use((req) => {
   const { access } = getTokens();
   req.headers.authorization = access ? `Bearer ${access}` : '';
 
   return req;
 });
+
+const isAuthError = (err) => [FORBIDDEN].includes(err.response.status);
 
 client.interceptors.response.use(
   (res) => res,
