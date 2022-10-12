@@ -4,6 +4,8 @@ import { CSSTransition } from 'react-transition-group';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 
+import { getTokens } from '../../utils/storage';
+
 class Auth extends Component {
   constructor(props) {
     super(props);
@@ -12,6 +14,11 @@ class Auth extends Component {
     };
     this.loginRef = React.createRef();
     this.registerRef = React.createRef();
+  }
+
+  componentDidMount() {
+    const { access, refresh } = getTokens();
+    if (access && refresh) this.props.history.push('/trips');
   }
 
   swapForm = () => {
