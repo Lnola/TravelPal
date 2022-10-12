@@ -47,8 +47,8 @@ const ensureTokens = async () => {
   const payload = { ...tokens, username };
 
   try {
-    const newTokens = await authApi.refresh(payload);
-    setTokens(newTokens);
+    const { accessToken, refreshToken } = await authApi.refresh(payload);
+    setTokens(accessToken, refreshToken);
   } catch (err) {
     console.log(err);
   }
