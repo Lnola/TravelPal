@@ -45,7 +45,7 @@ export default withFormik({
     };
 
     try {
-      const credentials = await api.login(userCredentials);
+      const credentials = await api.login({ userCredentials });
       setCredentials(credentials);
       window.location.href = '/trips';
     } catch ({ response }) {

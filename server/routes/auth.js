@@ -14,7 +14,7 @@ const { SALT_ROUNDS } = process.env;
 const path = '/auth';
 
 router.post('/login', async (req, res, next) => {
-  const { username, password } = req.body;
+  const { username, password } = req.body.userCredentials;
 
   const user = await User.findOne({ where: { username } });
   if (!user) return next(new HttpError(CONFLICT, errorMessages.LOGIN_ERROR));
