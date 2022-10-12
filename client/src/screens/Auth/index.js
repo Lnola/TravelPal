@@ -10,8 +10,8 @@ class Auth extends Component {
     this.state = {
       isLogin: true,
     };
-    this.nodeRef = React.createRef();
-    this.nodeRef2 = React.createRef();
+    this.loginRef = React.createRef();
+    this.registerRef = React.createRef();
   }
 
   swapForm = () => {
@@ -25,24 +25,24 @@ class Auth extends Component {
       <main className='auth__form'>
         <CSSTransition
           in={isLogin}
-          nodeRef={this.nodeRef}
+          nodeRef={this.loginRef}
           timeout={500}
           unmountOnExit
           classNames='login__node'
         >
-          <section className='auth__form--section' ref={this.nodeRef}>
+          <section className='auth__form--section' ref={this.loginRef}>
             <LoginForm swapForm={this.swapForm} />
           </section>
         </CSSTransition>
 
         <CSSTransition
           in={!isLogin}
-          nodeRef={this.nodeRef2}
+          nodeRef={this.registerRef}
           timeout={500}
           unmountOnExit
           classNames='login__node'
         >
-          <section className='auth__form--section' ref={this.nodeRef2}>
+          <section className='auth__form--section' ref={this.registerRef}>
             <RegisterForm swapForm={this.swapForm} />
           </section>
         </CSSTransition>
