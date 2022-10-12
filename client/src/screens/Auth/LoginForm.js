@@ -46,7 +46,7 @@ export default withFormik({
 
     try {
       const credentials = await authApi.login({ userCredentials });
-      setCredentials(credentials);
+      setCredentials({ ...credentials, username: values.username });
       window.location.href = '/trips';
     } catch ({ response }) {
       alert(response.data.message);
