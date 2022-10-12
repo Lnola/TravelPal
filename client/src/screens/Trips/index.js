@@ -4,7 +4,7 @@ import TripPreview from './TripPreview';
 import TripsFilter from './TripsFilter';
 import PlusButton from '../../components/PlusButton';
 import TripModal from './TripModal';
-import './Trips.css';
+import './index.css';
 import { authorizedRequest } from '../../utils/authorizedRequest';
 import { formatDate } from '../../utils/utils';
 import Logout from './Logout';

@@ -66,41 +66,6 @@
   margin-right: 10px;
 }
 
-/* .trips__preview--description h3 {
-  color: #f76f63;
-} */
-
-/* TripsFilter.js */
-
-.trips__filter button {
-  border: none;
-  color: #fff;
-  font-size: 15px;
-  padding: 10px;
-}
-
-.trips__filter button:hover {
-  cursor: pointer;
-}
-
-.trips__filter button:first-child {
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
-  border-right: 2px solid #fff;
-}
-
-.trips__filter button:last-child {
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
-  margin-right: 10px;
-}
-
-.logout__button {
-  position: fixed;
-  left: 25px;
-  bottom: 25px;
-}
-
 @media screen and (min-width: 500px) {
   .trips__preview--images img {
     height: 100px;
@@ -132,4 +97,33 @@
     max-height: 175px;
     height: auto;
   }
+}
+
+/* TripsFilter.js */
+
+.trips__filter--button {
+  padding: 12px;
+  border: none;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.trips__filter--button:first-child {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-right: 3px solid #fff;
+}
+
+.trips__filter--button:last-child {
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+/* Logout.js */
+
+.logout__button {
+  position: fixed;
+  left: 25px;
+  bottom: 25px;
 }
