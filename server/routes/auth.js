@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
-const { CONFLICT, NOT_FOUND, UNAUTHORIZED } = require('http-status');
+const { CONFLICT, NOT_FOUND, UNAUTHORIZED, FORBIDDEN } = require('http-status');
 
 const RefreshToken = require('../models/RefreshToken');
 const User = require('../models/User');
@@ -41,7 +41,6 @@ router.post('/register', async (req, res, next) => {
   try {
     const newUser = { ...userCredentials, password: hashPassword };
     const user = await User.create(newUser);
-
     const tokens = await generateTokens(user, next);
     return res.json(tokens);
   } catch {
@@ -50,15 +49,16 @@ router.post('/register', async (req, res, next) => {
 });
 
 router.post('/refresh', async (req, res, next) => {
-  const { access, refresh, userCredentials } = req.body;
-  const { username } = userCredentials;
+  const { refresh, username } = req.body;
 
-  if (access.length) return res.sendStatus(200);
-
-  await RefreshToken.destroy({ where: { token: refresh } });
-
-  const user = await User.findOne({ where: { username } });
-  generateRefreshToken(res, user, true, next);
+  try {
+    await RefreshToken.destroy({ where: { token: refresh } });
+    const user = await User.findOne({ where: { username } });
+    const tokens = await generateTokens(user, next);
+    return res.json(tokens);
+  } catch (err) {
+    return next(new HttpError(FORBIDDEN, errorMessages.FORBIDDEN));
+  }
 });
 
 router.delete('/delete/:userId', async (req, res) => {
