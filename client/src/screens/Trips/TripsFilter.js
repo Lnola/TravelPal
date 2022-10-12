@@ -12,6 +12,7 @@ class TripsFilter extends Component {
     const { selectedIndex } = this.state;
     if (id !== selectedIndex) {
       this.setState({ selectedIndex: id });
+      this.props.filterByDate(id);
     }
   };
 
