@@ -8,7 +8,6 @@ import Input from '../../../components/Input';
 import { authorizedRequest, setTokens } from '../../../utils/utils_api';
 
 import Logo from '../../../assets/Logo.png';
-import './Login.css';
 
 class Login extends Component {
   constructor(props) {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import Login from './Login';
-import Register from './Register';
+import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
 
 class Auth extends Component {
   constructor(props) {
@@ -9,10 +9,14 @@ class Auth extends Component {
     this.state = { isLogin: true };
   }
 
+  swapForm = () => {
+    this.setState((prev) => ({ isLogin: !prev.isLogin }));
+  };
+
   render() {
     const { isLogin } = this.state;
-    if (isLogin) return <Login />;
-    return <Register />;
+    if (isLogin) return <LoginForm swapForm={this.swapForm} />;
+    return <RegisterForm swapForm={this.swapForm} />;
   }
 }
 
