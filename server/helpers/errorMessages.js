@@ -4,6 +4,7 @@ const errorMessages = {
   NOT_FOUND: 'Cannot find the resource, try refreshing the page',
   FORBIDDEN: 'Your access to this resource is forbidden.',
   BAD_REQUEST: 'Bad request.',
+  TOKEN_EXPIRED: 'Token expired',
 };
 
 module.exports = errorMessages;
