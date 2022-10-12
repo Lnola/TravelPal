@@ -6,7 +6,7 @@ const DEFAULT_ERROR = new HttpError(
   'Something went wrong'
 );
 
-const errorHandler = (err, req, res) => {
+const errorHandler = (err, req, res, next) => {
   const { status, message } = err.status ? err : DEFAULT_ERROR;
   return res.status(status).json({ message });
 };
