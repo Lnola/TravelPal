@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const TripLocation = require('../models/TripLocation');
 const Location = require('../models/Location');
+const HttpError = require('./httpError');
+const { NOT_FOUND, BAD_REQUEST } = require('http-status');
+const errorMessages = require('./errorMessages');
 
 const path = '/trip_locations';
 
@@ -11,7 +14,7 @@ router.get(`/:id`, async (req, res) => {
     return res.send(tripLocations);
   } catch (err) {
     console.log(err);
-    return res.sendStatus(404);
+    return next(new HttpError(NOT_FOUND, errorMessages.NOT_FOUND));
   }
 });
 
@@ -30,7 +33,7 @@ router.post('/add', async (req, res) => {
     return res.send(tripLocation);
   } catch (err) {
     console.log(err);
-    return res.sendStatus(422);
+    return next(new HttpError(BAD_REQUEST, errorMessages.BAD_REQUEST));
   }
 });
 
@@ -60,7 +63,7 @@ router.get(`/images/:id`, async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.sendStatus(404);
+    return next(new HttpError(NOT_FOUND, errorMessages.NOT_FOUND));
   }
 });
 

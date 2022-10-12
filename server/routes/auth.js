@@ -1,25 +1,29 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
+const { CONFLICT, NOT_FOUND } = require('http-status');
+
 const RefreshToken = require('../models/RefreshToken');
 const User = require('../models/User');
-const { generateRefreshToken } = require('../helpers/auth');
+
+const HttpError = require('../helpers/httpError');
+const errorMessages = require('../helpers/errorMessages');
 
 const { SALT_ROUNDS } = process.env;
 
 const path = '/auth';
 
-router.post('/login', async (req, res) => {
-  const { username, password } = req.body.userCredentials;
+router.post('/login', async (req, res, next) => {
+  const { username, password } = req.body;
 
   const user = await User.findOne({ where: { username } });
-  if (!user) return res.sendStatus(404);
+  if (!user) return next(new HttpError(CONFLICT, errorMessages.LOGIN_ERROR));
 
   bcrypt.compare(password, user.password, (_, doesMatch) =>
-    generateRefreshToken(res, user, doesMatch)
+    generateRefreshToken(res, user, doesMatch, next)
   );
 });
 
-router.post('/refresh', async (req, res) => {
+router.post('/refresh', async (req, res, next) => {
   const { access, refresh, userCredentials } = req.body;
   const { username } = userCredentials;
 
@@ -28,7 +32,7 @@ router.post('/refresh', async (req, res) => {
   await RefreshToken.destroy({ where: { token: refresh } });
 
   const user = await User.findOne({ where: { username } });
-  generateRefreshToken(res, user, true);
+  generateRefreshToken(res, user, true, next);
 });
 
 router.delete('/delete/:userId', async (req, res) => {
@@ -39,11 +43,11 @@ router.delete('/delete/:userId', async (req, res) => {
     return res.sendStatus(200);
   } catch (err) {
     console.log(err);
-    return res.sendStatus(404);
+    return next(new HttpError(NOT_FOUND, errorMessages.NOT_FOUND));
   }
 });
 
-router.post('/register', (req, res) => {
+router.post('/register', (req, res, next) => {
   const { userCredentials } = req.body;
   const { password } = req.body.userCredentials;
 
@@ -51,7 +55,7 @@ router.post('/register', (req, res) => {
   bcrypt.hash(password, saltRounds, async (_, hashPassword) => {
     const newUser = { ...userCredentials, password: hashPassword };
     const user = await User.create(newUser);
-    generateRefreshToken(res, user, true);
+    generateRefreshToken(res, user, true, next);
   });
 });
 

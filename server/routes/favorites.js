@@ -1,5 +1,8 @@
 const router = require('express').Router();
 const Favorite = require('../models/Favorite');
+const HttpError = require('./httpError');
+const { NOT_FOUND, BAD_REQUEST } = require('http-status');
+const errorMessages = require('./errorMessages');
 
 const path = '/favorites';
 
@@ -11,7 +14,7 @@ router.get(`/user/:userId/location/:locationId`, async (req, res) => {
     return res.send(!!favorites.length);
   } catch (err) {
     console.log(err);
-    return res.sendStatus(404);
+    return next(new HttpError(NOT_FOUND, errorMessages.NOT_FOUND));
   }
 });
 
@@ -29,7 +32,7 @@ router.post('/add', async (req, res) => {
     return res.send(favorites);
   } catch (err) {
     console.log(err);
-    return res.sendStatus(422);
+    return next(new HttpError(BAD_REQUEST, errorMessages.BAD_REQUEST));
   }
 });
 
@@ -41,7 +44,7 @@ router.delete('/delete/user/:userId/location/:locationId', async (req, res) => {
     return res.sendStatus(204);
   } catch (err) {
     console.log(err);
-    return res.sendStatus(422);
+    return next(new HttpError(BAD_REQUEST, errorMessages.BAD_REQUEST));
   }
 });
 

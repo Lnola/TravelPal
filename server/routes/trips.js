@@ -1,5 +1,8 @@
 const router = require('express').Router();
 const Trip = require('../models/Trip');
+const HttpError = require('./httpError');
+const { BAD_REQUEST } = require('http-status');
+const errorMessages = require('./errorMessages');
 
 const path = '/trips';
 
@@ -38,7 +41,7 @@ router.post('/add', async (req, res) => {
     return res.send(newTrip);
   } catch (err) {
     console.log(err);
-    return res.sendStatus(422);
+    return next(new HttpError(BAD_REQUEST, errorMessages.BAD_REQUEST));
   }
 });
 
@@ -53,7 +56,7 @@ router.post('/edit', async (req, res) => {
     return res.send(newTrip);
   } catch (err) {
     console.log(err);
-    return res.sendStatus(422);
+    return next(new HttpError(BAD_REQUEST, errorMessages.BAD_REQUEST));
   }
 });
 

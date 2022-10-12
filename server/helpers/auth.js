@@ -1,12 +1,16 @@
 const jwt = require('jsonwebtoken');
 const randtoken = require('rand-token');
 const RefreshToken = require('../models/RefreshToken');
+const HttpError = require('./httpError');
+const { UNAUTHORIZED, FORBIDDEN } = require('http-status');
+const errorMessages = require('./errorMessages');
 
 const { JWT_SECRET_KEY } = process.env;
 
 const verifyToken = (req, res, next) => {
   const bearerHeader = req.headers['authorization'];
-  if (!bearerHeader) return res.sendStatus(403);
+  if (!bearerHeader)
+    return next(new HttpError(FORBIDDEN, errorMessages.LOGIN_ERROR));
 
   const bearer = bearerHeader.split(' ');
   const bearerToken = bearer[1];
@@ -25,15 +29,15 @@ const sign = async (res, user, accessToken) => {
     const newRefreshToken = { userId, token: refreshToken };
     await RefreshToken.create(newRefreshToken);
     const response = { accessToken, refreshToken, userId };
-    return res.send(response);
+    return res.json(response);
   } catch (err) {
-    console.log(err);
-    return res.sendStatus(403);
+    return next(new HttpError(FORBIDDEN, errorMessages.LOGIN_ERROR));
   }
 };
 
-const generateRefreshToken = (res, user, doesMatch) => {
-  if (!doesMatch) return res.sendStatus(401);
+const generateRefreshToken = (res, user, doesMatch, next) => {
+  if (!doesMatch)
+    return next(new HttpError(UNAUTHORIZED, errorMessages.LOGIN_ERROR));
 
   // Create jwt token
   const payload = { user };
