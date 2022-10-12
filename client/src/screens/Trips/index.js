@@ -28,13 +28,12 @@ class Trips extends Component {
     this.getTrips();
   }
 
-  getTrips = () => {
+  getTrips = async () => {
     const userId = getUserId();
 
-    authorizedRequest(`/api/trips/${userId}`, 'get').then((trips) => {
-      this.setState({ trips });
-      this.filterByDate(defaultFilterId);
-    });
+    const trips = await authorizedRequest(`/api/trips/${userId}`, 'get');
+    this.setState({ trips });
+    this.filterByDate(defaultFilterId);
   };
 
   filterByDate = (id) => {
