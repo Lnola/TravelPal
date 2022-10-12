@@ -17,7 +17,7 @@ function App() {
         <PrivateRoute exact path='/locations' component={Locations} />
         <PrivateRoute exact path='/trips' component={Trips} />
 
-        <Redirect exact to='/' />
+        <Redirect exact to='/auth' />
       </Switch>
     </BrowserRouter>
   );
