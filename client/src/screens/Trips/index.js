@@ -7,7 +7,7 @@ import TripModal from './TripModal';
 import Logout from './Logout';
 import PlusButton from '../../components/PlusButton';
 
-import { authorizedRequest } from '../../utils/authorizedRequest';
+import { tripsApi } from '../../api';
 import { formatDate } from '../../utils/utils';
 import { getUserId } from '../../utils/storage';
 import './index.css';
@@ -31,7 +31,7 @@ class Trips extends Component {
   getTrips = async () => {
     const userId = getUserId();
 
-    const trips = await authorizedRequest(`/api/trips/${userId}`, 'get');
+    const trips = await tripsApi.fetchByUserId(userId);
     this.setState({ trips });
     this.filterByDate(defaultFilterId);
   };
