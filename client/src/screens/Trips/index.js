@@ -28,9 +28,10 @@ class Trips extends Component {
   getTrips = () => {
     const userId = window.localStorage.getItem('id');
 
-    authorizedRequest(`/api/trips/${userId}`, 'get').then((trips) =>
-      this.setState({ trips })
-    );
+    authorizedRequest(`/api/trips/${userId}`, 'get').then((trips) => {
+      this.setState({ trips });
+      this.filterByDate(defaultFilterId);
+    });
   };
 
   filterByDate = (id) => {
