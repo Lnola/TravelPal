@@ -7,6 +7,7 @@ const User = require('../models/User');
 
 const HttpError = require('../helpers/httpError');
 const errorMessages = require('../helpers/errorMessages');
+const { generateTokens } = require('../helpers/auth');
 
 const { SALT_ROUNDS } = process.env;
 
@@ -18,9 +19,16 @@ router.post('/login', async (req, res, next) => {
   const user = await User.findOne({ where: { username } });
   if (!user) return next(new HttpError(CONFLICT, errorMessages.LOGIN_ERROR));
 
-  bcrypt.compare(password, user.password, (_, doesMatch) =>
-    generateRefreshToken(res, user, doesMatch, next)
-  );
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch)
+    return next(new HttpError(UNAUTHORIZED, errorMessages.LOGIN_ERROR));
+
+  try {
+    const tokens = await generateTokens(user, next);
+    return res.json(tokens);
+  } catch {
+    return next(new HttpError());
+  }
 });
 
 router.post('/refresh', async (req, res, next) => {
