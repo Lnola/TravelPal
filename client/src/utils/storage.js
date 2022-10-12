@@ -26,4 +26,15 @@ const getUserId = () => {
   return window.localStorage.getItem('id');
 };
 
-export { getTokens, setTokens, clearLocalStorage, setCredentials, getUserId };
+const getUsername = () => {
+  return window.localStorage.getItem('username');
+};
+
+export {
+  getTokens,
+  setTokens,
+  clearLocalStorage,
+  setCredentials,
+  getUserId,
+  getUsername,
+};
