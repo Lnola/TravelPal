@@ -1,17 +1,28 @@
 .input__wrapper {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
   width: 100%;
+  margin-bottom: 4px;
+}
+
+.input__wrapper > input {
+  margin-bottom: 4px;
+}
+
+.input__wrapper::after {
+  content: ' ';
+  display: inline-block;
+  width: 100%;
+  height: calc(12px + 8px / 2);
 }
 
 .input__error {
-  font-size: 12px;
+  height: 0;
   display: inline-block;
-  margin-top: -5px;
-  margin-bottom: 10px;
-  color: #f76f63;
+  font-size: 12px;
   font-weight: 600;
+  color: #f76f63;
 }
 
 /* PlusButton.js */
