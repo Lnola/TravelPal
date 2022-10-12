@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+
 import TripPreview from './TripPreview';
 import TripsFilter from './TripsFilter';
-import PlusButton from '../../components/PlusButton';
 import TripModal from './TripModal';
-import './index.css';
+import Logout from './Logout';
+import PlusButton from '../../components/PlusButton';
+
 import { authorizedRequest } from '../../utils/authorizedRequest';
 import { formatDate } from '../../utils/utils';
-import Logout from './Logout';
+import './index.css';
 
 const defaultFilterId = 1;
 
