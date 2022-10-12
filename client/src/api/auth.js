@@ -9,6 +9,10 @@ const urls = {
   get register() {
     return this.root + '/register';
   },
+
+  get refresh() {
+    return this.root + '/refresh';
+  },
 };
 
 const login = (credentials) => {
@@ -19,5 +23,9 @@ const register = (credentials) => {
   return request.post(urls.register, credentials).then(extractData);
 };
 
-const api = { login, register };
+const refresh = (credentials) => {
+  return request.post(urls.refresh, credentials).then(extractData);
+};
+
+const api = { login, register, refresh };
 export default api;
