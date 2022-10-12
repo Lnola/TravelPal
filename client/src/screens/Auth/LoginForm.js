@@ -38,7 +38,7 @@ export default withFormik({
     password: Yup.string().min(4).required('Cannot be empty'),
   }),
 
-  async handleSubmit(values, { resetForm }) {
+  async handleSubmit(values) {
     const userCredentials = {
       username: values.username,
       password: values.password,
@@ -47,7 +47,6 @@ export default withFormik({
     try {
       const credentials = await api.login(userCredentials);
       setCredentials(credentials);
-      resetForm();
       window.location.href = '/trips';
     } catch ({ response }) {
       alert(response.data.message);
