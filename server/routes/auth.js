@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
-const { CONFLICT, NOT_FOUND } = require('http-status');
+const { CONFLICT, NOT_FOUND, UNAUTHORIZED } = require('http-status');
 
 const RefreshToken = require('../models/RefreshToken');
 const User = require('../models/User');
