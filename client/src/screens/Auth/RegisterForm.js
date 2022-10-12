@@ -52,5 +52,13 @@ export default withFormik({
       email: values.email,
       password: values.password,
     };
+
+    try {
+      const credentials = await api.register(userCredentials);
+      setCredentials(credentials);
+      window.location.href = '/trips';
+    } catch ({ response }) {
+      alert(response.data.message);
+    }
   },
 })(RegisterForm);
