@@ -116,7 +116,6 @@
 /* TripsHeader */
 
 .trips__header {
-  margin-top: 12px;
   margin-bottom: 12px;
 }
 
@@ -127,4 +126,28 @@
 
 .trips__header h1 {
   font-size: 32px;
+}
+
+/* TripsNav.js */
+
+.trips__nav {
+  position: fixed;
+  bottom: 20px;
+  left: calc(50% - 1024px / 2);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.trips__nav--wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1024px;
+}
+
+.plus__button--trips {
+  position: static;
+  left: 0;
+  right: 0;
 }

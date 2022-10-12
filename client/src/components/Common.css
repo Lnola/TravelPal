@@ -221,28 +221,14 @@ abbr {
 
 @media screen and (min-width: 600px) {
   main,
-  header {
+  header,
+  nav {
     max-width: 1024px;
     margin: auto;
   }
 
   .react-calendar__tile {
     border-radius: 15px;
-  }
-
-  .nav__trips {
-    position: fixed;
-    bottom: 25px;
-    display: flex;
-    justify-content: center;
-    width: 95%;
-  }
-
-  .nav__trips--wrapper {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1024px;
   }
 
   .plus__button--trips {
@@ -253,11 +239,5 @@ abbr {
 
   .logout__button {
     position: static;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .nav__trips {
-    width: 97%;
   }
 }
