@@ -56,24 +56,23 @@ export default withFormik({
     password: Yup.string().min(4).required('Cannot be empty'),
   }),
 
-  handleSubmit(values, { resetForm, props }) {
+  async handleSubmit(values, { resetForm, props }) {
     const userCredentials = {
       username: values.username,
       password: values.password,
     };
 
+    const tokens = await authorizedRequest('/api/auth/login', 'post', {
+      userCredentials,
+    });
+
+    if (!tokens) return alert("Username and password don't match");
+
+    setTokens(tokens.accessToken, tokens.refreshToken);
+    window.localStorage.setItem('id', tokens.userId);
+    window.localStorage.setItem('username', userCredentials.username);
+
     resetForm();
-
-    authorizedRequest('/api/auth/login', 'post', { userCredentials }).then(
-      (tokens) => {
-        if (tokens !== undefined) {
-          setTokens(tokens.accessToken, tokens.refreshToken);
-          window.localStorage.setItem('id', tokens.userId);
-          window.localStorage.setItem('username', userCredentials.username);
-
-          props.history.push('/trips');
-        } else alert("Username and password don't match");
-      }
-    );
+    props.history.push('/trips');
   },
 })(Login);
