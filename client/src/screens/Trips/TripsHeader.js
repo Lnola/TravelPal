@@ -9,7 +9,7 @@ class TripsHeader extends Component {
     const { filterByDate } = this.props;
 
     return (
-      <header className='header__trips'>
+      <header className='trips__header'>
         <h1>My Trips</h1>
         <TripsFilter default={defaultFilterId} filterByDate={filterByDate} />
       </header>

@@ -1,20 +1,5 @@
 /* index.js */
 
-.header__trips {
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-.header__trips h1,
-.header__trips p {
-  color: grey;
-}
-
-.header__trips h1 {
-  font-size: 30px;
-  margin-left: 10px;
-}
-
 .trips__message {
   width: 90%;
   text-align: center;
@@ -126,4 +111,20 @@
   position: fixed;
   left: 25px;
   bottom: 25px;
+}
+
+/* TripsHeader */
+
+.trips__header {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.trips__header h1,
+.trips__header p {
+  color: grey;
+}
+
+.trips__header h1 {
+  font-size: 32px;
 }
