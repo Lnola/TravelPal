@@ -17,14 +17,14 @@ class TripsFilter extends Component {
 
   render() {
     const { selectedIndex } = this.state;
-    const buttons = [
+    const filterOptions = [
       { id: 0, label: 'Previous' },
       { id: 1, label: 'Upcoming' },
     ];
 
     return (
       <section>
-        {buttons.map(({ label, id }) => (
+        {filterOptions.map(({ label, id }) => (
           <button
             key={id}
             className={`trips__filter--button 
