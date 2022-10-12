@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { StatusCodes } from 'http-status-codes';
+import { getTokens } from '../../utils/storage';
 
 const { FORBIDDEN } = StatusCodes;
 
@@ -11,6 +12,13 @@ const config = {
 const client = axios.create(config);
 
 const isAuthError = (err) => [FORBIDDEN].includes(err.response.status);
+
+client.interceptors.request.use((req) => {
+  const { access } = getTokens();
+  req.headers.authorization = access ? `Bearer ${access}` : '';
+
+  return req;
+});
 
 client.interceptors.response.use(
   (res) => res,
