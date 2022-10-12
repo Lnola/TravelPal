@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import TripsHeader from './TripsHeader';
 import TripPreview from './TripPreview';
 import TripModal from './TripModal';
-import Logout from './Logout';
-import PlusButton from '../../components/PlusButton';
+import TripsNav from './TripsNav';
 
 import { tripsApi } from '../../api';
 import { formatDate } from '../../utils/utils';
@@ -44,12 +43,12 @@ class Trips extends Component {
     this.setState({ filteredTrips: filters[id]() });
   };
 
-  handleToggleModal = (visibleType) => {
+  toggleModal = (visibleType) => {
     const { isModalVisible } = this.state;
     if (isModalVisible === !visibleType) {
       if (visibleType) {
         document.getElementsByTagName('body')[0].classList.add('o-hidden');
-        this.setState({ currentScrollPosition: window.scrollY });
+        // this.setState({ currentScrollPosition: window.scrollY });
       } else
         document.getElementsByTagName('body')[0].classList.remove('o-hidden');
 
@@ -85,20 +84,12 @@ class Trips extends Component {
           )}
         </main>
 
-        <nav className='nav__trips'>
-          <section className='nav__trips--wrapper'>
-            <Logout />
-            <PlusButton
-              className='plus__button--trips'
-              onToggleModal={this.handleToggleModal}
-            />
-          </section>
-        </nav>
+        <TripsNav toggleModal={this.toggleModal} />
 
         {isModalVisible ? (
           <TripModal
             style={{ top: currentScrollPosition }}
-            onToggleModal={this.handleToggleModal}
+            onToggleModal={this.toggleModal}
             forceUpdateTrips={this.getTrips}
           />
         ) : null}
