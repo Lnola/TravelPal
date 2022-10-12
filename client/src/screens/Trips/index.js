@@ -29,25 +29,19 @@ class Trips extends Component {
     const userId = window.localStorage.getItem('id');
 
     authorizedRequest(`/api/trips/${userId}`, 'get').then((trips) =>
-      this.setState({ trips, filteredTrips: trips })
+      this.setState({ trips })
     );
   };
 
-  handleFilterByDate = (type) => {
+  filterByDate = (id) => {
     const { trips } = this.state;
-    let filteredTrips = [];
 
-    if (type === 'previous') {
-      trips.forEach((trip) => {
-        if (trip.dateTo < formatDate(new Date())) filteredTrips.push(trip);
-      });
-    } else if (type === 'upcoming') {
-      trips.forEach((trip) => {
-        if (trip.dateTo > formatDate(new Date())) filteredTrips.push(trip);
-      });
-    }
+    const filters = {
+      0: () => trips.filter(({ dateTo }) => dateTo < formatDate(new Date())),
+      1: () => trips.filter(({ dateTo }) => dateTo > formatDate(new Date())),
+    };
 
-    this.setState({ filteredTrips });
+    this.setState({ filteredTrips: filters[id]() });
   };
 
   handleToggleModal = (visibleType) => {
