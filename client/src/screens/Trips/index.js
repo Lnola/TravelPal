@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import TripsHeader from './TripsHeader';
 import TripPreview from './TripPreview';
-import TripsFilter from './TripsFilter';
 import TripModal from './TripModal';
 import Logout from './Logout';
 import PlusButton from '../../components/PlusButton';
@@ -62,13 +62,8 @@ class Trips extends Component {
 
     return (
       <React.Fragment>
-        <header className='header__trips'>
-          <h1>My Trips</h1>
-          <TripsFilter
-            default={defaultFilterId}
-            filterByDate={this.filterByDate}
-          />
-        </header>
+        <TripsHeader filterByDate={this.filterByDate} />
+
         <main>
           {filteredTrips.length === 0 ? (
             <p className='trips__message'>
