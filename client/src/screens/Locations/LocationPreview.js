@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { debounce } from 'throttle-debounce';
 import FavoritesButton from '../../components/FavoritesButton';
 import PlusButton from '../../components/PlusButton';
-import { authorizedRequest } from '../../utils/utils_api';
+import { authorizedRequest } from '../../utils/authorizedRequest';
 import { formatLocationId } from '../../utils/utils';
 import ImageMissing from '../../assets/RandomImg.png';
 

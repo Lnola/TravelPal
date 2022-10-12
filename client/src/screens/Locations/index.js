@@ -16,7 +16,7 @@ import Input from '../../components/Input';
 import './Locations.css';
 import LocationPreview from './LocationPreview';
 import LocationModal from './LocationModal';
-import { authorizedRequest } from '../../utils/utils_api';
+import { authorizedRequest } from '../../utils/authorizedRequest';
 
 class Locations extends Component {
   constructor(props) {

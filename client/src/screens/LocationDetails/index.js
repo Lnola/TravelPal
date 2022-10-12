@@ -7,7 +7,7 @@ import PlusButton from '../../components/PlusButton';
 import LocationModal from '../Locations/LocationModal';
 import { formatMarker } from '../../utils/utils';
 import ImageMissing from '../../assets/RandomImg.png';
-import { authorizedRequest } from '../../utils/utils_api';
+import { authorizedRequest } from '../../utils/authorizedRequest';
 
 class LocationDetails extends Component {
   constructor(props) {

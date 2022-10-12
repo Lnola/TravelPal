@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import TripCalendar from '../TripDetails/TripCalendar';
 import { formatDate } from '../../utils/utils';
-import { authorizedRequest } from '../../utils/utils_api';
+import { authorizedRequest } from '../../utils/authorizedRequest';
 
 class LocationModal extends Component {
   constructor(props) {

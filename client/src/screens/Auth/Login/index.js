@@ -5,7 +5,8 @@ import * as Yup from 'yup';
 
 import Input from '../../../components/Input';
 
-import { authorizedRequest, setTokens } from '../../../utils/utils_api';
+import { setTokens } from '../../../utils/storage';
+import { authorizedRequest } from '../../../utils/authorizedRequest';
 
 import Logo from '../../../assets/Logo.png';
 
