@@ -25,6 +25,7 @@
     "concurrently": "^4.1.2",
     "dotenv": "^16.0.2",
     "express": "^4.17.1",
+    "http-status": "^1.5.3",
     "jsonwebtoken": "^8.5.1",
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",
