@@ -9,16 +9,27 @@ const errorMessages = require('./errorMessages');
 
 const { JWT_SECRET_KEY } = process.env;
 
-const verifyToken = (req, res, next) => {
+const authenticate = (req, res, next) => {
   const bearerHeader = req.headers['authorization'];
   if (!bearerHeader)
-    return next(new HttpError(FORBIDDEN, errorMessages.LOGIN_ERROR));
+    return next(new HttpError(FORBIDDEN, errorMessages.FORBIDDEN));
 
   const bearer = bearerHeader.split(' ');
-  const bearerToken = bearer[1];
+  const accessToken = bearer[1];
 
-  req.token = bearerToken;
-  next();
+  try {
+    const { user } = jwt.verify(accessToken, JWT_SECRET_KEY);
+    req.user = user;
+    return next();
+  } catch (err) {
+    if (err instanceof jwt.TokenExpiredError) {
+      return next(new HttpError(FORBIDDEN, errorMessages.TOKEN_EXPIRED));
+    }
+
+    if (err instanceof jwt.JsonWebTokenError) {
+      return next(new HttpError(FORBIDDEN, errorMessages.FORBIDDEN));
+    }
+  }
 };
 
 const generateTokens = async (user) => {
@@ -36,4 +47,4 @@ const generateTokens = async (user) => {
   return { accessToken, refreshToken, userId };
 };
 
-module.exports = { verifyToken, generateTokens };
+module.exports = { authenticate, generateTokens };
