@@ -25,6 +25,7 @@ class AuthForm extends Component {
               name={name}
               value={value}
               error={error}
+              isValidationVisible={!!value.length}
             />
           ))}
           <Button

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Formik, withFormik } from 'formik';
+import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { authorizedRequest, setTokens } from '../../utils/utils_api';
@@ -7,22 +7,8 @@ import { authorizedRequest, setTokens } from '../../utils/utils_api';
 import AuthForm from './AuthForm';
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      areAllFull: false,
-    };
-  }
-
-  componentDidUpdate(nextProps) {
-    const { username, password } = nextProps.values;
-    if (username !== '' && password !== '' && !this.state.areAllFull)
-      this.setState({ areAllFull: true });
-  }
-
   render() {
     const { values, handleSubmit, errors, isSubmitting, swapForm } = this.props;
-    const { areAllFull } = this.state;
 
     const inputs = [
       {
