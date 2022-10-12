@@ -26,7 +26,7 @@ class Auth extends Component {
         <CSSTransition
           in={isLogin}
           nodeRef={this.nodeRef}
-          timeout={1000}
+          timeout={500}
           unmountOnExit
           classNames='login__node'
         >
@@ -38,7 +38,7 @@ class Auth extends Component {
         <CSSTransition
           in={!isLogin}
           nodeRef={this.nodeRef2}
-          timeout={1000}
+          timeout={500}
           unmountOnExit
           classNames='login__node'
         >
