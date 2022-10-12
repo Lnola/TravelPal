@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 
 import AuthForm from './AuthForm';
 
-import api from '../../api/auth';
+import { authApi } from '../../api';
 import { setCredentials } from '../../utils/storage';
 import { registerForm } from './constants';
 
@@ -54,7 +54,7 @@ export default withFormik({
     };
 
     try {
-      const credentials = await api.register({ userCredentials });
+      const credentials = await authApi.register({ userCredentials });
       setCredentials(credentials);
       window.location.href = '/trips';
     } catch ({ response }) {
