@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { authorizedRequest, setTokens } from '../../utils/utils_api';
-
 import AuthForm from './AuthForm';
+
+import api from '../../api/auth';
+import { setCredentials } from '../../utils/storage';
 
 class Login extends Component {
   render() {
@@ -56,23 +57,19 @@ export default withFormik({
     password: Yup.string().min(4).required('Cannot be empty'),
   }),
 
-  async handleSubmit(values, { resetForm, props }) {
+  async handleSubmit(values, { resetForm }) {
     const userCredentials = {
       username: values.username,
       password: values.password,
     };
 
-    const tokens = await authorizedRequest('/api/auth/login', 'post', {
-      userCredentials,
-    });
-
-    if (!tokens) return alert("Username and password don't match");
-
-    setTokens(tokens.accessToken, tokens.refreshToken);
-    window.localStorage.setItem('id', tokens.userId);
-    window.localStorage.setItem('username', userCredentials.username);
-
-    resetForm();
-    props.history.push('/trips');
+    try {
+      const credentials = await api.login(userCredentials);
+      setCredentials(credentials);
+      resetForm();
+      window.location.href = '/trips';
+    } catch ({ response }) {
+      alert(response.data.message);
+    }
   },
 })(Login);
