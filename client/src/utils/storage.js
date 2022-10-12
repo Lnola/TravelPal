@@ -22,4 +22,8 @@ const setCredentials = ({ accessToken, refreshToken, userId, username }) => {
   window.localStorage.setItem('username', username);
 };
 
-export { getTokens, setTokens, clearLocalStorage, setCredentials };
+const getUserId = () => {
+  return window.localStorage.getItem('id');
+};
+
+export { getTokens, setTokens, clearLocalStorage, setCredentials, getUserId };

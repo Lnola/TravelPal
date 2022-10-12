@@ -9,6 +9,7 @@ import PlusButton from '../../components/PlusButton';
 
 import { authorizedRequest } from '../../utils/authorizedRequest';
 import { formatDate } from '../../utils/utils';
+import { getUserId } from '../../utils/storage';
 import './index.css';
 
 const defaultFilterId = 1;
@@ -28,7 +29,7 @@ class Trips extends Component {
   }
 
   getTrips = () => {
-    const userId = window.localStorage.getItem('id');
+    const userId = getUserId();
 
     authorizedRequest(`/api/trips/${userId}`, 'get').then((trips) => {
       this.setState({ trips });
