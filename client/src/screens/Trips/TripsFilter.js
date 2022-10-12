@@ -4,49 +4,37 @@ class TripsFilter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      buttonColorCss: { firstButton: '', secondButton: '' },
+      selectedIndex: 1,
     };
   }
 
-  handleButtonColorCss = (isFirstButton) => {
-    const { buttonColorCss } = this.state;
-    if (isFirstButton) {
-      buttonColorCss.firstButton = 'bc-salmon';
-      buttonColorCss.secondButton = '';
-    } else {
-      buttonColorCss.firstButton = '';
-      buttonColorCss.secondButton = 'bc-salmon';
+  handleClick = (id) => {
+    const { selectedIndex } = this.state;
+    if (id !== selectedIndex) {
+      this.setState({ selectedIndex: id });
     }
-
-    this.setState({ buttonColorCss });
   };
 
   render() {
-    const { buttonColorCss } = this.state;
-    const { onFilterByDate } = this.props;
+    const { selectedIndex } = this.state;
+    const buttons = [
+      { id: 0, label: 'Previous' },
+      { id: 1, label: 'Upcoming' },
+    ];
 
     return (
-      <div className='trips__filter'>
-        <button
-          className={buttonColorCss.firstButton}
-          onClick={() => {
-            this.handleButtonColorCss(true);
-            onFilterByDate('previous');
-          }}
-        >
-          Previous
-        </button>
-
-        <button
-          className={buttonColorCss.secondButton}
-          onClick={() => {
-            this.handleButtonColorCss(false);
-            onFilterByDate('upcoming');
-          }}
-        >
-          Upcoming
-        </button>
-      </div>
+      <section>
+        {buttons.map(({ label, id }) => (
+          <button
+            key={id}
+            className={`trips__filter--button 
+            ${id === selectedIndex && 'bc-salmon'}`}
+            onClick={() => this.handleClick(id)}
+          >
+            {label}
+          </button>
+        ))}
+      </section>
     );
   }
 }
