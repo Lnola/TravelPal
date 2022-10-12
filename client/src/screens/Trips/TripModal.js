@@ -9,7 +9,7 @@ class TripModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      areAllFull: false,
+      isValidationVisible: false,
       isCalendarVisible: true,
       selectedDate: new Date(),
     };
@@ -17,8 +17,8 @@ class TripModal extends Component {
 
   componentDidUpdate(nextProps) {
     const { name } = nextProps.values;
-    if (name !== '' && !this.state.areAllFull)
-      this.setState({ areAllFull: true });
+    if (name !== '' && !this.state.isValidationVisible)
+      this.setState({ isValidationVisible: true });
   }
 
   handleToggleCalendarVisibility = () => {
@@ -33,7 +33,7 @@ class TripModal extends Component {
   render() {
     const { values, handleSubmit, errors, isSubmitting, onToggleModal, style } =
       this.props;
-    const { areAllFull, isCalendarVisible, selectedDate } = this.state;
+    const { isValidationVisible, isCalendarVisible, selectedDate } = this.state;
 
     values.selectedDate = selectedDate;
 
@@ -46,7 +46,7 @@ class TripModal extends Component {
               name='name'
               error={errors.name}
               value={values.name}
-              areAllFull={areAllFull}
+              isValidationVisible={isValidationVisible}
             />
 
             <TripCalendar
