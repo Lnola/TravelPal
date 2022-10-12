@@ -14,37 +14,35 @@ class AuthForm extends Component {
 
     if (!inputs) return null;
     return (
-      <main className='auth__form'>
-        <Form className='auth__form--form'>
-          <img className='auth__form--logo' src={Logo} alt='logo' />
+      <Form className='auth__form--form'>
+        <img className='auth__form--logo' src={Logo} alt='logo' />
 
-          {inputs.map(({ name, type, value, error }) => (
-            <Input
-              key={name}
-              type={type}
-              name={name}
-              value={value}
-              error={error}
-              isValidationVisible={!!value.length}
-            />
-          ))}
-          <Button
-            type='submit'
-            disabled={disabled}
-            onClick={handleSubmit}
-            label={submitLabel}
+        {inputs.map(({ name, type, value, error }) => (
+          <Input
+            key={name}
+            type={type}
+            name={name}
+            value={value}
+            error={error}
+            isValidationVisible={!!value.length}
           />
+        ))}
+        <Button
+          type='submit'
+          disabled={disabled}
+          onClick={handleSubmit}
+          label={submitLabel}
+        />
 
-          <div className='input__wrapper'>
-            <p className='auth__form--text'>{cta.text}</p>
-            <Button
-              variant={ButtonVariants.text}
-              onClick={cta.onClick}
-              label={cta.label}
-            />
-          </div>
-        </Form>
-      </main>
+        <div className='input__wrapper'>
+          <p className='auth__form--text'>{cta.text}</p>
+          <Button
+            variant={ButtonVariants.text}
+            onClick={cta.onClick}
+            label={cta.label}
+          />
+        </div>
+      </Form>
     );
   }
 }

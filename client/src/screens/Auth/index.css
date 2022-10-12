@@ -1,8 +1,14 @@
 .auth__form {
-  height: 80%;
+  height: 88%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.auth__form--section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .auth__form--form {
@@ -44,4 +50,28 @@
   .auth__form--form {
     max-width: 400px;
   }
+}
+
+.login__node-enter {
+  opacity: 0;
+  position: absolute;
+  margin-bottom: -100%;
+}
+
+.login__node-enter-active {
+  opacity: 1;
+  margin-bottom: 0;
+  transition: opacity 0.5s, margin-bottom 0.5s;
+}
+
+.login__node-exit {
+  opacity: 1;
+  position: absolute;
+  margin-bottom: 0;
+}
+
+.login__node-exit-active {
+  opacity: 0;
+  margin-bottom: 100%;
+  transition: opacity 0.5s, margin-bottom 0.5s;
 }
