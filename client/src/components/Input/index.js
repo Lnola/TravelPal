@@ -25,7 +25,7 @@ class Input extends Component {
             />
           )}
         </Field>
-        {props.areAllFull ? (
+        {props.isValidationVisible ? (
           <span className='input__error'>{capitalizeText(props.error)}</span>
         ) : null}
       </div>
