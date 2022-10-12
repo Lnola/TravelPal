@@ -1,8 +1,10 @@
 const router = require('express').Router();
-const Favorite = require('../models/Favorite');
-const HttpError = require('./httpError');
 const { NOT_FOUND, BAD_REQUEST } = require('http-status');
-const errorMessages = require('./errorMessages');
+
+const Favorite = require('../models/Favorite');
+
+const HttpError = require('../helpers/httpError');
+const errorMessages = require('../helpers/errorMessages');
 
 const path = '/favorites';
 

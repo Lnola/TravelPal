@@ -1,8 +1,10 @@
 const router = require('express').Router();
-const Trip = require('../models/Trip');
-const HttpError = require('./httpError');
 const { BAD_REQUEST } = require('http-status');
-const errorMessages = require('./errorMessages');
+
+const Trip = require('../models/Trip');
+
+const HttpError = require('../helpers/httpError');
+const errorMessages = require('../helpers/errorMessages');
 
 const path = '/trips';
 

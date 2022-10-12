@@ -27,6 +27,7 @@ const sign = async (res, user, accessToken) => {
   try {
     const userId = user.id;
     const newRefreshToken = { userId, token: refreshToken };
+
     await RefreshToken.create(newRefreshToken);
     const response = { accessToken, refreshToken, userId };
     return res.json(response);

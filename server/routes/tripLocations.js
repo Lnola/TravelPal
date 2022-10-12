@@ -1,9 +1,11 @@
 const router = require('express').Router();
+const { NOT_FOUND, BAD_REQUEST } = require('http-status');
+
 const TripLocation = require('../models/TripLocation');
 const Location = require('../models/Location');
-const HttpError = require('./httpError');
-const { NOT_FOUND, BAD_REQUEST } = require('http-status');
-const errorMessages = require('./errorMessages');
+
+const HttpError = require('../helpers/httpError');
+const errorMessages = require('../helpers/errorMessages');
 
 const path = '/trip_locations';
 

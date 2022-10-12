@@ -1,6 +1,9 @@
 const router = require('express').Router();
-const CityLocation = require('../models/CityLocation');
 const { BAD_REQUEST } = require('http-status');
+
+const CityLocation = require('../models/CityLocation');
+
+const HttpError = require('../helpers/httpError');
 const errorMessages = require('../helpers/errorMessages');
 
 const path = '/city-locations';
