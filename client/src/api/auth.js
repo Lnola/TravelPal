@@ -13,6 +13,10 @@ const urls = {
   get refresh() {
     return this.root + '/refresh';
   },
+
+  get logout() {
+    return this.root + '/logout';
+  },
 };
 
 const login = (credentials) => {
@@ -27,5 +31,9 @@ const refresh = (credentials) => {
   return request.post(urls.refresh, credentials).then(extractData);
 };
 
-const api = { login, register, refresh };
+const logout = () => {
+  return request.delete(urls.logout);
+};
+
+const api = { login, register, refresh, logout };
 export default api;

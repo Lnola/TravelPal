@@ -1,13 +1,19 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
-const { CONFLICT, NOT_FOUND, UNAUTHORIZED, FORBIDDEN } = require('http-status');
+const {
+  CONFLICT,
+  NOT_FOUND,
+  UNAUTHORIZED,
+  FORBIDDEN,
+  OK,
+} = require('http-status');
 
 const RefreshToken = require('../models/RefreshToken');
 const User = require('../models/User');
 
 const HttpError = require('../helpers/httpError');
 const errorMessages = require('../helpers/errorMessages');
-const { generateTokens } = require('../helpers/auth');
+const { generateTokens, authenticate } = require('../helpers/auth');
 
 const { SALT_ROUNDS } = process.env;
 
@@ -61,14 +67,14 @@ router.post('/refresh', async (req, res, next) => {
   }
 });
 
-router.delete('/delete/:userId', async (req, res) => {
-  const { userId } = req.params;
+router.delete('/logout', authenticate, async (req, res, next) => {
+  const { user } = req;
 
   try {
+    const userId = user.id;
     await RefreshToken.destroy({ where: { userId } });
-    return res.sendStatus(200);
+    return res.status(OK).send();
   } catch (err) {
-    console.log(err);
     return next(new HttpError(NOT_FOUND, errorMessages.NOT_FOUND));
   }
 });
