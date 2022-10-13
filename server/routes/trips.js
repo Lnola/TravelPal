@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { BAD_REQUEST } = require('http-status');
+const { BAD_REQUEST, NOT_FOUND } = require('http-status');
 
 const Trip = require('../models/Trip');
 
@@ -9,14 +9,14 @@ const { authenticate } = require('../helpers/auth');
 
 const path = '/trips';
 
-router.get('/', authenticate, async (req, res) => {
+router.get('/', authenticate, async (req, res, next) => {
   const userId = req.user.id;
 
   try {
     const trips = await Trip.findAll({ where: { userId } });
     return res.send(trips);
   } catch (err) {
-    return res.sendStatus(500);
+    return next(new HttpError(NOT_FOUND, errorMessages.NOT_FOUND));
   }
 });
 
