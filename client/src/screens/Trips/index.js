@@ -19,6 +19,7 @@ class Trips extends Component {
       isModalVisible: false,
       trips: [],
       filteredTrips: [],
+      currentScrollPosition: 0,
     };
   }
 
@@ -47,8 +48,9 @@ class Trips extends Component {
     if (isVisible) {
       document.getElementsByTagName('body')[0].classList.add('o-hidden');
       this.setState({ currentScrollPosition: window.scrollY });
-    } else
+    } else {
       document.getElementsByTagName('body')[0].classList.remove('o-hidden');
+    }
 
     this.setState({ isModalVisible: isVisible });
   };
@@ -85,9 +87,9 @@ class Trips extends Component {
 
         {isModalVisible && (
           <TripModal
-            style={{ top: currentScrollPosition }}
-            onToggleModal={this.toggleModal}
-            forceUpdateTrips={this.getTrips}
+            currentScrollPosition={currentScrollPosition}
+            toggleModal={this.toggleModal}
+            refetch={this.getTrips}
           />
         )}
       </React.Fragment>
