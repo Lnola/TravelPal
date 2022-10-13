@@ -20,3 +20,14 @@
   color: #f76f63;
   font-size: 14px;
 }
+
+.pal__button--icon {
+  width: auto;
+  margin-bottom: 0;
+  padding: 14px;
+  border-radius: 50%;
+}
+
+.pal__button--svg {
+  height: 18px;
+}

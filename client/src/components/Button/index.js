@@ -4,7 +4,14 @@ import './index.css';
 
 class AuthForm extends Component {
   render() {
-    const { variant, type = 'button', disabled, onClick, label } = this.props;
+    const {
+      variant,
+      type = 'button',
+      disabled,
+      onClick,
+      label,
+      icon,
+    } = this.props;
 
     let className = 'pal__button';
     if (variant) className += ' pal__button--' + variant;
@@ -16,7 +23,7 @@ class AuthForm extends Component {
         disabled={disabled}
         onClick={onClick}
       >
-        {label}
+        {label || <img className='pal__button--svg' src={icon} alt='icon' />}
       </button>
     );
   }
