@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -25,40 +26,42 @@ class RegisterForm extends Component {
   }
 }
 
-export default withFormik({
-  mapPropsToValues() {
-    return {
-      name: '',
-      surname: '',
-      username: '',
-      email: '',
-      password: '',
-    };
-  },
+export default withRouter(
+  withFormik({
+    mapPropsToValues() {
+      return {
+        name: '',
+        surname: '',
+        username: '',
+        email: '',
+        password: '',
+      };
+    },
 
-  validationSchema: Yup.object().shape({
-    name: Yup.string().min(2).required('Cannot be empty'),
-    surname: Yup.string().min(2).required('Cannot be empty'),
-    username: Yup.string().min(4).required('Cannot be empty'),
-    email: Yup.string().email(),
-    password: Yup.string().min(4).required('Cannot be empty'),
-  }),
+    validationSchema: Yup.object().shape({
+      name: Yup.string().min(2).required('Cannot be empty'),
+      surname: Yup.string().min(2).required('Cannot be empty'),
+      username: Yup.string().min(4).required('Cannot be empty'),
+      email: Yup.string().email(),
+      password: Yup.string().min(4).required('Cannot be empty'),
+    }),
 
-  async handleSubmit(values) {
-    const userCredentials = {
-      name: values.name,
-      surname: values.surname,
-      username: values.username,
-      email: values.email,
-      password: values.password,
-    };
+    async handleSubmit(values, { props }) {
+      const userCredentials = {
+        name: values.name,
+        surname: values.surname,
+        username: values.username,
+        email: values.email,
+        password: values.password,
+      };
 
-    try {
-      const credentials = await authApi.register({ userCredentials });
-      setCredentials(credentials);
-      window.location.href = '/trips';
-    } catch ({ response }) {
-      alert(response.data.message);
-    }
-  },
-})(RegisterForm);
+      try {
+        const credentials = await authApi.register({ userCredentials });
+        setCredentials(credentials);
+        props.history.push('/trips');
+      } catch ({ response }) {
+        alert(response.data.message);
+      }
+    },
+  })(RegisterForm)
+);
