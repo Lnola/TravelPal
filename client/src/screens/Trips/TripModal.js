@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { withFormik, Form } from 'formik';
 import * as Yup from 'yup';
+
 import Input from '../../components/Input';
+import Button from '../../components/Button';
 import TripCalendar from '../TripDetails/TripCalendar';
-import { authorizedRequest } from '../../utils/authorizedRequest';
+
+import { tripsApi } from '../../api';
 
 class TripModal extends Component {
   constructor(props) {
@@ -31,14 +34,21 @@ class TripModal extends Component {
   };
 
   render() {
-    const { values, handleSubmit, errors, isSubmitting, onToggleModal, style } =
-      this.props;
+    const {
+      values,
+      handleSubmit,
+      errors,
+      isSubmitting,
+      dirty,
+      toggleModal,
+      currentScrollPosition,
+    } = this.props;
     const { isValidationVisible, isCalendarVisible, selectedDate } = this.state;
 
     values.selectedDate = selectedDate;
 
     return (
-      <aside style={style}>
+      <aside style={{ top: currentScrollPosition }}>
         <section className='modal--wrapper'>
           <Form>
             <Input
@@ -57,21 +67,17 @@ class TripModal extends Component {
               isSelectRange={true}
             />
             <div className='modal__buttons'>
-              <button
+              <Button
                 type='button'
-                onClick={() => onToggleModal(false)}
-                className='modal__button'
-              >
-                Close
-              </button>
-              <button
+                onClick={() => toggleModal(false)}
+                label='Close'
+              />
+              <Button
                 type='submit'
-                disabled={isSubmitting}
+                disabled={isSubmitting || !dirty}
                 onClick={() => handleSubmit()}
-                className='modal__button'
-              >
-                Submit
-              </button>
+                label='Submit'
+              />
             </div>
           </Form>
         </section>
@@ -93,27 +99,17 @@ export default withFormik({
     selectedDate: Yup.array().min(2).required('Cant be empty'),
   }),
 
-  handleSubmit(values, { resetForm, props }) {
+  async handleSubmit(values, { props }) {
+    const { tripId, toggleModal, refetch } = props;
+
     const tripDetails = {
       name: values.name,
       selectedDate: values.selectedDate,
-      userId: window.localStorage.getItem('id'),
-      tripId: props.tripId,
+      tripId,
     };
 
-    resetForm();
-    props.onToggleModal(false);
-
-    // console.log(tripDetails);
-
-    if (props.tripId === undefined)
-      authorizedRequest('/api/trips/add', 'post', tripDetails).then((res) =>
-        props.forceUpdateTrips()
-      );
-    else {
-      authorizedRequest('/api/trips/edit', 'post', tripDetails).then((res) =>
-        props.forceUpdateTrip()
-      );
-    }
+    await tripsApi[tripId ? 'edit' : 'add'](tripDetails);
+    await refetch();
+    toggleModal(false);
   },
 })(TripModal);
