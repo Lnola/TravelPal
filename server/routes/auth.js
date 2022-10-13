@@ -31,7 +31,7 @@ router.post('/login', async (req, res, next) => {
     return next(new HttpError(UNAUTHORIZED, errorMessages.LOGIN_ERROR));
 
   try {
-    const tokens = await generateTokens(user, next);
+    const tokens = await generateTokens(user);
     return res.json(tokens);
   } catch {
     return next(new HttpError());
@@ -48,7 +48,7 @@ router.post('/register', async (req, res, next) => {
   try {
     const newUser = { ...userCredentials, password: hashPassword };
     const user = await User.create(newUser);
-    const tokens = await generateTokens(user, next);
+    const tokens = await generateTokens(user);
     return res.json(tokens);
   } catch (err) {
     if (err instanceof ValidationError)
@@ -64,7 +64,7 @@ router.post('/refresh', async (req, res, next) => {
   try {
     await RefreshToken.destroy({ where: { token: refresh } });
     const user = await User.findOne({ where: { username } });
-    const tokens = await generateTokens(user, next);
+    const tokens = await generateTokens(user);
     return res.json(tokens);
   } catch (err) {
     return next(new HttpError(FORBIDDEN, errorMessages.FORBIDDEN));
