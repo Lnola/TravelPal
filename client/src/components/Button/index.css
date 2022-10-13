@@ -10,6 +10,10 @@
   cursor: pointer;
 }
 
+.pal__button:disabled {
+  opacity: 0.6;
+}
+
 .pal__button--text {
   display: inline-block;
   width: auto;
