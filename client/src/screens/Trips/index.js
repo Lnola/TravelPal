@@ -83,13 +83,13 @@ class Trips extends Component {
 
         <TripsNav toggleModal={this.toggleModal} />
 
-        {isModalVisible ? (
+        {isModalVisible && (
           <TripModal
             style={{ top: currentScrollPosition }}
             onToggleModal={this.toggleModal}
             forceUpdateTrips={this.getTrips}
           />
-        ) : null}
+        )}
       </React.Fragment>
     );
   }
