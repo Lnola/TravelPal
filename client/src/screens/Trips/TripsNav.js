@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 
 import Button from '../../components/Button';
 import ButtonVariants from '../../components/Button/variants';
-import PlusButton from '../../components/PlusButton';
 
 import { authorizedRequest } from '../../utils/authorizedRequest';
 import { clearLocalStorage } from '../../utils/storage';
 
 import LogoutIcon from '../../assets/logout.svg';
+import PlusIcon from '../../assets/plus.svg';
 
 class TripsNav extends Component {
   handleLogout = () => {
@@ -30,9 +30,10 @@ class TripsNav extends Component {
             icon={LogoutIcon}
             onClick={this.handleLogout}
           />
-          <PlusButton
-            className='plus__button--trips'
-            onToggleModal={toggleModal}
+          <Button
+            variant={ButtonVariants.icon}
+            icon={PlusIcon}
+            onClick={toggleModal}
           />
         </section>
       </nav>
