@@ -43,17 +43,14 @@ class Trips extends Component {
     this.setState({ filteredTrips: filters[id]() });
   };
 
-  toggleModal = (visibleType) => {
-    const { isModalVisible } = this.state;
-    if (isModalVisible === !visibleType) {
-      if (visibleType) {
-        document.getElementsByTagName('body')[0].classList.add('o-hidden');
-        // this.setState({ currentScrollPosition: window.scrollY });
-      } else
-        document.getElementsByTagName('body')[0].classList.remove('o-hidden');
+  toggleModal = (isVisible) => {
+    if (isVisible) {
+      document.getElementsByTagName('body')[0].classList.add('o-hidden');
+      this.setState({ currentScrollPosition: window.scrollY });
+    } else
+      document.getElementsByTagName('body')[0].classList.remove('o-hidden');
 
-      this.setState({ isModalVisible: !isModalVisible });
-    }
+    this.setState({ isModalVisible: isVisible });
   };
 
   render() {
