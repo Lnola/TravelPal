@@ -7,6 +7,7 @@ const {
   FORBIDDEN,
   OK,
 } = require('http-status');
+const { ValidationError } = require('sequelize');
 
 const RefreshToken = require('../models/RefreshToken');
 const User = require('../models/User');
@@ -49,7 +50,10 @@ router.post('/register', async (req, res, next) => {
     const user = await User.create(newUser);
     const tokens = await generateTokens(user, next);
     return res.json(tokens);
-  } catch {
+  } catch (err) {
+    if (err instanceof ValidationError)
+      return next(new HttpError(CONFLICT, errorMessages.REGISTER_ERROR));
+
     return next(new HttpError());
   }
 });
