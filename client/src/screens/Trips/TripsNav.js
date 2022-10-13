@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import Button from '../../components/Button';
 import ButtonVariants from '../../components/Button/variants';
 
-import { authorizedRequest } from '../../utils/authorizedRequest';
+import { authApi } from '../../api';
 import { clearLocalStorage } from '../../utils/storage';
 
 import LogoutIcon from '../../assets/logout.svg';
 import PlusIcon from '../../assets/plus.svg';
 
 class TripsNav extends Component {
-  handleLogout = () => {
-    authorizedRequest(
-      `/api/auth/delete/${window.localStorage.getItem('id')}`,
-      'delete'
-    )
-      .then(() => clearLocalStorage())
-      .catch((err) => console.log('Something went wrong', err));
+  handleLogout = async () => {
+    try {
+      await authApi.logout();
+      clearLocalStorage();
+      this.props.history.push('auth');
+    } catch ({ response }) {
+      alert(response.data.message);
+    }
   };
 
   render() {
@@ -41,4 +43,4 @@ class TripsNav extends Component {
   }
 }
 
-export default TripsNav;
+export default withRouter(TripsNav);
