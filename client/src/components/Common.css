@@ -236,8 +236,4 @@ abbr {
     left: 0;
     right: 0;
   }
-
-  .logout__button {
-    position: static;
-  }
 }

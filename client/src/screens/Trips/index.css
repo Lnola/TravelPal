@@ -105,14 +105,6 @@
   border-bottom-right-radius: 12px;
 }
 
-/* Logout.js */
-
-.logout__button {
-  position: fixed;
-  left: 25px;
-  bottom: 25px;
-}
-
 /* TripsHeader */
 
 .trips__header {

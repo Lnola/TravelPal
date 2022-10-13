@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+
+import Button from '../../components/Button';
+import ButtonVariants from '../../components/Button/variants';
+
 import { authorizedRequest } from '../../utils/authorizedRequest';
 import { clearLocalStorage } from '../../utils/storage';
+import LogoutIcon from '../../assets/logout.svg';
 
 class Logout extends Component {
   handleLogout = () => {
@@ -17,15 +19,11 @@ class Logout extends Component {
 
   render() {
     return (
-      <Link to='/'>
-        <span onClick={this.handleLogout} className='logout__button'>
-          <FontAwesomeIcon
-            className='plus__button--icon'
-            icon={faSignOutAlt}
-            color='white'
-          />
-        </span>
-      </Link>
+      <Button
+        variant={ButtonVariants.icon}
+        icon={LogoutIcon}
+        onClick={this.handleLogout}
+      />
     );
   }
 }
