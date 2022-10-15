@@ -55,7 +55,7 @@ class TripModal extends Component {
             <div className='modal__buttons'>
               <Button
                 type='button'
-                onClick={() => toggleModal(false)}
+                onClick={() => toggleModal()}
                 label='Close'
               />
               <Button
