@@ -12,16 +12,9 @@ class TripModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isCalendarVisible: true,
       selectedDates: null,
     };
   }
-
-  toggleCalendarVisibility = () => {
-    this.setState(({ isCalendarVisible }) => ({
-      isCalendarVisible: !isCalendarVisible,
-    }));
-  };
 
   handleCalendarChange = (selectedDates) => {
     this.setState({ selectedDates });
@@ -37,7 +30,7 @@ class TripModal extends Component {
       toggleModal,
       currentScrollPosition,
     } = this.props;
-    const { isCalendarVisible, selectedDates } = this.state;
+    const { selectedDates } = this.state;
 
     values.selectedDates = selectedDates;
 
@@ -54,9 +47,9 @@ class TripModal extends Component {
             />
 
             <TripCalendar
-              isCalendarVisible={isCalendarVisible}
               selectedDate={values.selectedDates}
               onCalendarChange={this.handleCalendarChange}
+              isCalendarVisible={true}
               isSelectRange={true}
             />
             <div className='modal__buttons'>
