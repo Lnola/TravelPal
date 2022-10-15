@@ -13,17 +13,18 @@ class TripModal extends Component {
     super(props);
     this.state = {
       isCalendarVisible: true,
-      selectedDate: new Date(),
+      selectedDates: null,
     };
   }
 
-  handleToggleCalendarVisibility = () => {
-    const { isCalendarVisible } = this.state;
-    this.setState({ isCalendarVisible: !isCalendarVisible });
+  toggleCalendarVisibility = () => {
+    this.setState(({ isCalendarVisible }) => ({
+      isCalendarVisible: !isCalendarVisible,
+    }));
   };
 
-  handleCalendarChange = (e) => {
-    this.setState({ selectedDate: e });
+  handleCalendarChange = (selectedDates) => {
+    this.setState({ selectedDates });
   };
 
   render() {
@@ -36,9 +37,9 @@ class TripModal extends Component {
       toggleModal,
       currentScrollPosition,
     } = this.props;
-    const { isCalendarVisible, selectedDate } = this.state;
+    const { isCalendarVisible, selectedDates } = this.state;
 
-    values.selectedDate = selectedDate;
+    values.selectedDates = selectedDates;
 
     return (
       <aside style={{ top: currentScrollPosition }}>
@@ -54,8 +55,7 @@ class TripModal extends Component {
 
             <TripCalendar
               isCalendarVisible={isCalendarVisible}
-              onToggleCalendarVisibility={this.handleToggleCalendarVisibility}
-              selectedDate={values.selectedDate}
+              selectedDate={values.selectedDates}
               onCalendarChange={this.handleCalendarChange}
               isSelectRange={true}
             />
@@ -83,13 +83,13 @@ export default withFormik({
   mapPropsToValues() {
     return {
       name: '',
-      selectedDate: [],
+      selectedDates: [],
     };
   },
 
   validationSchema: Yup.object().shape({
     name: Yup.string().min(3).required('Cant be empty'),
-    selectedDate: Yup.array().min(2).required('Cant be empty'),
+    selectedDates: Yup.array().min(2).required('Cant be empty'),
   }),
 
   async handleSubmit(values, { props }) {
@@ -97,7 +97,7 @@ export default withFormik({
 
     const tripDetails = {
       name: values.name,
-      selectedDate: values.selectedDate,
+      selectedDates: values.selectedDates,
       tripId,
     };
 
