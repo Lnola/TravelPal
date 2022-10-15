@@ -26,7 +26,7 @@ class TripModal extends Component {
       handleSubmit,
       errors,
       isSubmitting,
-      dirty,
+      isValid,
       toggleModal,
       currentScrollPosition,
     } = this.props;
@@ -60,7 +60,7 @@ class TripModal extends Component {
               />
               <Button
                 type='submit'
-                disabled={isSubmitting || !dirty}
+                disabled={isSubmitting || !isValid}
                 onClick={() => handleSubmit()}
                 label='Submit'
               />
