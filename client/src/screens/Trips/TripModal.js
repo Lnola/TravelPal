@@ -23,8 +23,8 @@ class TripModal extends Component {
   render() {
     const {
       values,
-      handleSubmit,
       errors,
+      handleSubmit,
       isSubmitting,
       isValid,
       toggleModal,
@@ -53,15 +53,11 @@ class TripModal extends Component {
               isSelectRange={true}
             />
             <div className='modal__buttons'>
-              <Button
-                type='button'
-                onClick={() => toggleModal()}
-                label='Close'
-              />
+              <Button type='button' onClick={toggleModal} label='Close' />
               <Button
                 type='submit'
                 disabled={isSubmitting || !isValid}
-                onClick={() => handleSubmit()}
+                onClick={handleSubmit}
                 label='Submit'
               />
             </div>
