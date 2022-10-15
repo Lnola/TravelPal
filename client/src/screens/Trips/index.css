@@ -125,10 +125,11 @@
 .trips__nav {
   position: fixed;
   bottom: 20px;
-  left: calc(50% - 1024px / 2);
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: calc(100% - 20px * 2);
 }
 
 .trips__nav--wrapper {
