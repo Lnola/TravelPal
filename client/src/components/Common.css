@@ -171,6 +171,10 @@ abbr {
   color: #8b959e !important;
 }
 
+.react-calendar__month-view__days__day--weekend abbr {
+  color: #d10000 !important;
+}
+
 .react-calendar__tile {
   border: 3px solid white !important;
   border-radius: 20%;
@@ -191,10 +195,6 @@ abbr {
 
 .react-calendar__tile:disabled abbr {
   color: #8b959e !important;
-}
-
-.react-calendar__month-view__days__day--weekend abbr {
-  color: #d10000 !important;
 }
 
 /* Atomic */
