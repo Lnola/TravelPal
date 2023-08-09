@@ -1,7 +1,7 @@
 'use strict';
 const bcrypt = require('bcrypt');
 
-const createUser = async (index) => {
+const createUser = (index) => {
   const password = bcrypt.hashSync('1234', process.env.SALT_ROUNDS || 10);
 
   return {
@@ -17,8 +17,8 @@ const createUser = async (index) => {
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const users = [await createUser('')];
-    for (let i = 1; i <= 3; i++) users.push(await createUser(i));
+    const users = [createUser('')];
+    for (let i = 1; i <= 3; i++) users.push(createUser(i));
     return queryInterface.bulkInsert('users', users, {});
   },
 
