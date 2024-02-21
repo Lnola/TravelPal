@@ -23,5 +23,8 @@ const edit = (params) => {
   return request.post(urls.edit, params).then(extractData);
 };
 
-const api = { fetch, add, edit };
-export default api;
+export default {
+  fetch,
+  add,
+  edit,
+};

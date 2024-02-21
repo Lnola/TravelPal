@@ -35,5 +35,9 @@ const logout = () => {
   return request.delete(urls.logout);
 };
 
-const api = { login, register, refresh, logout };
-export default api;
+export default {
+  login,
+  register,
+  refresh,
+  logout,
+};
