@@ -40,5 +40,6 @@
   },
   "engines": {
     "node": ">= 12 < 13"
-  }
+  },
+  "proxy": "http://localhost:4000"
 }
