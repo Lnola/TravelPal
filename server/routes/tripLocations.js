@@ -44,25 +44,15 @@ router.get(`/images/:id`, async (req, res) => {
 
   try {
     const tripLocations = await TripLocation.findAll({ where: { tripId } });
-    let thumbnails = [];
-
-    if (tripLocations.length < 4) {
-      for (let i = 0; i < 4 - tripLocations.length; i++) thumbnails.push(false);
-      if (!tripLocations.length) return res.send(thumbnails);
-    }
-
-    tripLocations.forEach(async (tripLocation, index) => {
-      const { locationId } = tripLocation.dataValues;
-
-      const location = await Location.findByPk(locationId);
-
-      const mainMedia = location.dataValues.result.data.places[0].main_media;
-      if (mainMedia) thumbnails.push(mainMedia.media[0].url);
-
-      // if (tripLocations.length === index + 1)
-      return res.send(thumbnails);
-      // else return res.sendStatus(404);
+    const findLocationById = ({ locationId }) => Location.findByPk(locationId);
+    const locationPromises = tripLocations.map(findLocationById);
+    const locations = await Promise.all(locationPromises);
+    const thumbnails = locations.map((location) => {
+      const media = location.dataValues.result.data.places[0].main_media;
+      if (media) return media.media[0].url;
+      return null;
     });
+    res.send(thumbnails);
   } catch (err) {
     console.log(err);
     return next(new HttpError(NOT_FOUND, errorMessages.NOT_FOUND));
