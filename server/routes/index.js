@@ -1,12 +1,12 @@
 const router = require('express').Router();
 
-const auth = require('./routes/auth');
-const cityLocations = require('./routes/cityLocations');
-const favorites = require('./routes/favorites');
-const locations = require('./routes/locations');
-const tripLocations = require('./routes/tripLocations');
-const trips = require('./routes/trips');
-const users = require('./routes/users');
+const auth = require('./auth');
+const cityLocations = require('./cityLocations');
+const favorites = require('./favorites');
+const locations = require('./locations');
+const tripLocations = require('./tripLocations');
+const trips = require('./trips');
+const users = require('./users');
 
 router.use(auth.path, auth.router);
 router.use(cityLocations.path, cityLocations.router);
