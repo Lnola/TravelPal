@@ -16,5 +16,9 @@
     "db:seed:undo": "(cd server && npm run db:seed:undo)"
   },
   "author": "Luka Nola",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">= 12 < 13",
+    "postgres": "11"
+  }
 }
