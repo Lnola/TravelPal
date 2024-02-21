@@ -90,7 +90,8 @@ export default withFormik({
       tripId,
     };
 
-    await tripsApi[tripId ? 'edit' : 'add'](tripDetails);
+    const action = tripId ? 'edit' : 'add';
+    await tripsApi[action](tripDetails);
     await refetch();
     toggleModal(false);
   },
