@@ -1,36 +1,20 @@
 {
   "name": "travelpal",
   "version": "1.0.0",
-  "description": "Simple travel app",
+  "description": "Travel Planner Application",
   "main": "app.js",
   "scripts": {
-    "dev:server": "nodemon -r dotenv/config server/app.js",
-    "dev:client": "npm start --prefix client",
+    "dev:server": "(cd server && npm run dev)",
+    "dev:client": "(cd client && npm run dev)",
     "dev:start": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
-    "debug:server": "nodemon --inspect -r dotenv/config server/app.js",
-    "db:create": "docker compose up -d",
-    "db:migration:up": "npx sequelize db:migrate",
-    "db:migration:undo": "npx sequelize db:migrate:undo",
-    "db:migration:undo:all": "npx sequelize db:migrate:undo:all",
-    "db:seed": "npx sequelize db:seed:all",
-    "db:seed:undo": "npx sequelize db:seed:undo:all"
+    "debug:server": "(cd server && npm run debug)",
+    "db:create": "(cd server && npm run db:create)",
+    "db:migration:up": "(cd server && npm run db:migration:up)",
+    "db:migration:undo": "(cd server && npm run db:migration:undo)",
+    "db:migration:undo:all": "(cd server && npm run db:migration:undo:all)",
+    "db:seed": "(cd server && npm run db:seed)",
+    "db:seed:undo": "(cd server && npm run db:seed:undo)"
   },
   "author": "Luka Nola",
-  "license": "MIT",
-  "devDependencies": {
-    "nodemon": "^1.19.1"
-  },
-  "dependencies": {
-    "bcrypt": "^3.0.6",
-    "concurrently": "^4.1.2",
-    "dotenv": "^16.0.2",
-    "express": "^4.17.1",
-    "http-status": "^1.5.3",
-    "jsonwebtoken": "^8.5.1",
-    "pg": "^7.12.1",
-    "pg-hstore": "^2.3.3",
-    "rand-token": "^0.4.0",
-    "sequelize": "^5.16.0",
-    "sequelize-cli": "^5.5.0"
-  }
+  "license": "MIT"
 }
